@@ -5,6 +5,6 @@ class ElementoMapa:
     def __init__(self):
         pass
 
-    def entrar(self, ):
+    def entrar(self):
         pass
 

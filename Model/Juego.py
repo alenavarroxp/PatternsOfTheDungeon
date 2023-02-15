@@ -8,12 +8,47 @@ from Puerta import Puerta
 class Juego:
     def _init_(self):
         self.laberinto =None
+
     def fabricarLaberinto(self):
         return Laberinto()
     
+    def fabricarHabitacion(self,num):
+        hab = Habitacion(num)
+        return hab
+
+    def fabricarPared(self):
+        return Pared()
+    
+    def fabricarPuerta(self,unaHab:Habitacion,otraHab:Habitacion):
+        puerta = Puerta()
+        puerta.lado1 = unaHab
+        puerta.lado2 = otraHab
+        return puerta
+    
+    def obtenerHabitacion(self,num):
+        return self.laberinto.obtenerHabitacion(num)
+
+    
     def laberinto2HabitacionesFM(self):
-        "TODO"
-        pass
+        self.laberinto = self.fabricarLaberinto()
+        hab1 = self.fabricarHabitacion(1)
+        hab2 = self.fabricarHabitacion(2)
+
+        puerta = self.fabricarPuerta(hab1,hab2)
+        hab1.norte = self.fabricarPared
+        hab1.oeste = self.fabricarPared
+        hab1.este = self.fabricarPared
+
+        hab2.sur = self.fabricarPared
+        hab2.oeste = self.fabricarPared
+        hab2.este = self.fabricarPared
+
+        hab1.sur = puerta
+        hab2.norte = puerta
+
+        self.laberinto.agregarHabitacion(hab1)
+        self.laberinto.agregarHabitacion(hab2)
+
     def laberinto2Habitaciones(self):
         self.laberinto = Laberinto()
         hab1 = Habitacion(1)
@@ -36,6 +71,8 @@ class Juego:
 
         self.laberinto.agregarHabitacion(hab1)
         self.laberinto.agregarHabitacion(hab2)
+
+  
 
 juego = Juego()
 juego.laberinto2Habitaciones()
