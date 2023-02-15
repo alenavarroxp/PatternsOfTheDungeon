@@ -6,3 +6,6 @@ class Laberinto(Habitacion):
         self.habitaciones = list()
     def agregarHabitacion(self,hab):
         self.habitaciones.append(hab)
+    "Hacer bien obtenerHabitacion"
+    def obtenerHabitacion(self,num):
+        return self.habitaciones(num)

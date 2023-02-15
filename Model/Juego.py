@@ -4,7 +4,7 @@ from Laberinto import Laberinto
 from Habitacion import Habitacion
 from Pared import Pared
 from Puerta import Puerta
-from
+
 class Juego:
     def _init_(self):
         self.laberinto =None
