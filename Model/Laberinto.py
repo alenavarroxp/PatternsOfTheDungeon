@@ -1,9 +1,10 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 from Habitacion import Habitacion
-class Laberinto(Habitacion):
-    def _init_(self):
-        self.habitaciones = list()
+class Laberinto():
+
+    def __init__ (self):
+        self.habitaciones = []
 
     def agregarHabitacion(self,hab):
         self.habitaciones.append(hab)
