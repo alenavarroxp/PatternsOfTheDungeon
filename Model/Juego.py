@@ -6,7 +6,7 @@ from Pared import Pared
 from Puerta import Puerta
 
 class Juego:
-    def _init_(self):
+    def __init__(self):
         self.laberinto =None
 
     def fabricarLaberinto(self):
@@ -75,5 +75,5 @@ class Juego:
   
 
 juego = Juego()
-juego.laberinto2Habitaciones()
+juego.laberinto2HabitacionesFM()
 
