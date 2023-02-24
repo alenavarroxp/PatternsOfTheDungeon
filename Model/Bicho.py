@@ -7,3 +7,9 @@ class Bicho():
         self.poder = None
         self.vidas = None
         self.posicion = None
+    
+    def esAgresivo(self):
+        return self.modo.esAgresivo()
+    
+    def esPerezoso(self):
+        return self.modo.esPerezoso()

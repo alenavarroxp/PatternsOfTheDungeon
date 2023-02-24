@@ -3,17 +3,13 @@
 
 
 from ElementoMapa import ElementoMapa
+from Model.Contenedor import Contenedor
 
-class Habitacion(ElementoMapa):
+class Habitacion(Contenedor):
     
-    def __init__(self,num):
-        self.norte = None
-        self.sur = None
-        self.este = None
-        self.oeste = None
-        self.num = num
+    def __init__(self):
+      pass
         
-    
     def entrar(self):
         print('Estas en la habitación: ',self.num)
     
