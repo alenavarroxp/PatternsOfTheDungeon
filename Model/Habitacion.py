@@ -17,4 +17,6 @@ class Habitacion(ElementoMapa):
     def entrar(self):
         print('Estas en la habitación: ',self.num)
     
+    def esHabitacion(self):
+        return True
 
