@@ -11,4 +11,4 @@ class Laberinto():
 
     
     def obtenerHabitacion(self,num):
-        return self.habitaciones.index(num)
+        return self.habitaciones[num]

@@ -7,8 +7,12 @@ from Puerta import Puerta
 
 class Juego:
     def __init__(self):
-        self.laberinto =None
+        self.laberinto = None
+        self.bichos = []
 
+    def agregarBicho(self,unBicho):
+        self.bichos.append(unBicho)
+        
     def fabricarLaberinto(self):
         return Laberinto()
     
@@ -75,5 +79,6 @@ class Juego:
   
 
 juego = Juego()
-juego.laberinto2HabitacionesFM()
+juego.laberinto2Habitaciones()
+juego.laberinto
 
