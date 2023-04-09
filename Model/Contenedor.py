@@ -14,8 +14,8 @@ class Contenedor(ElementoMapa):
         self.num = None
 
     def agregarHijo(self,unHijo):
+        unHijo.padre = self
         self.hijos.append(unHijo)
-        #Falta lo del padre
 
     def ponerEnElemento(self,unaOrientacion,unEM):
         unaOrientacion.ponerElemento(self)

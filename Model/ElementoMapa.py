@@ -7,7 +7,10 @@ class ElementoMapa:
 
     def entrar(self):
         pass
-    
+
+    def entrar(self,alguien):
+        pass
+
     def esBomba(self):
         return False
     
