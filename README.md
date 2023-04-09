@@ -1,8 +1,10 @@
 # Diseño de Software
-- Autor: Alejandro Navarro de la Cruz
-- Version: Python 3.11 <br/>
-Diagrama de Diseño realizado con StarUML 
-Patrones implementados:
+## Información del proyecto
+- **Autor:** Alejandro Navarro de la Cruz
+- **Version:** Python 3.11
+---
+##Diagrama de Diseño realizado con StarUML <br/>
+**Patrones implementados:**
 - Factory Method
 - Decorator
 - Strategy
