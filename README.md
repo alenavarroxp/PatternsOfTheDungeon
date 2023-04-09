@@ -1,6 +1,6 @@
 # Diseño de Software
 - Autor: Alejandro Navarro de la Cruz
-- Version: Python 3.11
+- Version: Python 3.11 <br/>
 Diagrama de Diseño realizado con StarUML 
 Patrones implementados:
 - Factory Method
