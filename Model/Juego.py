@@ -23,7 +23,12 @@ class Juego:
         infoBicho = ""
         for bicho in self.bichos:
             infoBicho += f"  {bicho}\n"
-        
+        return f"Juego:\n {self.laberinto}\n Hay {len(self.bichos)} bichos en el laberinto:\n {infoBicho}"
+
+    def __repr__(self):
+        infoBicho = ""
+        for bicho in self.bichos:
+            infoBicho += f"  {bicho}\n"
         return f"Juego:\n {self.laberinto}\n Hay {len(self.bichos)} bichos en el laberinto:\n {infoBicho}"
 
     def agregarBicho(self,unBicho):
@@ -32,8 +37,8 @@ class Juego:
     def fabricarArmario(self):
         return Armario()
     
-    def fabricarArmarioEn(self,unContenedor):
-        arm = Armario(1)
+    def fabricarArmarioEn(self,unContenedor,num):
+        arm = Armario(num)
         arm.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
         arm.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
         arm.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
@@ -186,10 +191,10 @@ class Juego:
         hab4 = self.fabricarHabitacion(4)
 
         #Unica modificacion para añadir 4 armarios al laberinto
-        self.fabricarArmarioEn(hab1)
-        self.fabricarArmarioEn(hab2)
-        self.fabricarArmarioEn(hab3)
-        self.fabricarArmarioEn(hab4)
+        self.fabricarArmarioEn(hab1,1)
+        self.fabricarArmarioEn(hab2,2)
+        self.fabricarArmarioEn(hab3,3)
+        self.fabricarArmarioEn(hab4,4)
 
         puerta12 = self.fabricarPuerta(hab1,hab2)
         puerta13 = self.fabricarPuerta(hab1,hab3)
@@ -231,10 +236,10 @@ class Juego:
         hab4 = self.fabricarHabitacion(4)
 
         #Unica modificacion para añadir 4 armarios al laberinto
-        self.fabricarArmarioEn(hab1)
-        self.fabricarArmarioEn(hab2)
-        self.fabricarArmarioEn(hab3)
-        self.fabricarArmarioEn(hab4)
+        self.fabricarArmarioEn(hab1,1)
+        self.fabricarArmarioEn(hab2,2)
+        self.fabricarArmarioEn(hab3,3)
+        self.fabricarArmarioEn(hab4,4)
 
         puerta12 = self.fabricarPuerta(hab1,hab2)
         puerta13 = self.fabricarPuerta(hab1,hab3)
@@ -315,4 +320,34 @@ class Juego:
     def obtenerHabitacion(self,num):
         return self.laberinto.obtenerHabitacion(num)
     
-    
+
+# PLAYGROUND
+print("--- LABERINTO 2 HABITACIONES --")
+juego = Juego()
+juego.laberinto2Habitaciones()
+print(juego)
+
+print("--- LABERINTO 2 HABITACIONES (FACTORY METHOD) --")
+juego = Juego()
+juego.laberinto2HabitacionesFM()
+print(juego)
+
+print("--- LABERINTO 2 HABITACIONES (FM & DECORATOR) --")
+juego = Juego()
+juego.laberinto2HabitacionesFMDecorator()
+print(juego)
+
+print("--- LABERINTO 4 HABITACIONES 4 BICHOS --")
+juego = Juego()
+juego.laberinto4Hab4BichosFM()
+print(juego)
+
+print("--- LABERINTO 4 HABITACIONES 4 ARMARIO 4 BICHOS --")
+juego = Juego()
+juego.laberinto4Hab4Arm4BichosFM()
+print(juego)
+
+print("--- LABERINTO 4 HABITACIONES 4 ARMARIO 4 BOMBAS 4 BICHOS --")
+juego = Juego()
+juego.laberinto4Hab4Arm4Bombas4BichosFM()
+print(juego)
