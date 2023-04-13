@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 
-from Model.Modo import Modo
+from Modo import Modo
 
 
 class Agresivo(Modo):
@@ -10,3 +10,6 @@ class Agresivo(Modo):
 
     def esAgresivo(self):
         return True
+    
+    def __str__(self):
+        return "Agresivo"

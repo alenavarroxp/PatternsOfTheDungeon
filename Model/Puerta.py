@@ -20,6 +20,14 @@ class Puerta(ElementoMapa):
     
     def esPuerta(self):
         return True
+    
+    def __str__(self):
+        if self.abierta:
+            estado = 'Abierta'        
+        else:
+            estado = 'Cerrada'
+
+        return f"Puerta ({estado})"
 
 
 

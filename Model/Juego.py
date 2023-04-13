@@ -18,6 +18,13 @@ class Juego:
     def __init__(self):
         self.laberinto = None
         self.bichos = []
+    
+    def __str__(self):
+        infoBicho = ""
+        for bicho in self.bichos:
+            infoBicho += f"  {bicho}\n"
+        
+        return f"Juego:\n {self.laberinto}\n Hay {len(self.bichos)} bichos en el laberinto:\n {infoBicho}"
 
     def agregarBicho(self,unBicho):
         self.bichos.append(unBicho)
@@ -26,8 +33,7 @@ class Juego:
         return Armario()
     
     def fabricarArmarioEn(self,unContenedor):
-        arm = Armario()
-        unNum = unContenedor.hijos.size()
+        arm = Armario(1)
         arm.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
         arm.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
         arm.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
@@ -58,7 +64,7 @@ class Juego:
     
     def fabricarBichoPerezosoPosicion(self,unaHabitacion):
         bicho = Bicho()
-        bicho.modo = self.fabricarModoAgresivo
+        bicho.modo = self.fabricarModoPerezoso()
         bicho.vidas = 10
         bicho.poder = 10
         bicho.posicion = unaHabitacion
@@ -308,10 +314,5 @@ class Juego:
 
     def obtenerHabitacion(self,num):
         return self.laberinto.obtenerHabitacion(num)
-        
-
-
-unJuego = Juego()
-unJuego.laberinto2Habitaciones()
-
-print(unJuego.laberinto)
+    
+    

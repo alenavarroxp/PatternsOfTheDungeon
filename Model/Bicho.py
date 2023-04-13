@@ -13,3 +13,6 @@ class Bicho():
     
     def esPerezoso(self):
         return self.modo.esPerezoso()
+    
+    def __str__(self):
+        return f"Bicho {self.modo}:\n\t Vidas: {self.vidas}\n\t Poder: {self.poder}\n\t Posicion: \n\t\t{self.posicion}"

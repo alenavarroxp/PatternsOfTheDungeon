@@ -1,8 +1,8 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 
-from Model.Habitacion import Habitacion
-from Model.Orientacion import Orientacion
+from Habitacion import Habitacion
+from Orientacion import Orientacion
 
 
 class Este(Orientacion):

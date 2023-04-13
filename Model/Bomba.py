@@ -16,3 +16,10 @@ class Bomba(Decorator):
 
     def esBomba(self):
         return True
+    
+    def __str__(self):
+        if self.activa:
+            estado = 'Activa'
+        else:
+            estado = 'No activa'
+        return f"Bomba ({estado})"

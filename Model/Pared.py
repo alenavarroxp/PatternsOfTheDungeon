@@ -9,3 +9,9 @@ class Pared(ElementoMapa):
 
     def esPared(self):
         return True
+    
+    def ponerEnElemento(self, unaOrientacion, unEM, unaHab):
+        unaOrientacion.ponerElemento(self, unaHab)
+
+    def __str__(self):
+        return "Pared"

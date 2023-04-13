@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 
-from Model.Modo import Modo
+from Modo import Modo
 
 
 class Perezoso(Modo):
@@ -10,3 +10,6 @@ class Perezoso(Modo):
 
     def esPerezoso(self):
         return True
+    
+    def __str__(self):
+        return "Perezoso"
