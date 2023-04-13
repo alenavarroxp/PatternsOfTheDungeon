@@ -117,6 +117,8 @@ class Juego:
         return Sur()
 
     def laberinto2Habitaciones(self):
+        
+        print("\n--- LABERINTO 2 HABITACIONES --")
         self.laberinto = Laberinto()
         hab1 = Habitacion(1)
         hab2 = Habitacion(2)
@@ -138,8 +140,12 @@ class Juego:
 
         self.laberinto.agregarHabitacion(hab1)
         self.laberinto.agregarHabitacion(hab2)
+        print(juego)
+        print("------------------------------------------------")
+
 
     def laberinto2HabitacionesFM(self):
+        print("\n--- LABERINTO 2 HABITACIONES (FACTORY METHOD) --")
         self.laberinto = self.fabricarLaberinto()
         hab1 = self.fabricarHabitacion(1)
         hab2 = self.fabricarHabitacion(2)
@@ -158,8 +164,11 @@ class Juego:
 
         self.laberinto.agregarHabitacion(hab1)
         self.laberinto.agregarHabitacion(hab2)
+        print(juego)
+        print("------------------------------------------------")
     
     def laberinto2HabitacionesFMDecorator(self):
+        print("\n--- LABERINTO 2 HABITACIONES (FM & DECORATOR) --")
         self.laberinto = self.fabricarLaberinto()
         hab1 = self.fabricarHabitacion(1)
         hab2 = self.fabricarHabitacion(2)
@@ -182,8 +191,11 @@ class Juego:
 
         self.laberinto.agregarHabitacion(hab1)
         self.laberinto.agregarHabitacion(hab2)
+        print(juego)
+        print("------------------------------------------------")
 
     def laberinto4Hab4Arm4BichosFM(self):
+        print("\n--- LABERINTO 4 HABITACIONES, 4 ARMARIOS y 4 BICHOS --")
         self.laberinto = self.fabricarLaberinto()
         hab1 = self.fabricarHabitacion(1)
         hab2 = self.fabricarHabitacion(2)
@@ -227,8 +239,11 @@ class Juego:
         self.laberinto.agregarHabitacion(hab2)
         self.laberinto.agregarHabitacion(hab3)
         self.laberinto.agregarHabitacion(hab4)
+        print(juego)
+        print("------------------------------------------------")
     
     def laberinto4Hab4Arm4Bombas4BichosFM(self):
+        print("\n--- LABERINTO 4 HABITACIONES, 4 ARMARIOS, 4 BOMBAS y 4 BICHOS --")
         self.laberinto = self.fabricarLaberinto()
         hab1 = self.fabricarHabitacion(1)
         hab2 = self.fabricarHabitacion(2)
@@ -277,8 +292,11 @@ class Juego:
         self.laberinto.agregarHabitacion(hab2)
         self.laberinto.agregarHabitacion(hab3)
         self.laberinto.agregarHabitacion(hab4)
+        print(juego)
+        print("------------------------------------------------")
 
     def laberinto4Hab4BichosFM(self):
+        print("\n--- LABERINTO 4 HABITACIONES y 4 BICHOS --")
         self.laberinto = self.fabricarLaberinto()
         hab1 = self.fabricarHabitacion(1)
         hab2 = self.fabricarHabitacion(2)
@@ -316,38 +334,35 @@ class Juego:
         self.laberinto.agregarHabitacion(hab2)
         self.laberinto.agregarHabitacion(hab3)
         self.laberinto.agregarHabitacion(hab4)
+        print(juego)
+        print("------------------------------------------------")
 
     def obtenerHabitacion(self,num):
         return self.laberinto.obtenerHabitacion(num)
     
+  
+       
 
 # PLAYGROUND
-print("--- LABERINTO 2 HABITACIONES --")
-juego = Juego()
-juego.laberinto2Habitaciones()
-print(juego)
+while True:
+    juego = Juego()
+    opcion = input("¿Qué opción quieres elegir?\n1. Laberinto 2 habitaciones\n2. Laberinto 2 habitaciones (Factory Method)\n3. Laberinto 2 habitaciones (FM & Decorator)\n4. Laberinto 4 habitaciones y 4 bichos\n5. Laberinto 4 habitaciones, 4 armarios y 4 bichos\n6. Laberinto 4 habitaciones,4 armarios, 4 bombas y 4 bichos\n\n")
+    try:
+        opcion = int(opcion)
+        switch = {
+            1: juego.laberinto2Habitaciones,
+            2: juego.laberinto2HabitacionesFM,
+            3: juego.laberinto2HabitacionesFMDecorator,
+            4: juego.laberinto4Hab4BichosFM,
+            5: juego.laberinto4Hab4Arm4BichosFM,
+            6: juego.laberinto4Hab4Arm4Bombas4BichosFM
+        }
+        resultado = switch.get(opcion, "\n\nEl carácter ingresado no es correcto.\n\n")
+        if resultado == "\n\nEl carácter ingresado no es correcto.\n\n":
+            print(resultado)
+        else:
+            resultado()
+    except ValueError:
+        print("\n\nNo se admiten letras ni otro carácter fuera del rango.\n\n")
 
-print("--- LABERINTO 2 HABITACIONES (FACTORY METHOD) --")
-juego = Juego()
-juego.laberinto2HabitacionesFM()
-print(juego)
 
-print("--- LABERINTO 2 HABITACIONES (FM & DECORATOR) --")
-juego = Juego()
-juego.laberinto2HabitacionesFMDecorator()
-print(juego)
-
-print("--- LABERINTO 4 HABITACIONES 4 BICHOS --")
-juego = Juego()
-juego.laberinto4Hab4BichosFM()
-print(juego)
-
-print("--- LABERINTO 4 HABITACIONES 4 ARMARIO 4 BICHOS --")
-juego = Juego()
-juego.laberinto4Hab4Arm4BichosFM()
-print(juego)
-
-print("--- LABERINTO 4 HABITACIONES 4 ARMARIO 4 BOMBAS 4 BICHOS --")
-juego = Juego()
-juego.laberinto4Hab4Arm4Bombas4BichosFM()
-print(juego)

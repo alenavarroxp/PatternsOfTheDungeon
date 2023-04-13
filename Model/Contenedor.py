@@ -23,6 +23,10 @@ class Contenedor(ElementoMapa):
 
     def __str__(self):
         cadena = "Hijos: "
-        for hijo in self.hijos:
-            cadena += str(hijo) +". "
+        if len(self.hijos) == 0:
+            cadena += "Sin Hijos"
+        else:
+            for hijo in self.hijos:
+                cadena += str(hijo) +". "
+
         return cadena
