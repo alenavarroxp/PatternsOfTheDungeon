@@ -2,8 +2,8 @@
 #-*- coding: utf-8 -*-
 
 from abc import ABC
-from ElementoMapa import ElementoMapa
+from Hoja import Hoja
 
-class Decorator(ElementoMapa,ABC):
+class Decorator(Hoja,ABC):
     def __init__(self):
         self.component = None
