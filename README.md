@@ -9,4 +9,5 @@
 - Decorator
 - Strategy
 - Composite
+- Iterator 
 <img src="https://github.com/alenavarroxp/laberintoPython/blob/main/DesignDiagram/DiagramaDise%C3%B1o.jpg"/>

@@ -5,13 +5,13 @@ from Decorator import Decorator
 
 class Fuego(Decorator):
     def __init__(self):
-        self.estado = True
+        self.activo = True
 
     def esFuego(self):
         return True
     
     def __str__(self):
-        if self.estado:
+        if self.activo:
             estado = 'Activo'
         else:
             estado = 'No activo'
