@@ -17,7 +17,22 @@ class Bomba(Decorator):
     def esBomba(self):
         return True
     
+    def activar(self):
+        self.activa = True
+        print('Bomba activada')
+
+    def desactivar(self):
+        self.activa = False
+        print('Bomba desactivada')
+    
     def __str__(self):
+        if self.activa:
+            estado = 'Activa'
+        else:
+            estado = 'No activa'
+        return f"Bomba ({estado})"
+    
+    def __repr__(self):
         if self.activa:
             estado = 'Activa'
         else:

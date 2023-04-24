@@ -1,9 +1,10 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
-from Habitacion import Habitacion
-class Laberinto():
+from Contenedor import Contenedor
+class Laberinto(Contenedor):
 
     def __init__ (self):
+        super().__init__(0)
         self.habitaciones = []
 
     def agregarHabitacion(self,hab):
@@ -18,3 +19,8 @@ class Laberinto():
             cadena += f"  {hab}\n"
 
         return cadena
+    
+    def recorrer(self,unBloque):
+        print('Recorriendo el laberinto')
+        for habitacion in self.habitaciones:
+            habitacion.recorrer(unBloque)

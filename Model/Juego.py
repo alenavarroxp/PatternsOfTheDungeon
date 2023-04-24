@@ -36,7 +36,22 @@ class Juego:
 
     def agregarBicho(self,unBicho):
         self.bichos.append(unBicho)
-    
+    # Métodos ITERATOR
+    def activarBomba(self,unaBomba):
+        if isinstance(unaBomba,Bomba):
+            unaBomba.activar()
+
+    def activarBombas(self):
+        self.laberinto.recorrer(self.activarBomba)
+
+    def desactivarBomba(self,unaBomba):
+        if isinstance(unaBomba,Bomba):
+            unaBomba.desactivar()
+
+    def desactivarBombas(self):
+        self.laberinto.recorrer(self.desactivarBomba)  
+    ##
+
     def fabricarArmario(self):
         return Armario()
     
@@ -243,7 +258,6 @@ class Juego:
         puerta24 = self.fabricarPuerta(hab2,hab4)
         puerta34 = self.fabricarPuerta(hab3,hab4)
 
-        puerta13.agregarHijo(self.fabricarBomba())
 
         hab1.ponerEnElemento(self.fabricarSur(),puerta12)
         hab2.ponerEnElemento(self.fabricarNorte(),puerta12)
@@ -409,7 +423,11 @@ class Juego:
         print(juego)
         print("------------------------------------------------")
 
-  
+# juego= Juego()
+# juego.laberinto4Hab2baules()
+# juego.activarBombas()
+# print(juego)
+
        
 
 # PLAYGROUND
@@ -434,5 +452,30 @@ while True:
             resultado()
     except ValueError:
         print("\n\nNo se admiten letras ni otro carácter fuera del rango.\n\n")
+    activado = False
+
+    while True:
+        if activado:
+            operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Salir\n")
+        else:
+            operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Salir\n")
+
+        try:
+            operacion = int(operacion)
+            if operacion == 1:
+                if activado:
+                    juego.desactivarBombas()
+                    activado = False
+                else:
+                    juego.activarBombas()
+                    activado = True
+                print(juego)
+            elif operacion == 2:
+                break
+            else:
+                print("\n\nOpción no válida.\n\n")
+        except ValueError:
+            print("\n\nNo se admiten letras ni otro carácter fuera del rango.\n\n")
+
 
 

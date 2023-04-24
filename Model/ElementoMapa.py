@@ -4,6 +4,13 @@
 class ElementoMapa:
     def __init__(self):
         self.padre = None
+        self.bool = False
+
+    def get_bool(self):
+        return self.bool
+    
+    def set_bool(self,bool):
+        self.bool = bool
 
     def entrar(self):
         pass
@@ -28,4 +35,7 @@ class ElementoMapa:
     
     def esPuerta(self):
         return False
+    
+    def recorrer(self,unBloque):
+        unBloque(self)
     

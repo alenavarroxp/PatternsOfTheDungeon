@@ -14,6 +14,14 @@ class Puerta(Contenedor):
             print('Puedes pasar.')
         else:
             print('La puerta está cerrada.')
+            
+    def abrir(self):
+        self.abierta = True
+        print('Puerta abierta')
+
+    def cerrar(self):
+        self.abierta = False
+        print('Puerta cerrada')
 
     def estaCerrada(self):
         return self.abierta
