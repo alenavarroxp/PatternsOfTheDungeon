@@ -7,8 +7,7 @@
 **Patrones implementados:**
 | Patrón de Diseño | Descripción |
 |------------------|-------------|
-| Factory Method   | Patrón que define una interface para crear un objeto, pero deja que las subclases decidan qué clase 
-instanciar |
+| Factory Method   | Patrón que define una interface para crear un objeto, pero deja que las subclases decidan qué clase instanciar |
 | Decorator        | Patrón que permite agregar funcionalidad a un objeto existente dinámicamente, sin afectar a otros objetos de la misma clase. |
 | Strategy         | Patrón que define una familia de algoritmos, encapsula cada uno de ellos y los hace intercambiables. |
 | Composite        | Patrón que permite construir objetos complejos a partir de objetos más simples, formando una estructura en árbol. |
