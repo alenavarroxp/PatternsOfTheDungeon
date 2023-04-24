@@ -7,6 +7,9 @@ from Armario import Armario
 from Bicho import Bicho
 from Bomba import Bomba
 from Este import Este
+from Baul import Baul
+from Espada import Espada
+from Fuego import Fuego
 from Norte import Norte
 from Oeste import Oeste
 from Perezoso import Perezoso
@@ -45,6 +48,20 @@ class Juego:
         arm.ponerEnElemento(self.fabricarSur(),self.fabricarPared())
         unContenedor.agregarHijo(arm)
 
+    def fabricarBaul(self):
+        return Baul()
+    
+    def fabricarBaulEn(self,unContenedor,num,contenido):
+        baul = Baul(num)
+        baul.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
+        baul.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
+        baul.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
+        baul.ponerEnElemento(self.fabricarSur(),self.fabricarPared())
+        baul.agregarHijo(contenido)
+        unContenedor.agregarHijo(baul)
+        
+
+
     def fabricarBichoAgresivo(self):
         bicho = Bicho()
         bicho.modo = self.fabricarModoAgresivo()
@@ -81,6 +98,12 @@ class Juego:
     def fabricarEste(self):
         return Este()
     
+    def fabricarEspada(self):
+        return Espada()
+    
+    def fabricarFuego(self):
+        return Fuego()
+    
     def fabricarHabitacion(self,num):
         hab = Habitacion(num)
         hab.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
@@ -111,6 +134,13 @@ class Juego:
         puerta = Puerta()
         puerta.lado1 = unaHab
         puerta.lado2 = otraHab
+        return puerta
+    
+    def fabricarPuertaEstado(self,unaHab:Habitacion,otraHab:Habitacion,estado:bool):
+        puerta = Puerta()
+        puerta.lado1 = unaHab
+        puerta.lado2 = otraHab
+        puerta.abierta = estado
         return puerta
     
     def fabricarSur(self):
@@ -212,6 +242,8 @@ class Juego:
         puerta13 = self.fabricarPuerta(hab1,hab3)
         puerta24 = self.fabricarPuerta(hab2,hab4)
         puerta34 = self.fabricarPuerta(hab3,hab4)
+
+        puerta13.agregarHijo(self.fabricarBomba())
 
         hab1.ponerEnElemento(self.fabricarSur(),puerta12)
         hab2.ponerEnElemento(self.fabricarNorte(),puerta12)
@@ -340,13 +372,50 @@ class Juego:
     def obtenerHabitacion(self,num):
         return self.laberinto.obtenerHabitacion(num)
     
+    def laberinto4Hab2baules(self):
+        self.laberinto = self.fabricarLaberinto()
+        hab1 = self.fabricarHabitacion(1)
+        hab2 = self.fabricarHabitacion(2)
+        hab3 = self.fabricarHabitacion(3)
+        hab4 = self.fabricarHabitacion(4)
+
+        puerta12 = self.fabricarPuertaEstado(hab1,hab2,True)
+        puerta13 = self.fabricarPuertaEstado(hab1,hab3,False)
+        puerta24 = self.fabricarPuertaEstado(hab2,hab4,True)
+        
+        bomba = self.fabricarBomba()
+        bomba.component = self.fabricarPuerta(hab3,hab4)
+
+        hab1.ponerEnElemento(self.fabricarEste(),puerta12)
+        hab2.ponerEnElemento(self.fabricarOeste(),puerta12)
+
+        hab1.ponerEnElemento(self.fabricarSur(),puerta13)
+        hab3.ponerEnElemento(self.fabricarNorte(),puerta13)
+
+        hab3.ponerEnElemento(self.fabricarEste(),bomba)
+        hab4.ponerEnElemento(self.fabricarOeste(),bomba)
+
+        hab2.ponerEnElemento(self.fabricarSur(),puerta24)
+        hab4.ponerEnElemento(self.fabricarNorte(),puerta24)
+
+        hab4.agregarHijo(self.fabricarFuego())
+        self.fabricarBaulEn(hab2,2,self.fabricarBomba())
+        self.fabricarBaulEn(hab3,3,self.fabricarEspada())
+
+        self.laberinto.agregarHabitacion(hab1)
+        self.laberinto.agregarHabitacion(hab2)
+        self.laberinto.agregarHabitacion(hab3)
+        self.laberinto.agregarHabitacion(hab4)
+        print(juego)
+        print("------------------------------------------------")
+
   
        
 
 # PLAYGROUND
 while True:
     juego = Juego()
-    opcion = input("¿Qué opción quieres elegir?\n1. Laberinto 2 habitaciones\n2. Laberinto 2 habitaciones (Factory Method)\n3. Laberinto 2 habitaciones (FM & Decorator)\n4. Laberinto 4 habitaciones y 4 bichos\n5. Laberinto 4 habitaciones, 4 armarios y 4 bichos\n6. Laberinto 4 habitaciones,4 armarios, 4 bombas y 4 bichos\n\n")
+    opcion = input("¿Qué opción quieres elegir?\n1. Laberinto 2 habitaciones\n2. EJERCICIO 1: Laberinto 2 habitaciones (Factory Method)\n3. Laberinto 2 habitaciones (FM & Decorator)\n4. Laberinto 4 habitaciones y 4 bichos\n5. Laberinto 4 habitaciones, 4 armarios y 4 bichos\n6. Laberinto 4 habitaciones,4 armarios, 4 bombas y 4 bichos\n7. EJERCICIO 2 Laberinto 4 habitaciones y 2 baúles\n\n")
     try:
         opcion = int(opcion)
         switch = {
@@ -355,7 +424,8 @@ while True:
             3: juego.laberinto2HabitacionesFMDecorator,
             4: juego.laberinto4Hab4BichosFM,
             5: juego.laberinto4Hab4Arm4BichosFM,
-            6: juego.laberinto4Hab4Arm4Bombas4BichosFM
+            6: juego.laberinto4Hab4Arm4Bombas4BichosFM,
+            7: juego.laberinto4Hab2baules
         }
         resultado = switch.get(opcion, "\n\nEl carácter ingresado no es correcto.\n\n")
         if resultado == "\n\nEl carácter ingresado no es correcto.\n\n":

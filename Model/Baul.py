@@ -5,15 +5,16 @@
 from Contenedor import Contenedor
 
 
-class Armario(Contenedor):
+class Baul(Contenedor):
     def __init__(self, num):
         super().__init__(num)
+        
 
     def entrar(self):
-        print('Estas en el armario',self.num)
+        print('Estas en el baul',self.num)
 
-    def esArmario(self):
+    def esBaul(self):
         return True
     
     def __str__(self):
-        return f"Armario: {self.num}"
+        return f"Baul: {self.num} {super().__str__()}"

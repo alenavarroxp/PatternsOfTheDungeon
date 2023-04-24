@@ -10,6 +10,12 @@ class ElementoMapa:
 
     def entrar(self,alguien):
         pass
+    
+    def esArmario(self):
+        return False
+    
+    def esBaul(self):
+        return False
 
     def esBomba(self):
         return False
@@ -22,3 +28,4 @@ class ElementoMapa:
     
     def esPuerta(self):
         return False
+    
