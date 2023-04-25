@@ -1,9 +1,9 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 
-from Contenedor import Contenedor
+from ElementoMapa import ElementoMapa
 
-class Puerta(Contenedor):
+class Puerta(ElementoMapa):
     def __init__(self):
         self.abierta = False
         self.lado1 = None

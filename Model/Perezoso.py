@@ -1,6 +1,7 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 
+from time import sleep
 from Modo import Modo
 
 
@@ -8,6 +9,9 @@ class Perezoso(Modo):
     def __init__(self):
         super().__init__()
 
+    def dormir(self):
+        sleep(4)
+        
     def esPerezoso(self):
         return True
     

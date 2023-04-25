@@ -8,6 +8,12 @@ class Bicho():
         self.vidas = None
         self.posicion = None
     
+    def actua(self):
+        self.modo.actua(self)
+    
+    def obtenerOrientacionAleatoria(self):
+        return self.posicion.obtenerOrientacionAleatoria()
+    
     def esAgresivo(self):
         return self.modo.esAgresivo()
     

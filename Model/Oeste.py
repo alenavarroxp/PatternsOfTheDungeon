@@ -8,3 +8,7 @@ from Orientacion import Orientacion
 class Oeste(Orientacion):
     def ponerElemento(self, unEM, unaHab:Habitacion):
         unaHab.oeste = unEM
+
+    def recorrerEn(self,unBloque,unContenedor):
+         if unContenedor.oeste is not None:
+            unContenedor.oeste.recorrer(unBloque)

@@ -4,23 +4,23 @@ from Contenedor import Contenedor
 class Laberinto(Contenedor):
 
     def __init__ (self):
-        super().__init__(0)
-        self.habitaciones = []
+        super().__init__(1)
+        
 
     def agregarHabitacion(self,hab):
-        self.habitaciones.append(hab)
+        self.hijos.append(hab)
 
     def obtenerHabitacion(self,num):
-        return self.habitaciones[num]
+        return self.hijos[num]
     
     def __str__(self):
-        cadena = f"Laberinto con {len(self.habitaciones)} habitaciones\n"
-        for hab in self.habitaciones:
+        cadena = f"Laberinto con {len(self.hijos)} habitaciones\n"
+        for hab in self.hijos:
             cadena += f"  {hab}\n"
 
         return cadena
     
     def recorrer(self,unBloque):
         print('Recorriendo el laberinto')
-        for habitacion in self.habitaciones:
+        for habitacion in self.hijos:
             habitacion.recorrer(unBloque)

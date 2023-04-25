@@ -50,6 +50,18 @@ class Juego:
 
     def desactivarBombas(self):
         self.laberinto.recorrer(self.desactivarBomba)  
+
+    def abrirPuerta(self,unaPuerta):
+        if isinstance(unaPuerta,Puerta):
+            unaPuerta.abrir()
+    def abrirPuertas(self):
+        self.laberinto.recorrer(self.abrirPuerta)
+
+    def cerrarPuerta(self,unaPuerta):
+        if isinstance(unaPuerta,Puerta):
+            unaPuerta.cerrar()
+    def cerrarPuertas(self):
+        self.laberinto.recorrer(self.cerrarPuerta)
     ##
 
     def fabricarArmario(self):
@@ -125,6 +137,10 @@ class Juego:
         hab.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
         hab.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
         hab.ponerEnElemento(self.fabricarSur(),self.fabricarPared())
+        hab.agregarOrientacion(self.fabricarNorte())
+        hab.agregarOrientacion(self.fabricarEste())
+        hab.agregarOrientacion(self.fabricarOeste())
+        hab.agregarOrientacion(self.fabricarSur())
         return hab
     
     def fabricarLaberinto(self):
@@ -423,10 +439,7 @@ class Juego:
         print(juego)
         print("------------------------------------------------")
 
-# juego= Juego()
-# juego.laberinto4Hab2baules()
-# juego.activarBombas()
-# print(juego)
+
 
        
 
@@ -452,13 +465,20 @@ while True:
             resultado()
     except ValueError:
         print("\n\nNo se admiten letras ni otro carácter fuera del rango.\n\n")
-    activado = False
 
+    activado = False
+    abierto = False
     while True:
         if activado:
-            operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Salir\n")
+            if abierto:
+                operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Cerrar Puertas\n3. Salir\n")
+            else:
+                operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Abrir Puertas\n3. Salir\n")
         else:
-            operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Salir\n")
+            if abierto:
+                operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Cerrar Puertas\n3. Salir\n")
+            else:
+                operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Abrir Puertas\n3. Salir\n")
 
         try:
             operacion = int(operacion)
@@ -471,6 +491,14 @@ while True:
                     activado = True
                 print(juego)
             elif operacion == 2:
+                if abierto:
+                    juego.cerrarPuertas()
+                    abierto = False
+                else:
+                    juego.abrirPuertas()
+                    abierto = True
+                print(juego)
+            elif operacion == 3:
                 break
             else:
                 print("\n\nOpción no válida.\n\n")

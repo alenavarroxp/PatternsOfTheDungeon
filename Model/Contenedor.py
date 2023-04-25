@@ -1,6 +1,7 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 
+import random
 from ElementoMapa import ElementoMapa
 from Bomba import Bomba
 
@@ -9,6 +10,7 @@ class Contenedor(ElementoMapa):
     def __init__(self):
         super().__init__()
         self.hijos = []
+        self.orientaciones = []
         self.norte = None
         self.este = None
         self.oeste = None
@@ -18,6 +20,7 @@ class Contenedor(ElementoMapa):
     def __init__(self,num):
         super().__init__()
         self.hijos = []
+        self.orientaciones = []
         self.norte = None
         self.este = None
         self.oeste = None
@@ -28,8 +31,20 @@ class Contenedor(ElementoMapa):
         unHijo.padre = self
         self.hijos.append(unHijo)
 
+    def agregarOrientacion(self,unaOrientacion):
+        self.orientaciones.append(unaOrientacion)
+
     def ponerEnElemento(self,unaOrientacion,unEM):
-        unaOrientacion.ponerElemento(self,unEM)
+        unaOrientacion.ponerElemento(unEM,self)
+
+    def obtenerOrientacionAleatoria(self):
+        num_aleatorio = self.obtenerNumeroAleatorio(len(self.orientaciones))
+        return self.orientaciones[num_aleatorio - 1]
+    
+    def obtenerNumeroAleatorio(self, lenOris):
+        numRandom = random.Random()
+        resultado = 1 + int(numRandom.random() * lenOris)
+        return resultado
 
     def __str__(self):
         cadena = "Hijos: "
@@ -40,37 +55,14 @@ class Contenedor(ElementoMapa):
                 cadena += str(hijo) +". "
 
         return cadena
-    
-    def cambiar_estado_orientaciones(self, estado):
-        if isinstance(self.norte, Bomba):
-            if not estado:
-                self.norte.activar()
-            else:
-                self.norte.desactivar()
-        if isinstance(self.este, Bomba):
-            if not estado:
-                self.este.activar()
-            else:
-                self.este.desactivar()
-        if isinstance(self.oeste, Bomba):
-            if not estado:
-                self.oeste.activar()
-            else:
-                self.oeste.desactivar()
-        if isinstance(self.sur, Bomba):
-            if not estado:
-                self.sur.activar()
-            else:
-                self.sur.desactivar()
-
 
     def recorrer(self, unBloque):
         unBloque(self)
         for hijo in self.hijos:
             hijo.recorrer(unBloque)
-        estado_actual = super().get_bool()
-        super().set_bool(not estado_actual)
-        self.cambiar_estado_orientaciones(estado_actual)
+        for orientacion in self.orientaciones:
+            orientacion.recorrerEn(unBloque,self)
+       
 
       
     
