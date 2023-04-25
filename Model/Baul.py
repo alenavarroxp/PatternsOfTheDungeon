@@ -12,7 +12,9 @@ class Baul(Contenedor):
 
     def entrar(self):
         print('Estas en el baul',self.num)
-
+    def entrar(self,alguien):
+        print(alguien,' entra en el baúl: ',self.num)
+    
     def esBaul(self):
         return True
     

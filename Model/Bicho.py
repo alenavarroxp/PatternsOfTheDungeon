@@ -11,6 +11,9 @@ class Bicho():
     def actua(self):
         self.modo.actua(self)
     
+    def irA(self,unaOrientacion):
+        unaOrientacion.ir(self)
+        
     def obtenerOrientacionAleatoria(self):
         return self.posicion.obtenerOrientacionAleatoria()
     

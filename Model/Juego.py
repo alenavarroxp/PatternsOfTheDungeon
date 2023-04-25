@@ -439,7 +439,12 @@ class Juego:
         print(juego)
         print("------------------------------------------------")
 
-
+# juego = Juego()
+# juego.laberinto4Hab4Arm4Bombas4BichosFM()
+# juego.abrirPuertas()
+# bicho = juego.bichos[0]
+# bicho.actua()
+# print(bicho)
 
        
 
@@ -471,14 +476,14 @@ while True:
     while True:
         if activado:
             if abierto:
-                operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Cerrar Puertas\n3. Salir\n")
+                operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Cerrar Puertas\n3. Bicho actua\n4. Salir\n")
             else:
-                operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Abrir Puertas\n3. Salir\n")
+                operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Abrir Puertas\n3. Bicho actua\n4. Salir\n")
         else:
             if abierto:
-                operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Cerrar Puertas\n3. Salir\n")
+                operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Cerrar Puertas\n3. Bicho actua\n4. Salir\n")
             else:
-                operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Abrir Puertas\n3. Salir\n")
+                operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Abrir Puertas\n3. Bicho actua\n4. Salir\n")
 
         try:
             operacion = int(operacion)
@@ -499,6 +504,16 @@ while True:
                     abierto = True
                 print(juego)
             elif operacion == 3:
+                while True:
+                    if len(juego.bichos) == 0:
+                        print("\n\nNo hay bichos en el laberinto.\n\n")
+                        break
+                    else:
+                        numero = input("¿Qué bicho quieres que actúe?\n1. Bicho1\n2. Bicho2\n3. Bicho3\n4. Bicho4\n")
+                        juego.bichos[int(numero)-1].actua()
+                        break
+                print('\n',juego)
+            elif operacion == 4:
                 break
             else:
                 print("\n\nOpción no válida.\n\n")

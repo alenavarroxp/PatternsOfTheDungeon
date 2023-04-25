@@ -10,6 +10,9 @@ class Habitacion(Contenedor):
         
     def entrar(self):
         print('Estas en la habitación: ',self.num)
+
+    def entrar(self,alguien):
+        print('Bicho entra en la habitación: ',self.num) #puedo poner alguien en vez de 'Bicho'
     
     def esHabitacion(self):
         return True

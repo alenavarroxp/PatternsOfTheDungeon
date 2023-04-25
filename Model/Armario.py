@@ -12,6 +12,9 @@ class Armario(Contenedor):
     def entrar(self):
         print('Estas en el armario',self.num)
 
+    def entrar(self,alguien):
+        print(alguien,' entra en el armario: ',self.num)
+    
     def esArmario(self):
         return True
     

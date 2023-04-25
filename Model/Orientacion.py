@@ -11,5 +11,8 @@ class Orientacion(ABC):
     def recorrerEn(self,unBloque,unContenedor):
         pass
     
+    def ir(self,alguien):
+        pass
+
     def ponerElemento(self,unEM,unaHab):
         pass

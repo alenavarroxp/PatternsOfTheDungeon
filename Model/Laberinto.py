@@ -17,9 +17,12 @@ class Laberinto(Contenedor):
         cadena = f"Laberinto con {len(self.hijos)} habitaciones\n"
         for hab in self.hijos:
             cadena += f"  {hab}\n"
-
         return cadena
     
+    def entrar(self,alguien):
+        hab1 = self.obtenerHabitacion(1)
+        hab1.entrar(alguien)
+        
     def recorrer(self,unBloque):
         print('Recorriendo el laberinto')
         for habitacion in self.hijos:
