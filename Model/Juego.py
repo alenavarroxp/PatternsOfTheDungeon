@@ -10,6 +10,7 @@ from Este import Este
 from Baul import Baul
 from Espada import Espada
 from Fuego import Fuego
+from AbstractFactory.LaberintoFactory import LaberintoFactory
 from Norte import Norte
 from Oeste import Oeste
 from Perezoso import Perezoso
@@ -73,6 +74,12 @@ class Juego:
         arm.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
         arm.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
         arm.ponerEnElemento(self.fabricarSur(),self.fabricarPared())
+        arm.agregarOrientacion(self.fabricarNorte())
+        arm.agregarOrientacion(self.fabricarEste())
+        arm.agregarOrientacion(self.fabricarOeste())
+        arm.agregarOrientacion(self.fabricarSur())
+        puerta = self.fabricarPuerta(arm,unContenedor)
+        arm.ponerEnElemento(self.fabricarEste(),puerta)
         unContenedor.agregarHijo(arm)
 
     def fabricarBaul(self):
@@ -85,6 +92,12 @@ class Juego:
         baul.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
         baul.ponerEnElemento(self.fabricarSur(),self.fabricarPared())
         baul.agregarHijo(contenido)
+        baul.agregarOrientacion(self.fabricarNorte())
+        baul.agregarOrientacion(self.fabricarEste())
+        baul.agregarOrientacion(self.fabricarOeste())
+        baul.agregarOrientacion(self.fabricarSur())
+        puerta = self.fabricarPuerta(baul,unContenedor)
+        baul.ponerEnElemento(self.fabricarEste(),puerta)
         unContenedor.agregarHijo(baul)
         
 
@@ -403,6 +416,7 @@ class Juego:
         return self.laberinto.obtenerHabitacion(num)
     
     def laberinto4Hab2baules(self):
+        print("\n--- LABERINTO 4 HABITACIONES y 2 BAÚLES --")
         self.laberinto = self.fabricarLaberinto()
         hab1 = self.fabricarHabitacion(1)
         hab2 = self.fabricarHabitacion(2)
@@ -439,19 +453,66 @@ class Juego:
         print(juego)
         print("------------------------------------------------")
 
-# juego = Juego()
-# juego.laberinto4Hab4Arm4Bombas4BichosFM()
-# juego.abrirPuertas()
-# bicho = juego.bichos[0]
-# bicho.actua()
-# print(bicho)
+    def laberinto4Hab4Arm4Bombas4BichosAF(self,unAF):
+        print("\n--- LABERINTO 4 HABITACIONES, 4 ARMARIOS, 4 BOMBAS y 4 BICHOS (ABSTRACT FACTORY)--")
+        self.laberinto = unAF.fabricarLaberinto()
+        hab1 = unAF.fabricarHabitacion(1)
+        hab2 = unAF.fabricarHabitacion(2)
+        hab3 = unAF.fabricarHabitacion(3)
+        hab4 = unAF.fabricarHabitacion(4)
+
+        #Unica modificacion para añadir 4 armarios al laberinto
+        unAF.fabricarArmarioEn(hab1,1)
+        unAF.fabricarArmarioEn(hab2,2)
+        unAF.fabricarArmarioEn(hab3,3)
+        unAF.fabricarArmarioEn(hab4,4)
+
+        puerta12 = unAF.fabricarPuerta(hab1,hab2)
+        puerta13 = unAF.fabricarPuerta(hab1,hab3)
+        puerta24 = unAF.fabricarPuerta(hab2,hab4)
+        puerta34 = unAF.fabricarPuerta(hab3,hab4)
+
+        hab1.ponerEnElemento(unAF.fabricarSur(),puerta12)
+        hab2.ponerEnElemento(unAF.fabricarNorte(),puerta12)
+
+        hab1.ponerEnElemento(unAF.fabricarEste(),puerta13)
+        hab3.ponerEnElemento(unAF.fabricarOeste(),puerta13)
+
+        hab3.ponerEnElemento(unAF.fabricarSur(),puerta34)
+        hab4.ponerEnElemento(unAF.fabricarNorte(),puerta34)
+
+        hab2.ponerEnElemento(unAF.fabricarEste(),puerta24)
+        hab4.ponerEnElemento(unAF.fabricarOeste(),puerta24)
+
+        hab1.agregarHijo(unAF.fabricarBomba())
+        hab2.agregarHijo(unAF.fabricarBomba())
+        hab3.agregarHijo(unAF.fabricarBomba())
+        hab4.agregarHijo(unAF.fabricarBomba())
+
+        b1 = unAF.fabricarBichoAgresivoPosicion(hab1)
+        b2 = unAF.fabricarBichoPerezosoPosicion(hab2)
+        b3 = unAF.fabricarBichoAgresivoPosicion(hab3)
+        b4 = unAF.fabricarBichoPerezosoPosicion(hab4)
+
+        self.agregarBicho(b1)
+        self.agregarBicho(b2)
+        self.agregarBicho(b3)
+        self.agregarBicho(b4)
+
+        self.laberinto.agregarHabitacion(hab1)
+        self.laberinto.agregarHabitacion(hab2)
+        self.laberinto.agregarHabitacion(hab3)
+        self.laberinto.agregarHabitacion(hab4)
+        print(juego)
+        print("------------------------------------------------")
+    
 
        
 
 # PLAYGROUND
 while True:
     juego = Juego()
-    opcion = input("¿Qué opción quieres elegir?\n1. Laberinto 2 habitaciones\n2. EJERCICIO 1: Laberinto 2 habitaciones (Factory Method)\n3. Laberinto 2 habitaciones (FM & Decorator)\n4. Laberinto 4 habitaciones y 4 bichos\n5. Laberinto 4 habitaciones, 4 armarios y 4 bichos\n6. Laberinto 4 habitaciones,4 armarios, 4 bombas y 4 bichos\n7. EJERCICIO 2 Laberinto 4 habitaciones y 2 baúles\n\n")
+    opcion = input("¿Qué opción quieres elegir?\n1. Laberinto 2 habitaciones\n2. EJERCICIO 1: Laberinto 2 habitaciones (Factory Method)\n3. Laberinto 2 habitaciones (FM & Decorator)\n4. Laberinto 4 habitaciones y 4 bichos\n5. Laberinto 4 habitaciones, 4 armarios y 4 bichos\n6. Laberinto 4 habitaciones,4 armarios, 4 bombas y 4 bichos\n7. EJERCICIO 2 Laberinto 4 habitaciones y 2 baúles\n8. Laberinto 4 habitaciones,4 armarios, 4 bombas y 4 bichos (ABSTRACT FACTORY)\n")
     try:
         opcion = int(opcion)
         switch = {
@@ -461,13 +522,18 @@ while True:
             4: juego.laberinto4Hab4BichosFM,
             5: juego.laberinto4Hab4Arm4BichosFM,
             6: juego.laberinto4Hab4Arm4Bombas4BichosFM,
-            7: juego.laberinto4Hab2baules
+            7: juego.laberinto4Hab2baules,
+            8: juego.laberinto4Hab4Arm4Bombas4BichosAF
         }
         resultado = switch.get(opcion, "\n\nEl carácter ingresado no es correcto.\n\n")
         if resultado == "\n\nEl carácter ingresado no es correcto.\n\n":
             print(resultado)
         else:
-            resultado()
+            if opcion == 8:
+                af = LaberintoFactory()
+                resultado(af)
+            else:
+                resultado()
     except ValueError:
         print("\n\nNo se admiten letras ni otro carácter fuera del rango.\n\n")
 
