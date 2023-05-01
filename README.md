@@ -4,7 +4,10 @@
 - **Version:** Python 3.11
 ---
 ## Diagrama de Diseño realizado con StarUML <br/>
-**Patrones implementados:**
+
+<img src="https://github.com/alenavarroxp/laberintoPython/blob/main/DesignDiagram/DiagramaDise%C3%B1o.jpg"/>
+
+## Patrones implementados <br/>
 | Patrón de Diseño | Descripción |
 |------------------|-------------|
 | Factory Method   | Patrón que define una interface para crear un objeto, pero deja que las subclases decidan qué clase instanciar |
@@ -15,4 +18,4 @@
 | Template Method  | Patrón que define el esqueleto de un algoritmo en una operación, dejando que las subclases definan algunos de los pasos. |
 | Abstract Factory | Patrón que proporciona una interface para crear familias de objetos relacionados o dependientes sin especificar sus clases concretas. |
  
-<img src="https://github.com/alenavarroxp/laberintoPython/blob/main/DesignDiagram/DiagramaDise%C3%B1o.jpg"/>
+
