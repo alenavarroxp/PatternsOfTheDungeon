@@ -11,7 +11,7 @@ class Laberinto(Contenedor):
         self.hijos.append(hab)
 
     def obtenerHabitacion(self,num):
-        return self.hijos[num]
+        return self.hijos[num-1]
     
     def __str__(self):
         cadena = f"Laberinto con {len(self.hijos)} habitaciones\n"

@@ -17,5 +17,6 @@
 | Iterator         | Patrón que permite recorrer los elementos de una colección de manera secuencial sin exponer su representación interna. |
 | Template Method  | Patrón que define el esqueleto de un algoritmo en una operación, dejando que las subclases definan algunos de los pasos. |
 | Abstract Factory | Patrón que proporciona una interface para crear familias de objetos relacionados o dependientes sin especificar sus clases concretas. |
+| Builder          | Patrón que separa construcción y representación de un objeto complejo para permitir diferentes construcciones con el mismo proceso.|
  
 

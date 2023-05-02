@@ -19,10 +19,10 @@ class Director():
     def crearJuego(self):
         self.builder.fabricarJuego()
         for bicho in self.dict['bichos']:
-            if bicho[0] == 'agresivo':
-                self.builder.juego.agregarBicho(self.builder.fabricarBichoPerezosoPosicion(bicho[1]))
+            if bicho['modo'] == 'agresivo':
+                self.builder.juego.agregarBicho(self.builder.fabricarBichoPerezosoPosicion(bicho['posicion']))
             else:
-                self.builder.juego.agregarBicho(self.builder.fabricarBichoPerezosoPosicion(bicho[1]))
+                self.builder.juego.agregarBicho(self.builder.fabricarBichoPerezosoPosicion(bicho['posicion']))
 
     def crearLaberinto(self):
         self.builder.fabricarLaberinto()
@@ -34,6 +34,7 @@ class Director():
     def crearLaberintoRecursivo(self, laberinto, root):
         if laberinto['tipo'] == 'habitacion':
             tmp1 = self.builder.fabricarHabitacion(laberinto['num'])
+            print(tmp1)
         elif laberinto['tipo'] == 'armario':
             tmp1 = self.builder.fabricarArmario(laberinto['num'])
         elif laberinto['tipo'] == 'baul':
@@ -54,9 +55,14 @@ class Director():
         self.iniBuilder()
         self.crearLaberinto()
         self.crearJuego()
+        
 
 
-unArchivo = r'C:\Users\aleja\OneDrive - Universidad de Castilla-La Mancha\ASIGNATURAS\3º CARRERA\2º CUATRIMESTRE\Diseño Software\git\laberintoPython\laberintos\lab2Hab.json'
+unArchivo = r'C:\Users\aleja\OneDrive - Universidad de Castilla-La Mancha\ASIGNATURAS\3º CARRERA\2º CUATRIMESTRE\Diseño Software\git\laberintoPython\laberintos\lab4Hab4Arm4BichosTunel.json'
 director = Director()
 director.procesar(unArchivo)
+print(director.builder.juego)
 print('Juego creado')
+
+director.builder.juego.abrirPuertas()
+print(director.builder.juego)

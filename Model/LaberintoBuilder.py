@@ -33,11 +33,12 @@ class LaberintoBuilder():
        return self.juego
     
     def fabricarLaberinto(self):
-        self.laberinto = Laberinto(1)
+        self.laberinto = Laberinto()
+        return self.laberinto
 
     
-    def fabricarArmario(self):
-        return Armario()
+    def fabricarArmario(self,num):
+        return Armario(num)
     
     def fabricarArmarioEn(self,unContenedor,num):
         arm = Armario(num)
@@ -53,8 +54,8 @@ class LaberintoBuilder():
         arm.ponerEnElemento(self.fabricarEste(),puerta)
         unContenedor.agregarHijo(arm)
 
-    def fabricarBaul(self):
-        return Baul()
+    def fabricarBaul(self,num):
+        return Baul(num)
     
     def fabricarBaulEn(self,unContenedor,num,contenido):
         baul = Baul(num)
@@ -100,7 +101,7 @@ class LaberintoBuilder():
         bicho.modo = self.fabricarModoPerezoso()
         bicho.vidas = 10
         bicho.poder = 10
-        bicho.posicion = unaHabitacion
+        bicho.posicion = self.juego.obtenerHabitacion(unaHabitacion)
         return bicho
     
     def fabricarBomba(self):
@@ -128,10 +129,12 @@ class LaberintoBuilder():
         hab.agregarOrientacion(self.fabricarEste())
         hab.agregarOrientacion(self.fabricarOeste())
         hab.agregarOrientacion(self.fabricarSur())
+        self.laberinto.agregarHabitacion(hab)
         return hab
     
     def fabricarLaberinto(self):
-        return Laberinto()
+        self.laberinto = Laberinto()
+        return self.laberinto
     
     def fabricarModoAgresivo(self):
         return Agresivo()
@@ -157,8 +160,9 @@ class LaberintoBuilder():
     def fabricarPuertaBuilder(self,num1, ori1, num2, ori2):
         hab1 = self.laberinto.obtenerHabitacion(num1)
         hab2 = self.laberinto.obtenerHabitacion(num2)
-        cadena1 = getattr(self.builder, 'fabricar' + ori1)()
-        cadena2 = getattr(self.builder, 'fabricar' + ori2)()
+        juegoaux = Juego()
+        cadena1 = getattr(juegoaux,'fabricar' + ori1)()
+        cadena2 = getattr(juegoaux,'fabricar' + ori2)()
         puerta = self.fabricarPuerta(hab1, hab2)
         hab1.ponerEnElemento(cadena1, puerta)
         hab2.ponerEnElemento(cadena2, puerta)
