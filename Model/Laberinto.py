@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
-from Contenedor import Contenedor
+from model.Contenedor import Contenedor
 class Laberinto(Contenedor):
 
     def __init__ (self):

@@ -2,7 +2,7 @@
 #-*- coding: utf-8 -*-
 
 from time import sleep
-from Modo import Modo
+from model.Modo import Modo
 
 
 class Perezoso(Modo):

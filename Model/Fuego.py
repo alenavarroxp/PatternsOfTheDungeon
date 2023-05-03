@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 
-from Decorator import Decorator
+from model.Decorator import Decorator
 
 class Fuego(Decorator):
     def __init__(self):

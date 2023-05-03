@@ -2,8 +2,8 @@
 #-*- coding: utf-8 -*-
 
 import random
-from ElementoMapa import ElementoMapa
-from Bomba import Bomba
+from model.ElementoMapa import ElementoMapa
+from model.Bomba import Bomba
 
 
 class Contenedor(ElementoMapa):

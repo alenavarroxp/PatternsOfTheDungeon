@@ -20,7 +20,7 @@ class Director():
         self.builder.fabricarJuego()
         for bicho in self.dict['bichos']:
             if bicho['modo'] == 'agresivo':
-                self.builder.juego.agregarBicho(self.builder.fabricarBichoPerezosoPosicion(bicho['posicion']))
+                self.builder.juego.agregarBicho(self.builder.fabricarBichoAgresivoPosicion(bicho['posicion']))
             else:
                 self.builder.juego.agregarBicho(self.builder.fabricarBichoPerezosoPosicion(bicho['posicion']))
 

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 
-from ElementoMapa import ElementoMapa
+from model.ElementoMapa import ElementoMapa
 
 class Pared(ElementoMapa):
     def entrar(self):

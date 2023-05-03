@@ -1,19 +1,19 @@
-from Agresivo import Agresivo
-from Armario import Armario
-from Baul import Baul
-from Bicho import Bicho
-from Bomba import Bomba
-from Espada import Espada
-from Este import Este
-from Fuego import Fuego
-from Habitacion import Habitacion
-from Laberinto import Laberinto
-from Norte import Norte
-from Oeste import Oeste
-from Pared import Pared
-from Perezoso import Perezoso
-from Puerta import Puerta
-from Sur import Sur
+from model.Agresivo import Agresivo
+from model.Armario import Armario
+from model.Baul import Baul
+from model.Bicho import Bicho
+from model.Bomba import Bomba
+from model.Espada import Espada
+from model.Este import Este
+from model.Fuego import Fuego
+from model.Habitacion import Habitacion
+from model.Laberinto import Laberinto
+from model.Norte import Norte
+from model.Oeste import Oeste
+from model.Pared import Pared
+from model.Perezoso import Perezoso
+from model.Puerta import Puerta
+from model.Sur import Sur
 
 
 class LaberintoFactory():

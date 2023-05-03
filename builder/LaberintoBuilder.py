@@ -1,6 +1,3 @@
-
-
-
 from Agresivo import Agresivo
 from Armario import Armario
 from Baul import Baul
@@ -86,7 +83,7 @@ class LaberintoBuilder():
         bicho.modo = self.fabricarModoAgresivo()
         bicho.vidas = 10
         bicho.poder = 10
-        bicho.posicion = unaHabitacion
+        bicho.posicion = self.juego.obtenerHabitacion(unaHabitacion)
         return bicho
      
     def fabricarBichoPerezoso(self):
