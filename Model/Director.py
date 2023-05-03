@@ -34,9 +34,10 @@ class Director():
     def crearLaberintoRecursivo(self, laberinto, root):
         if laberinto['tipo'] == 'habitacion':
             tmp1 = self.builder.fabricarHabitacion(laberinto['num'])
-            print(tmp1)
         elif laberinto['tipo'] == 'armario':
-            tmp1 = self.builder.fabricarArmario(laberinto['num'])
+            tmp1 = self.builder.fabricarArmarioEn(root)
+        elif laberinto['tipo'] == 'tunel':
+            tmp1 = self.builder.fabricarTunelEn(root)
         elif laberinto['tipo'] == 'baul':
             tmp1 = self.builder.fabricarBaul(laberinto['num'])
         elif laberinto['tipo'] == 'bomba':

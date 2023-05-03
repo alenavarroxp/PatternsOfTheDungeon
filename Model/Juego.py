@@ -1,5 +1,6 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
+import copy
 from model.Laberinto import Laberinto
 from model.Habitacion import Habitacion
 from model.Agresivo import Agresivo
@@ -22,47 +23,61 @@ class Juego:
     def __init__(self):
         self.laberinto = None
         self.bichos = []
+        self.personaje = None
+        self.prototipo = None
     
     def __str__(self):
         infoBicho = ""
         for bicho in self.bichos:
             infoBicho += f"  {bicho}\n"
-        return f"Juego:\n {self.laberinto}\n Hay {len(self.bichos)} bichos en el laberinto:\n {infoBicho}"
+        return f"Juego:\n {self.personaje}\n {self.laberinto}\n Hay {len(self.bichos)} bichos en el laberinto:\n {infoBicho}"
 
     def __repr__(self):
         infoBicho = ""
         for bicho in self.bichos:
             infoBicho += f"  {bicho}\n"
-        return f"Juego:\n {self.laberinto}\n Hay {len(self.bichos)} bichos en el laberinto:\n {infoBicho}"
+        return f"Juego:\n {self.personaje}\n{self.laberinto}\n Hay {len(self.bichos)} bichos en el laberinto:\n {infoBicho}"
 
     def agregarBicho(self,unBicho):
         self.bichos.append(unBicho)
+        unBicho.juego = self
+
+    def agregarPersonaje(self,unPersonaje):
+        self.personaje = unPersonaje
+        self.personaje.juego = self
+        self.laberinto.entrar(self.personaje)
+    
+    def clonarLaberinto(self):
+        self.prototipo = copy.deepcopy(self)
+        return self.prototipo.laberinto
+    
     # Métodos ITERATOR
     def activarBomba(self,unaBomba):
-        if isinstance(unaBomba,Bomba):
+        if unaBomba.esBomba():
             unaBomba.activar()
 
     def activarBombas(self):
         self.laberinto.recorrer(self.activarBomba)
 
     def desactivarBomba(self,unaBomba):
-        if isinstance(unaBomba,Bomba):
+        if unaBomba.esBomba():
             unaBomba.desactivar()
 
     def desactivarBombas(self):
         self.laberinto.recorrer(self.desactivarBomba)  
 
     def abrirPuerta(self,unaPuerta):
-        if isinstance(unaPuerta,Puerta):
+        if unaPuerta.esPuerta():
             unaPuerta.abrir()
     def abrirPuertas(self):
         self.laberinto.recorrer(self.abrirPuerta)
 
     def cerrarPuerta(self,unaPuerta):
-        if isinstance(unaPuerta,Puerta):
+        if unaPuerta.esPuerta():
             unaPuerta.cerrar()
     def cerrarPuertas(self):
         self.laberinto.recorrer(self.cerrarPuerta)
+
     ##
 
     def fabricarArmario(self):

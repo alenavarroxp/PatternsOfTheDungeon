@@ -15,6 +15,7 @@ from model.Pared import Pared
 from model.Perezoso import Perezoso
 from model.Puerta import Puerta
 from model.Sur import Sur
+from model.Tunel import Tunel
 
 class LaberintoBuilder():
     def __init__(self):
@@ -37,8 +38,9 @@ class LaberintoBuilder():
     def fabricarArmario(self,num):
         return Armario(num)
     
-    def fabricarArmarioEn(self,unContenedor,num):
-        arm = Armario(num)
+    def fabricarArmarioEn(self,unContenedor):
+        num = unContenedor.hijos.__len__() + 1
+        arm = self.fabricarArmario(num)
         arm.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
         arm.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
         arm.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
@@ -173,3 +175,9 @@ class LaberintoBuilder():
     
     def fabricarSur(self):
         return Sur()
+    
+    def fabricarTunel(self):
+        return Tunel()
+    
+    def fabricarTunelEn(self,unContenedor):
+        unContenedor.agregarHijo(self.fabricarTunel())

@@ -18,5 +18,6 @@
         [1,"Este",3,"Oeste"],
         [2,"Este",4,"Oeste"],
         [3,"Sur",4,"Norte"]
-    ]
+    ],
+    "bichos":[]
 }

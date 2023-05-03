@@ -28,6 +28,12 @@ class ElementoMapa:
     
     def esPuerta(self):
         return False
+
+    def esHoja(self):
+        return False
+    
+    def esTunel(self):
+        return False
     
     def recorrer(self,unBloque):
         unBloque(self)
