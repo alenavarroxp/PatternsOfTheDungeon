@@ -2,7 +2,7 @@
 #-*- coding: utf-8 -*-
 
 import json
-from LaberintoBuilder import LaberintoBuilder
+from model.LaberintoBuilder import LaberintoBuilder
 
 
 class Director():

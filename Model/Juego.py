@@ -1,6 +1,5 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
-from abstractFactory.LaberintoFactory import LaberintoFactory
 from model.Laberinto import Laberinto
 from model.Habitacion import Habitacion
 from model.Agresivo import Agresivo

@@ -1,2 +1,2 @@
 from setuptools import setup, find_packages
-setup(name='laberintoPython', version='1.0',packages=find_packages())
+setup(name='LaberintoPython', version='1.0', packages=find_packages())

@@ -1,5 +1,5 @@
 from model.Juego import Juego
-from abstractFactory.LaberintoFactory import LaberintoFactory
+from model.LaberintoFactory import LaberintoFactory
 
 
 while True:
