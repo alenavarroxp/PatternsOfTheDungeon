@@ -1,37 +1,45 @@
+from model.Director import Director
 from model.Juego import Juego
 from model.LaberintoFactory import LaberintoFactory
 
 
 while True:
-    juego = Juego()
-    opcion = input("¿Qué opción quieres elegir?\n1. Laberinto 2 habitaciones\n2. EJERCICIO 1: Laberinto 2 habitaciones (Factory Method)\n3. Laberinto 2 habitaciones (FM & Decorator)\n4. Laberinto 4 habitaciones y 4 bichos\n5. Laberinto 4 habitaciones, 4 armarios y 4 bichos\n6. Laberinto 4 habitaciones,4 armarios, 4 bombas y 4 bichos\n7. EJERCICIO 2 Laberinto 4 habitaciones y 2 baúles\n8. Laberinto 4 habitaciones,4 armarios, 4 bombas y 4 bichos (ABSTRACT FACTORY)\n")
-    try:
-        opcion = int(opcion)
-        switch = {
-            1: juego.laberinto2Habitaciones,
-            2: juego.laberinto2HabitacionesFM,
-            3: juego.laberinto2HabitacionesFMDecorator,
-            4: juego.laberinto4Hab4BichosFM,
-            5: juego.laberinto4Hab4Arm4BichosFM,
-            6: juego.laberinto4Hab4Arm4Bombas4BichosFM,
-            7: juego.laberinto4Hab2baules,
-            8: juego.laberinto4Hab4Arm4Bombas4BichosAF
-        }
-        resultado = switch.get(opcion, "\n\nEl carácter ingresado no es correcto.\n\n")
-        if resultado == "\n\nEl carácter ingresado no es correcto.\n\n":
-            print(resultado)
-        else:
-            if opcion == 8:
-                af = LaberintoFactory()
-                resultado(af)
-                print(juego)
-                print("------------------------------------------------")
+    metodo = input("¿Quieres usar el builder para crear el laberinto?\n1. Sí\n2. No\n")
+    metodo = int(metodo)
+    if metodo == 1:
+        unArchivo = r'laberintos/lab4Hab4Arm4BichosTunel.json'
+        director = Director()
+        director.procesar(unArchivo)
+    else:
+        juego = Juego()
+        opcion = input("¿Qué opción quieres elegir?\n1. Laberinto 2 habitaciones\n2. EJERCICIO 1: Laberinto 2 habitaciones (Factory Method)\n3. Laberinto 2 habitaciones (FM & Decorator)\n4. Laberinto 4 habitaciones y 4 bichos\n5. Laberinto 4 habitaciones, 4 armarios y 4 bichos\n6. Laberinto 4 habitaciones,4 armarios, 4 bombas y 4 bichos\n7. EJERCICIO 2 Laberinto 4 habitaciones y 2 baúles\n8. Laberinto 4 habitaciones,4 armarios, 4 bombas y 4 bichos (ABSTRACT FACTORY)\n")
+        try:
+            opcion = int(opcion)
+            switch = {
+                1: juego.laberinto2Habitaciones,
+                2: juego.laberinto2HabitacionesFM,
+                3: juego.laberinto2HabitacionesFMDecorator,
+                4: juego.laberinto4Hab4BichosFM,
+                5: juego.laberinto4Hab4Arm4BichosFM,
+                6: juego.laberinto4Hab4Arm4Bombas4BichosFM,
+                7: juego.laberinto4Hab2baules,
+                8: juego.laberinto4Hab4Arm4Bombas4BichosAF
+            }
+            resultado = switch.get(opcion, "\n\nEl carácter ingresado no es correcto.\n\n")
+            if resultado == "\n\nEl carácter ingresado no es correcto.\n\n":
+                print(resultado)
             else:
-                resultado()
-                print(juego)
-                print("------------------------------------------------")
-    except ValueError:
-        print("\n\nNo se admiten letras ni otro carácter fuera del rango.\n\n")
+                if opcion == 8:
+                    af = LaberintoFactory()
+                    resultado(af)
+                    print(juego)
+                    print("------------------------------------------------")
+                else:
+                    resultado()
+                    print(juego)
+                    print("------------------------------------------------")
+        except ValueError:
+            print("\n\nNo se admiten letras ni otro carácter fuera del rango.\n\n")
 
     activado = False
     abierto = False

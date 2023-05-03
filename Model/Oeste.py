@@ -6,6 +6,13 @@ from model.Orientacion import Orientacion
 
 
 class Oeste(Orientacion):
+    UnicaInstancia = None
+
+    def __new__(cls):
+        if cls.UnicaInstancia is None:
+            cls.UnicaInstancia = super().__new__(cls)
+        return cls.UnicaInstancia
+
     def ponerElemento(self, unEM, unaHab:Habitacion):
         unaHab.oeste = unEM
 

@@ -56,13 +56,3 @@ class Director():
         self.crearLaberinto()
         self.crearJuego()
         
-
-
-unArchivo = r'C:\Users\aleja\OneDrive - Universidad de Castilla-La Mancha\ASIGNATURAS\3º CARRERA\2º CUATRIMESTRE\Diseño Software\git\laberintoPython\laberintos\lab4Hab4Arm4BichosTunel.json'
-director = Director()
-director.procesar(unArchivo)
-print(director.builder.juego)
-print('Juego creado')
-
-director.builder.juego.abrirPuertas()
-print(director.builder.juego)

@@ -18,5 +18,6 @@
 | Template Method  | Patrón que define el esqueleto de un algoritmo en una operación, dejando que las subclases definan algunos de los pasos. |
 | Abstract Factory | Patrón que proporciona una interface para crear familias de objetos relacionados o dependientes sin especificar sus clases concretas. |
 | Builder          | Patrón que separa construcción y representación de un objeto complejo para permitir diferentes construcciones con el mismo proceso.|
+| Singleton        | Patrón que asegura que una clase sólo tiene una instancia y proporciona un punto de acceso a la instancia. |
  
 
