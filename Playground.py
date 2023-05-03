@@ -112,8 +112,9 @@ while True:
                 if juego.personaje == None:
                     print("No hay ningun personaje en el laberinto")
                 else:
+                    juego.personaje.irAlSur()
                     #TODO: Entrar a tunel BIEN HECHO (Esto solo para prueba)
-                    juego.laberinto.hijos[0].hijos[0].entrar(personaje)
+                    #juego.laberinto.hijos[0].hijos[0].entrar(personaje)
                 print(juego)
                 juego
             elif operacion == 6:
