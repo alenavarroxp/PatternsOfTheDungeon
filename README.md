@@ -21,6 +21,7 @@
 | Singleton        | Patrón que asegura que una clase sólo tiene una instancia y proporciona un punto de acceso a la instancia. 
 | Proxy            | Patrón que proporciona un sustituto o referencia a otro objeto para controlar el acceso a ese objeto. |
 | Prototype        | Patrón que especifica el tipo de objetos a crear utilizando una instancia prototípica, y los crea copiando este prototipo. |
-| Mediator         | EN PROCESO DE IMPLEMENTACIÓN |
+| Mediator         | Patrón que define un objeto que encapsula la interacción entre un conjunto de objetos. Promueve un acoplamiento débil al evitar que los objetos tengan referencia al resto de objetos explícita. |
+| State            | Patrón que permite a un objeto alterar su comportamiento cuando cambia su estado interno. |
  
 
