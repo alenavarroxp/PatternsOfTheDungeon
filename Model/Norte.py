@@ -17,9 +17,12 @@ class Norte(Orientacion):
         unaHab.norte = unEM
 
     def ir(self,alguien):
-        contenedor = alguien.posicion
+        contenedor = alguien.posicion.forma
         contenedor.norte.entrar(alguien)
 
+    def obtenerElementoEn(self,unContenedor):
+        return unContenedor.norte
+    
     def recorrerEn(self,unBloque,unContenedor):
          if unContenedor.norte is not None:
             unContenedor.norte.recorrer(unBloque)

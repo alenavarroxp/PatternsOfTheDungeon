@@ -17,9 +17,12 @@ class Este(Orientacion):
         unaHab.este = unEM
     
     def ir(self,alguien):
-        contenedor = alguien.posicion
+        contenedor = alguien.posicion.forma
         contenedor.este.entrar(alguien)
 
+    def obtenerElementoEn(self,unContenedor):
+        return unContenedor.este
+    
     def recorrerEn(self,unBloque,unContenedor):
          if unContenedor.este is not None:
             unContenedor.este.recorrer(unBloque)

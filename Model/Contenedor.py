@@ -15,6 +15,7 @@ class Contenedor(ElementoMapa):
         self.este = None
         self.oeste = None
         self.sur = None
+        self.forma = None
         
 
     def __init__(self,num):
@@ -25,6 +26,7 @@ class Contenedor(ElementoMapa):
         self.este = None
         self.oeste = None
         self.sur = None
+        self.forma = None
         self.num = num
 
     def agregarHijo(self,unHijo):
@@ -32,19 +34,22 @@ class Contenedor(ElementoMapa):
         self.hijos.append(unHijo)
 
     def agregarOrientacion(self,unaOrientacion):
-        self.orientaciones.append(unaOrientacion)
+        self.forma.agregarOrientacion(unaOrientacion)
 
     def ponerEnElemento(self,unaOrientacion,unEM):
-        unaOrientacion.ponerElemento(unEM,self)
+        self.forma.ponerElementoEn(unaOrientacion,unEM)
 
     def obtenerOrientacionAleatoria(self):
-        num_aleatorio = self.obtenerNumeroAleatorio(len(self.orientaciones))
-        return self.orientaciones[num_aleatorio - 1]
+        num_aleatorio = self.obtenerNumeroAleatorio(len(self.forma.orientaciones))
+        return self.forma.orientaciones[num_aleatorio - 1]
     
     def obtenerNumeroAleatorio(self, lenOris):
         numRandom = random.Random()
         resultado = 1 + int(numRandom.random() * lenOris)
         return resultado
+    
+    def obtenerElemento(self,unaOrientacion):
+        return self.forma.obtenerElemento(unaOrientacion)
 
     def __str__(self):
         cadena = "Hijos: "
@@ -53,15 +58,13 @@ class Contenedor(ElementoMapa):
         else:
             for hijo in self.hijos:
                 cadena += str(hijo) +". "
-
         return cadena
 
     def recorrer(self, unBloque):
         unBloque(self)
         for hijo in self.hijos:
             hijo.recorrer(unBloque)
-        for orientacion in self.orientaciones:
-            orientacion.recorrerEn(unBloque,self)
+        self.forma.recorrer(unBloque)
        
 
       

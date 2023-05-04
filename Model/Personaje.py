@@ -14,4 +14,4 @@ class Personaje(Ente):
         return self.juego.buscarBicho()
     
     def __str__(self):
-        return f"Personaje:\n\t Nickname: {self.nickname}\n\t Vidas: {self.vidas}\n\t Poder: {self.poder}\n\t Posicion:[\n\t{self.posicion}]\n\t " 
+        return f"\n\t Nickname: {self.nickname}\n\t Vidas: {self.vidas}\n\t Poder: {self.poder}\n\t Posicion:[\n\t{self.posicion}]\n\t " 

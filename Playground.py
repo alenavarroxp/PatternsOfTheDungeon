@@ -21,7 +21,6 @@ while True:
             8: 'laberintos/lab4Hab4Arm4BichosTunel.json'
         }
         unArchivo = switch.get(opcion1, "\n\nEl carácter ingresado no es correcto.\n\n")
-        print(unArchivo)
         director = Director()
         director.procesar(unArchivo)
         juego = director.builder.juego
@@ -56,6 +55,7 @@ while True:
                     print("------------------------------------------------")
         except ValueError:
             print("\n\nNo se admiten letras ni otro carácter fuera del rango.\n\n")
+    juego
     activado = False
     abierto = False
     while True:
@@ -114,6 +114,7 @@ while True:
                 if juego.personaje == None:
                     print("No hay ningun personaje en el laberinto")
                 else:
+                    #Prueba de movimiento
                     juego.personaje.irAlSur()
                     #TODO: Entrar a tunel BIEN HECHO (Esto solo para prueba)
                     #juego.laberinto.hijos[0].hijos[0].entrar(personaje)

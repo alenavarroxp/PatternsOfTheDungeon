@@ -3,6 +3,7 @@ from model.Armario import Armario
 from model.Baul import Baul
 from model.Bicho import Bicho
 from model.Bomba import Bomba
+from model.Cuadrado import Cuadrado
 from model.Espada import Espada
 from model.Este import Este
 from model.Fuego import Fuego
@@ -25,6 +26,7 @@ class LaberintoFactory():
     
     def fabricarArmarioEn(self,unContenedor,num):
         arm = Armario(num)
+        arm.forma = self.fabricarForma()
         arm.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
         arm.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
         arm.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
@@ -42,6 +44,7 @@ class LaberintoFactory():
     
     def fabricarBaulEn(self,unContenedor,num,contenido):
         baul = Baul(num)
+        baul.forma = self.fabricarForma()
         baul.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
         baul.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
         baul.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
@@ -52,7 +55,7 @@ class LaberintoFactory():
         baul.agregarOrientacion(self.fabricarOeste())
         baul.agregarOrientacion(self.fabricarSur())
         puerta = self.fabricarPuerta(baul,unContenedor)
-        baul.ponerEnElemento(self.fabricarEste(),puerta)
+        baul.ponerEnElemento(self.fabricarNorte(),puerta)
         unContenedor.agregarHijo(baul)
         
 
@@ -99,8 +102,13 @@ class LaberintoFactory():
     def fabricarFuego(self):
         return Fuego()
     
+    def fabricarForma(self):
+        return Cuadrado()
+    
     def fabricarHabitacion(self,num):
         hab = Habitacion(num)
+        hab.forma = self.fabricarForma()
+        hab.forma.num = num
         hab.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
         hab.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
         hab.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
@@ -133,13 +141,6 @@ class LaberintoFactory():
         puerta = Puerta()
         puerta.lado1 = unaHab
         puerta.lado2 = otraHab
-        return puerta
-    
-    def fabricarPuertaEstado(self,unaHab:Habitacion,otraHab:Habitacion,estado:bool):
-        puerta = Puerta()
-        puerta.lado1 = unaHab
-        puerta.lado2 = otraHab
-        puerta.abierta = estado
         return puerta
     
     def fabricarSur(self):

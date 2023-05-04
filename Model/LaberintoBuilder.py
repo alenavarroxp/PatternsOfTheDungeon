@@ -3,6 +3,7 @@ from model.Armario import Armario
 from model.Baul import Baul
 from model.Bicho import Bicho
 from model.Bomba import Bomba
+from model.Cuadrado import Cuadrado
 from model.Espada import Espada
 from model.Este import Este
 from model.Fuego import Fuego
@@ -41,6 +42,7 @@ class LaberintoBuilder():
     def fabricarArmarioEn(self,unContenedor):
         num = unContenedor.hijos.__len__() + 1
         arm = self.fabricarArmario(num)
+        arm.forma = self.fabricarForma()
         arm.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
         arm.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
         arm.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
@@ -118,8 +120,13 @@ class LaberintoBuilder():
     def fabricarFuego(self):
         return Fuego()
     
+    def fabricarForma(self):
+        return Cuadrado()
+    
     def fabricarHabitacion(self,num):
         hab = Habitacion(num)
+        hab.forma = self.fabricarForma()
+        hab.forma.num = num
         hab.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
         hab.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
         hab.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())

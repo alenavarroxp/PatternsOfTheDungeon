@@ -2,6 +2,8 @@
 #-*- coding: utf-8 -*-
 import copy
 import threading
+from model.Cuadrado import Cuadrado
+from model.Forma import Forma
 from model.Laberinto import Laberinto
 from model.Habitacion import Habitacion
 from model.Agresivo import Agresivo
@@ -32,7 +34,11 @@ class Juego:
         infoBicho = ""
         for bicho in self.bichos:
             infoBicho += f"  {bicho}\n"
-        return f"Juego:\n {self.personaje}\n {self.laberinto}\n Hay {len(self.bichos)} bichos en el laberinto:\n {infoBicho}"
+        personaje= ""
+        if self.personaje is None:
+            return f"Juego:\n Personaje: No hay personaje\n {self.laberinto}\n Hay {len(self.bichos)} bichos en el laberinto:\n {infoBicho}"
+        else:
+            return f"Juego:\n Personaje: {self.personaje}\n {self.laberinto}\n Hay {len(self.bichos)} bichos en el laberinto:\n {infoBicho}"
 
     def __repr__(self):
         infoBicho = ""
@@ -144,6 +150,7 @@ class Juego:
     
     def fabricarArmarioEn(self,unContenedor,num):
         arm = Armario(num)
+        arm.forma = self.fabricarForma()
         arm.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
         arm.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
         arm.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
@@ -161,6 +168,7 @@ class Juego:
     
     def fabricarBaulEn(self,unContenedor,num,contenido):
         baul = Baul(num)
+        baul.forma = self.fabricarForma()
         baul.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
         baul.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
         baul.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
@@ -218,8 +226,13 @@ class Juego:
     def fabricarFuego(self):
         return Fuego()
     
+    def fabricarForma(self):
+        return Cuadrado()
+    
     def fabricarHabitacion(self,num):
         hab = Habitacion(num)
+        hab.forma = self.fabricarForma()
+        hab.forma.num = num
         hab.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
         hab.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
         hab.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
@@ -275,16 +288,16 @@ class Juego:
         puerta.lado1 = hab1
         puerta.lado2 = hab2
 
-        hab1.sur = puerta
-        hab2.norte = puerta
+        hab1.forma.sur = puerta
+        hab2.forma.norte = puerta
 
-        hab1.norte = Pared()
-        hab1.este = Pared()
-        hab1.oeste = Pared()
+        hab1.forma.norte = Pared()
+        hab1.forma.este = Pared()
+        hab1.forma.oeste = Pared()
 
-        hab2.sur = Pared()
-        hab2.este = Pared()
-        hab2.oeste = Pared()
+        hab2.forma.sur = Pared()
+        hab2.forma.este = Pared()
+        hab2.forma.oeste = Pared()
 
         self.laberinto.agregarHabitacion(hab1)
         self.laberinto.agregarHabitacion(hab2)
@@ -299,16 +312,16 @@ class Juego:
         hab2 = self.fabricarHabitacion(2)
 
         puerta = self.fabricarPuerta(hab1,hab2)
-        hab1.norte = self.fabricarPared()
-        hab1.oeste = self.fabricarPared()
-        hab1.este = self.fabricarPared()
+        hab1.forma.norte = self.fabricarPared()
+        hab1.forma.oeste = self.fabricarPared()
+        hab1.forma.este = self.fabricarPared()
 
-        hab2.sur = self.fabricarPared()
-        hab2.oeste = self.fabricarPared()
-        hab2.este = self.fabricarPared()
+        hab2.forma.sur = self.fabricarPared()
+        hab2.forma.oeste = self.fabricarPared()
+        hab2.forma.este = self.fabricarPared()
 
-        hab1.sur = puerta
-        hab2.norte = puerta
+        hab1.forma.sur = puerta
+        hab2.forma.norte = puerta
 
         self.laberinto.agregarHabitacion(hab1)
         self.laberinto.agregarHabitacion(hab2)
@@ -326,16 +339,16 @@ class Juego:
         bomba2 = self.fabricarBomba()
         bomba2.component = self.fabricarPared()
 
-        hab1.norte = bomba1
-        hab1.oeste = self.fabricarPared()
-        hab1.este = self.fabricarPared()
+        hab1.forma.norte = bomba1
+        hab1.forma.oeste = self.fabricarPared()
+        hab1.forma.este = self.fabricarPared()
 
-        hab2.sur = bomba2
-        hab2.oeste = self.fabricarPared()
-        hab2.este = self.fabricarPared()
+        hab2.forma.sur = bomba2
+        hab2.forma.oeste = self.fabricarPared()
+        hab2.forma.este = self.fabricarPared()
 
-        hab1.sur = puerta
-        hab2.norte = puerta
+        hab1.forma.sur = puerta
+        hab2.forma.norte = puerta
 
         self.laberinto.agregarHabitacion(hab1)
         self.laberinto.agregarHabitacion(hab2)

@@ -14,5 +14,8 @@ class Orientacion(ABC):
     def ir(self,alguien):
         pass
 
-    def ponerElemento(self,unEM,unaHab):
+    def ponerElemento(self,unEM,unaForma):
+        pass
+
+    def obtenerElementoEn(self,unContenedor):
         pass

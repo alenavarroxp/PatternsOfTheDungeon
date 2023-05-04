@@ -17,8 +17,11 @@ class Sur(Orientacion):
         unaHab.sur = unEM
     
     def ir(self,alguien):
-        contenedor = alguien.posicion
+        contenedor = alguien.posicion.forma
         contenedor.sur.entrar(alguien)
+    
+    def obtenerElementoEn(self,unContenedor):
+        return unContenedor.sur
     
     def recorrerEn(self,unBloque,unContenedor):
          if unContenedor.sur is not None:
