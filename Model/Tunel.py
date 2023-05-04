@@ -5,6 +5,9 @@ class Tunel(Hoja):
     def __init__(self):
         super().__init__()
         self.laberinto = None
+        
+    def aceptar(self,unVisitor):
+        unVisitor.visitarTunel(self)
 
     def esTunel(self):
         return True

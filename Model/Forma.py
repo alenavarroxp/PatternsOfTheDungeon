@@ -2,6 +2,10 @@ class Forma():
     def __init__(self):
         self.orientaciones = []
     
+    def aceptar(self,unVisitor):
+        for orientacion in self.orientaciones:
+            orientacion.aceptarEn(unVisitor,self
+                                  )
     def agregarOrientacion(self,unaOrientacion):
         self.orientaciones.append(unaOrientacion)
     

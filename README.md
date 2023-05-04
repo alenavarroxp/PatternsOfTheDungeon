@@ -7,7 +7,7 @@
 
 <img src="https://github.com/alenavarroxp/laberintoPython/blob/main/DesignDiagram/DiagramaDise%C3%B1o.jpg"/>
 
-## 14 Patrones implementados <br/>
+## 15 Patrones implementados <br/>
 | Patrón de Diseño | Descripción |
 |------------------|-------------|
 | Factory Method   | Patrón que define una interface para crear un objeto, pero deja que las subclases decidan qué clase instanciar |
@@ -23,8 +23,8 @@
 | Prototype        | Patrón que especifica el tipo de objetos a crear utilizando una instancia prototípica, y los crea copiando este prototipo. |
 | Mediator         | Patrón que define un objeto que encapsula la interacción entre un conjunto de objetos. Promueve un acoplamiento débil al evitar que los objetos tengan referencia al resto de objetos explícita. |
 | State            | Patrón que permite a un objeto alterar su comportamiento cuando cambia su estado interno. |
-| Bridge           | Patrón que desacopla una abstracción de su implementación de modo que las dos puedan variar de forma 
-independiente. |
+| Bridge           | Patrón que desacopla una abstracción de su implementación de modo que las dos puedan variar de forma independiente. |
+| Visitor          | Patrón que representa una operación a realizar en los elementos de un objeto compuesto y nos permite definir una nueva operación sin modificar las clases de los objetos sobre los que se aplica. |
 
 
 

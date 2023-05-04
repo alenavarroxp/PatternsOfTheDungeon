@@ -9,7 +9,13 @@ class Habitacion(Contenedor):
     def __init__(self, num):
         super().__init__(num)
         self.forma = Cuadrado()
-        
+
+    def aceptar(self,unVisitor):
+        unVisitor.visitarHabitacion(self)
+        for hijo in self.hijos:
+            hijo.aceptar(unVisitor)
+        self.forma.aceptar(unVisitor)
+
     def entrar(self):
         print('Estas en la habitación: ',self.num)
 

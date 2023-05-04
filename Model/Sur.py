@@ -13,6 +13,9 @@ class Sur(Orientacion):
             cls.UnicaInstancia = super().__new__(cls)
         return cls.UnicaInstancia
     
+    def aceptarEn(self,unVisitor,unaForma):
+        unaForma.sur.aceptar(unVisitor)
+
     def ponerElemento(self, unEM, unaHab:Habitacion):
         unaHab.sur = unEM
     

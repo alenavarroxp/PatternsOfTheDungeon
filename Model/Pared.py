@@ -7,6 +7,9 @@ class Pared(ElementoMapa):
     def entrar(self):
         print('Te has chocado con una pared.')
     
+    def aceptar(self,unVisitor):
+        unVisitor.visitarPared(self)
+
     def entrar(self,alguien):
         print(alguien,' se ha chocado con una pared.')
 

@@ -8,7 +8,13 @@ from model.Contenedor import Contenedor
 class Armario(Contenedor):
     def __init__(self, num):
         super().__init__(num)
-
+    
+    def aceptar(self,unVisitor):
+        unVisitor.visitarArmario(self)
+        for hijo in self.hijos:
+            hijo.aceptar(unVisitor)
+        self.forma.aceptar(unVisitor)
+        
     def entrar(self):
         print('Estas en el armario',self.num)
 

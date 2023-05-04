@@ -4,7 +4,10 @@
 class ElementoMapa:
     def __init__(self):
         self.padre = None
-       
+    
+    def aceptar(self,unVisitor):
+        pass
+    
     def entrar(self):
         pass
 
@@ -37,4 +40,6 @@ class ElementoMapa:
     
     def recorrer(self,unBloque):
         unBloque(self)
+
+    
     

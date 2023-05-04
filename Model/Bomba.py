@@ -6,6 +6,9 @@ from model.Decorator import Decorator
 class Bomba(Decorator):
     def __init__(self):
         self.activa = False
+        
+    def aceptar(self,unVisitor):
+        unVisitor.visitarBomba(self)
 
     def entrar(self):
         if self.activa == True:

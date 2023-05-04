@@ -13,6 +13,9 @@ class Oeste(Orientacion):
             cls.UnicaInstancia = super().__new__(cls)
         return cls.UnicaInstancia
 
+    def aceptarEn(self,unVisitor,unaForma):
+        unaForma.oeste.aceptar(unVisitor)
+
     def ponerElemento(self, unEM, unaHab:Habitacion):
         unaHab.oeste = unEM
 

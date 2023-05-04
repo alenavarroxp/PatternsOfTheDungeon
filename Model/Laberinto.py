@@ -6,7 +6,11 @@ class Laberinto(Contenedor):
     def __init__ (self):
         super().__init__(1)
         
-
+    def aceptar(self,unVisitor):
+        print("Visitando al laberinto:")
+        for hijo in self.hijos:
+            hijo.aceptar(unVisitor)
+            
     def agregarHabitacion(self,hab):
         self.agregarHijo(hab)
 
