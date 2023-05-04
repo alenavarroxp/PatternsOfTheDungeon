@@ -56,20 +56,19 @@ while True:
                     print("------------------------------------------------")
         except ValueError:
             print("\n\nNo se admiten letras ni otro carácter fuera del rango.\n\n")
-
     activado = False
     abierto = False
     while True:
         if activado:
             if abierto:
-                operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Cerrar Puertas\n3. Bicho actua\n4. Añadir personaje\n5. Entrar en tunel\n6. Salir\n")
+                operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Cerrar Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Salir\n")
             else:
-                operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Abrir Puertas\n3. Bicho actua\n4. Añadir personaje\n5. Entrar en tunel\n6. Salir\n")
+                operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Abrir Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Salir\n")
         else:
             if abierto:
-                operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Cerrar Puertas\n3. Bicho actua\n4. Añadir personaje\n5. Entrar en tunel\n6. Salir\n")
+                operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Cerrar Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Salir\n")
             else:
-                operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Abrir Puertas\n3. Bicho actua\n4. Añadir personaje\n5. Entrar en tunel\n6. Salir\n")
+                operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Abrir Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Salir\n")
 
         try:
             operacion = int(operacion)
@@ -95,11 +94,14 @@ while True:
                         print("\n\nNo hay bichos en el laberinto.\n\n")
                         break
                     else:
-                        numero = input("¿Qué bicho quieres que actúe?\n1. Bicho1\n2. Bicho2\n3. Bicho3\n4. Bicho4\n")
-                        juego.bichos[int(numero)-1].actua()
+                        juego.lanzarBichos()
+                        print("Todos los bichos lanzados")
                         break
                 print('\n',juego)
             elif operacion == 4:
+                juego.terminarBichos()
+                print("Todos los hilos terminados")
+            elif operacion == 5:
                 personaje = Personaje()
                 personaje.nickname = input("¿Cuál es tu nickname?\n")
                 personaje.poder = input("¿Cuánto es tu poder?(0-100)\n")
@@ -107,7 +109,7 @@ while True:
                 juego.agregarPersonaje(personaje)
                 print("Personaje ",personaje.nickname," añadido al laberinto")
                 print(juego)
-            elif operacion == 5:
+            elif operacion == 6:
                 
                 if juego.personaje == None:
                     print("No hay ningun personaje en el laberinto")
@@ -117,7 +119,8 @@ while True:
                     #juego.laberinto.hijos[0].hijos[0].entrar(personaje)
                 print(juego)
                 juego
-            elif operacion == 6:
+            
+            elif operacion == 7:
                 break
             else:
                 print("\n\nOpción no válida.\n\n")

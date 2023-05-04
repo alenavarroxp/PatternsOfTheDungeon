@@ -1,14 +1,32 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 from model.Ente import Ente
+from model.Muerto import Muerto
 class Bicho(Ente):
     def __init__(self):
         super().__init__()
         
     
     def actua(self):
-        self.modo.actua(self)
+        self.estado.actua(self)
+
+    def buscarEnemigo(self):
+        return self.juego.buscarPersonaje(self)
     
+    def estaVivo(self):
+        return self.estado.estaVivo()
+    
+    def heMuerto(self):
+        self.estado= Muerto()
+        print(self, " ha muerto")
+        self.juego.muereBicho()
+
+    def puedeActuar(self):
+        self.modo.actua(self)
+
+    def quitarVidas(self,num):
+        self.vidas -= num
+        
     def irA(self,unaOrientacion):
         unaOrientacion.ir(self)
         

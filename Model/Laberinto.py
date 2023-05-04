@@ -8,7 +8,7 @@ class Laberinto(Contenedor):
         
 
     def agregarHabitacion(self,hab):
-        self.hijos.append(hab)
+        self.agregarHijo(hab)
 
     def obtenerHabitacion(self,num):
         return self.hijos[num-1]

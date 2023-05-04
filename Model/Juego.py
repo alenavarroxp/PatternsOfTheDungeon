@@ -1,6 +1,7 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 import copy
+import threading
 from model.Laberinto import Laberinto
 from model.Habitacion import Habitacion
 from model.Agresivo import Agresivo
@@ -25,6 +26,7 @@ class Juego:
         self.bichos = []
         self.personaje = None
         self.prototipo = None
+        self.hilos = dict()
     
     def __str__(self):
         infoBicho = ""
@@ -37,7 +39,42 @@ class Juego:
         for bicho in self.bichos:
             infoBicho += f"  {bicho}\n"
         return f"Juego:\n {self.personaje}\n{self.laberinto}\n Hay {len(self.bichos)} bichos en el laberinto:\n {infoBicho}"
+    # Gestión de los hilos#
+    def agregarHiloDe(self,unHilo,unBicho):
+        self.hilos[unBicho] = unHilo
 
+    def lanzarBichos(self):
+        for bicho in self.bichos:
+            self.lanzarHilo(bicho)
+
+    def lanzarHilo(self, unBicho):
+        hilo = threading.Thread(target=lambda: self.hiloBicho(unBicho))
+        self.agregarHiloDe(hilo, unBicho)
+        hilo.start()
+        
+    def hiloBicho(self, unBicho):
+        while unBicho.estaVivo():
+            unBicho.actua()
+
+    def terminarBichos(self):
+        for bicho in self.bichos:
+            self.terminarHilo(bicho)
+    
+    def terminarHilo(self,unBicho):
+        unBicho.heMuerto()
+        
+
+    def todosMuertos(self):
+        result = None
+        for bicho in self.bichos:
+            if bicho.estaVivo():
+                result = bicho
+        print("RESULT",result)
+        if result is None:
+            return True
+        result = None
+        return False
+    ##
     def agregarBicho(self,unBicho):
         self.bichos.append(unBicho)
         unBicho.juego = self
@@ -79,6 +116,28 @@ class Juego:
         self.laberinto.recorrer(self.cerrarPuerta)
 
     ##
+    def buscarBicho(self):
+        pos = self.personaje.posicion
+        for bicho in self.bichos:
+            if bicho.estaVivo and bicho.posicion == pos:
+                return bicho
+        return None
+    
+    def buscarPersonaje(self,unBicho):
+        pos = self.personaje.posicion
+        if unBicho.posicion == pos:
+            return self.personaje
+        return None
+    
+    def muereBicho(self):
+        if self.todosMuertos():
+            print("Fin del juego. Gana el personaje.")
+
+    def muerePersonaje(self):
+        print("Fin del juego.",self.personaje.nickname," ha muerto.")
+    
+   
+    ##
 
     def fabricarArmario(self):
         return Armario()
@@ -112,7 +171,7 @@ class Juego:
         baul.agregarOrientacion(self.fabricarOeste())
         baul.agregarOrientacion(self.fabricarSur())
         puerta = self.fabricarPuerta(baul,unContenedor)
-        baul.ponerEnElemento(self.fabricarEste(),puerta)
+        baul.ponerEnElemento(self.fabricarNorte(),puerta)
         unContenedor.agregarHijo(baul)
         
 
