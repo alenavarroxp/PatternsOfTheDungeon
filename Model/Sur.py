@@ -16,6 +16,11 @@ class Sur(Orientacion):
     def aceptarEn(self,unVisitor,unaForma):
         unaForma.sur.aceptar(unVisitor)
 
+    def calcularPosicionDesde(self, unaForma):
+        puntoX = unaForma.puntoX
+        puntoY = unaForma.puntoY + 1
+        unaForma.norte.calcularPosicionDesde(unaForma,puntoX,puntoY)
+
     def ponerElemento(self, unEM, unaHab:Habitacion):
         unaHab.sur = unEM
     

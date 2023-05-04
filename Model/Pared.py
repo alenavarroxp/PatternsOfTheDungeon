@@ -10,6 +10,10 @@ class Pared(ElementoMapa):
     def aceptar(self,unVisitor):
         unVisitor.visitarPared(self)
 
+    def calcularPosicionDesde(self,unaForma,puntoX,puntoY):
+        pass
+
+
     def entrar(self,alguien):
         print(alguien,' se ha chocado con una pared.')
 

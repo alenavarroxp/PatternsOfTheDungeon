@@ -15,6 +15,11 @@ class Oeste(Orientacion):
 
     def aceptarEn(self,unVisitor,unaForma):
         unaForma.oeste.aceptar(unVisitor)
+    
+    def calcularPosicionDesde(self, unaForma):
+        puntoX = unaForma.puntoX - 1
+        puntoY = unaForma.puntoY
+        unaForma.oeste.calcularPosicionDesde(unaForma,puntoX,puntoY)
 
     def ponerElemento(self, unEM, unaHab:Habitacion):
         unaHab.oeste = unEM

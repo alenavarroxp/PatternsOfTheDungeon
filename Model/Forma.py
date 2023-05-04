@@ -1,11 +1,20 @@
 class Forma():
     def __init__(self):
         self.orientaciones = []
+        self.puntoX = 0
+        self.puntoY = 0
+        self.extentX = 0 
+        self.extentY = 0
+
     
     def aceptar(self,unVisitor):
         for orientacion in self.orientaciones:
-            orientacion.aceptarEn(unVisitor,self
-                                  )
+            orientacion.aceptarEn(unVisitor,self)
+
+    def calcularPosicion(self):
+        for orientacion in self.orientaciones:
+            orientacion.calcularPosicionDesde(self)
+
     def agregarOrientacion(self,unaOrientacion):
         self.orientaciones.append(unaOrientacion)
     

@@ -10,7 +10,6 @@ class Contenedor(ElementoMapa):
     def __init__(self):
         super().__init__()
         self.hijos = []
-        self.orientaciones = []
         self.norte = None
         self.este = None
         self.oeste = None
@@ -28,6 +27,7 @@ class Contenedor(ElementoMapa):
         self.sur = None
         self.forma = None
         self.num = num
+        
 
     def agregarHijo(self,unHijo):
         unHijo.padre = self
@@ -35,6 +35,33 @@ class Contenedor(ElementoMapa):
 
     def agregarOrientacion(self,unaOrientacion):
         self.forma.agregarOrientacion(unaOrientacion)
+
+    def calcularPosicion(self):
+        self.forma.calcularPosicion()
+    
+    def extentX(self):
+        return self.forma.extentX
+    
+    def extentX(self,unExtentX):
+        self.forma.extentX = unExtentX
+    
+    def extentY(self):
+        return self.forma.extentY
+    
+    def extentY(self,unExtentY):
+        self.forma.extentY = unExtentY
+    
+    def puntoX(self):
+        return self.forma.puntoX
+    
+    def puntoX(self,unPuntoX):
+        self.forma.puntoX = unPuntoX
+
+    def puntoY(self):
+        return self.forma.puntoY
+
+    def puntoY(self,unPuntoY):
+        self.forma.puntoY = unPuntoY
 
     def ponerEnElemento(self,unaOrientacion,unEM):
         self.forma.ponerElementoEn(unaOrientacion,unEM)
@@ -65,7 +92,6 @@ class Contenedor(ElementoMapa):
         for hijo in self.hijos:
             hijo.recorrer(unBloque)
         self.forma.recorrer(unBloque)
-       
 
       
     

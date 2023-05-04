@@ -8,6 +8,9 @@ class Orientacion(ABC):
     def __init__(self):
         pass
     
+    def calcularPosicionDesde(self,unaForma):
+        pass
+    
     def recorrerEn(self,unBloque,unContenedor):
         pass
     
