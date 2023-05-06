@@ -39,29 +39,29 @@ class Contenedor(ElementoMapa):
     def calcularPosicion(self):
         self.forma.calcularPosicion()
     
-    def extentX(self):
-        return self.forma.extentX
+    # def extentX(self):
+    #     return self.forma.extentX
     
-    def extentX(self,unExtentX):
-        self.forma.extentX = unExtentX
+    # def extentX(self,unExtentX):
+    #     self.forma.extentX = unExtentX
     
-    def extentY(self):
-        return self.forma.extentY
+    # def extentY(self):
+    #     return self.forma.extentY
     
-    def extentY(self,unExtentY):
-        self.forma.extentY = unExtentY
+    # def extentY(self,unExtentY):
+    #     self.forma.extentY = unExtentY
     
-    def puntoX(self):
-        return self.forma.puntoX
+    # def puntoX(self):
+    #     return self.forma.puntoX
     
-    def puntoX(self,unPuntoX):
-        self.forma.puntoX = unPuntoX
+    # def puntoX(self,unPuntoX):
+    #     self.forma.puntoX = unPuntoX
 
-    def puntoY(self):
-        return self.forma.puntoY
+    # def puntoY(self):
+    #     return self.forma.puntoY
 
-    def puntoY(self,unPuntoY):
-        self.forma.puntoY = unPuntoY
+    # def puntoY(self,unPuntoY):
+    #     self.forma.puntoY = unPuntoY
 
     def ponerEnElemento(self,unaOrientacion,unEM):
         self.forma.ponerElementoEn(unaOrientacion,unEM)

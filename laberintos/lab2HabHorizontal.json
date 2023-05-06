@@ -8,7 +8,7 @@
         ]}
     ],
     "puertas":[
-        [1,"Oeste",2,"Este"]
+        [1,"Este",2,"Oeste"]
     ],
     "bichos":[
     ]

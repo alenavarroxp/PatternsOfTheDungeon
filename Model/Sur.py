@@ -19,7 +19,7 @@ class Sur(Orientacion):
     def calcularPosicionDesde(self, unaForma):
         puntoX = unaForma.puntoX
         puntoY = unaForma.puntoY + 1
-        unaForma.norte.calcularPosicionDesde(unaForma,puntoX,puntoY)
+        unaForma.sur.calcularPosicionDesde(unaForma,puntoX,puntoY)
 
     def ponerElemento(self, unEM, unaHab:Habitacion):
         unaHab.sur = unEM

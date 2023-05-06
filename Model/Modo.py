@@ -6,8 +6,9 @@ class Modo():
         pass
     
     def actua(self, bicho):
-        self.dormir();
-        self.caminar(bicho);
+        self.dormir()
+        self.caminar(bicho)
+        self.ataca(bicho)
     
     def dormir(self):
         print("Bicho duerme")
@@ -17,6 +18,9 @@ class Modo():
         print("Bicho camina")
         orientacion = bicho.obtenerOrientacionAleatoria()
         bicho.irA(orientacion)
+    
+    def ataca(self,bicho):
+        bicho.atacar()
         
     def esAgresivo(self):
         return False

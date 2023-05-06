@@ -4,11 +4,13 @@
 from model.ElementoMapa import ElementoMapa
 
 class Puerta(ElementoMapa):
+
     def __init__(self):
         self.abierta = False
         self.lado1 = None
         self.lado2 = None
         self.visitada = False
+        
 
     def aceptar(self,unVisitor):
         unVisitor.visitarPuerta(self)
@@ -19,13 +21,14 @@ class Puerta(ElementoMapa):
         else:
             self.visitada = True
             if unContenedor.num == self.lado1.num:
-                self.lado2.puntoX = puntoX
-                self.lado2.puntoY = puntoY
+                self.lado2.forma.puntoX = puntoX
+                self.lado2.forma.puntoY = puntoY
                 self.lado2.calcularPosicion()
             else:
-                self.lado1.puntoX = puntoX
-                self.lado1.puntoY = puntoY
+                self.lado1.forma.puntoX = puntoX
+                self.lado1.forma.puntoY = puntoY
                 self.lado1.calcularPosicion()
+            
 
     def entrar(self):
         if self.abierta == True:

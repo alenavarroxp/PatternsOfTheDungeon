@@ -4,7 +4,7 @@ from model.Vivo import Vivo
 class Ente():
     def __init__(self):
         self.poder = None
-        self.vidas = None
+        self.vidas = 50
         self.posicion = None
         self.juego = None
         self.estado = Vivo()

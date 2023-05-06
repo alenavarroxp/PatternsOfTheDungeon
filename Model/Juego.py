@@ -75,7 +75,6 @@ class Juego:
         for bicho in self.bichos:
             if bicho.estaVivo():
                 result = bicho
-        print("RESULT",result)
         if result is None:
             return True
         result = None
@@ -88,6 +87,7 @@ class Juego:
     def agregarPersonaje(self,unPersonaje):
         self.personaje = unPersonaje
         self.personaje.juego = self
+        self.personaje.vidas = 100
         self.laberinto.entrar(self.personaje)
     
     def clonarLaberinto(self):
@@ -130,17 +130,23 @@ class Juego:
         return None
     
     def buscarPersonaje(self,unBicho):
-        pos = self.personaje.posicion
-        if unBicho.posicion == pos:
-            return self.personaje
+        if self.personaje is not None:
+            pos = self.personaje.posicion
+            if unBicho.posicion == pos:
+                return self.personaje
         return None
     
     def muereBicho(self):
         if self.todosMuertos():
-            print("Fin del juego. Gana el personaje.")
+            if self.personaje is not None:
+                print("Fin del juego. Gana el personaje.")
+            else:
+                print("Fin del juego. Han ganado los bichos.")
 
-    def muerePersonaje(self):
+    def personajeMuere(self):
         print("Fin del juego.",self.personaje.nickname," ha muerto.")
+        self.personaje = None
+        self.terminarBichos()
     
    
     ##

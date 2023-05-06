@@ -55,7 +55,6 @@ while True:
                     print("------------------------------------------------")
         except ValueError:
             print("\n\nNo se admiten letras ni otro carácter fuera del rango.\n\n")
-    juego
     activado = False
     abierto = False
     while True:
