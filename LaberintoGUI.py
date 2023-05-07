@@ -96,53 +96,68 @@ class LaberintoGUI():
         mirando_izquierda = False
         
 
-        
+        abrir = False
         while running:
+            keys = pygame.key.get_pressed()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
+                if keys[pygame.K_SPACE]:
+                    if not abrir:
+                        abrir = True
+                        self.juego.abrirPuertas()
+                        pygame.display.flip()
+                    else:
+                        abrir = False
+                        self.juego.cerrarPuertas()
+                        pygame.display.flip()        
 
             
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_ESCAPE]:
+            if keys[pygame.K_LSHIFT]:
                 shift = 2
             else:
                 shift = 0
 
-            if keys[pygame.K_LEFT]:
+            if keys[pygame.K_LEFT] or keys[pygame.K_a]:
                 self.screen.blit(personaje,(pX,pY))
                 for hijo in self.juego.laberinto.hijos:
                     self.dibujarContenedorRectangularEscala(hijo.forma, 1)
+                    self.ocultar()
                 pX -= (2 + shift)
                 #voltear 
                 if not mirando_izquierda:
                     mirando_izquierda = True
                     personaje = pygame.transform.flip(personaje,True,False)
                 self.screen.blit(personaje,(pX,pY))
-            if keys[pygame.K_RIGHT]:
+            if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
                 self.screen.blit(personaje,(pX,pY))
                 for hijo in self.juego.laberinto.hijos:
                     self.dibujarContenedorRectangularEscala(hijo.forma, 1)
+                    self.ocultar()
                 pX += (2 +shift)
                 #voltear
                 if mirando_izquierda:
                     mirando_izquierda = False
                     personaje = pygame.transform.flip(personaje,True,False)
                 self.screen.blit(personaje,(pX,pY))
-            if keys[pygame.K_UP]:
+            if keys[pygame.K_UP] or keys[pygame.K_w]:
                 self.screen.blit(personaje,(pX,pY))
                 for hijo in self.juego.laberinto.hijos:
                     self.dibujarContenedorRectangularEscala(hijo.forma, 1)
+                    self.ocultar()
                 pY -= (2 + shift)
                 self.screen.blit(personaje,(pX,pY))
-            if keys[pygame.K_DOWN]:
+            if keys[pygame.K_DOWN] or keys[pygame.K_s]:
                 self.screen.blit(personaje,(pX,pY))
                 for hijo in self.juego.laberinto.hijos:
                     self.dibujarContenedorRectangularEscala(hijo.forma, 1)
+                    self.ocultar()
+                self.juego.personaje.irAlSur()
                 pY += (2 + shift)
                 self.screen.blit(personaje,(pX,pY))
             
+        
             self.screen.blit(personaje,(pX,pY))
         
             pygame.display.update()
@@ -161,9 +176,7 @@ class LaberintoGUI():
             return self
         
         self.juego.laberinto.aceptar(self)
-        ocultar = pygame.Surface((11,self.height-60))
-        ocultar.fill((50,50,50))
-        self.screen.blit(ocultar,(1140,50))
+        self.ocultar()
 
         self.mostrarVidasPersonaje()
 
@@ -173,21 +186,12 @@ class LaberintoGUI():
         self.juego.agregarPersonaje(personaje)
         self.person = self.juego.personaje
         self.vidasM = self.person.vidas
-       
-    
-    def dibujarPersonaje(self,pX,pY):
-        if pX == 0 and pY == 0:
-            pX = self.origenX + (self.ancho/2) - (30/2)
-            pY = self.origenY + (self.alto/2) - (30/2)
       
-        
-        
+    def ocultar(self):
+        ocultar = pygame.Surface((11,self.height-60))
+        ocultar.fill((50,50,50))
+        self.screen.blit(ocultar,(1140,50))
 
-        
-       
-        
-        
-        
     def mostrarVidasPersonaje(self):
         if self.vidasM == None:
             return None
@@ -196,7 +200,6 @@ class LaberintoGUI():
         text = miFuente.render("Vidas: "+str(self.person.vidas),True,(255,0,0))
         rectText = text.get_rect()
         rectText.center = (80,30)
-        pygame.draw.rect(self.screen,(0,0,0),rectText,2)
         self.screen.blit(text,rectText)
         pygame.display.update()
 
@@ -244,6 +247,8 @@ class LaberintoGUI():
        unaForma.extentY = alto
      
        
+      
+       
        
     #    rect =pygame.Rect(unPuntoX,unPuntoY,ancho,alto)
     #    pygame.draw.rect(self.screen,(255,0,0),rect)
@@ -264,15 +269,53 @@ class LaberintoGUI():
        
        pygame.draw.rect(rect,(0,0,0),rect.get_rect(),2)
        self.screen.blit(rect,(unPuntoX,unPuntoY))        
-       
+       self.dibujarPared(unaForma,unPuntoX,unPuntoY,ancho,alto)
+       self.dibujarPuerta(unaForma,unPuntoX,unPuntoY,ancho,alto)
     
-        
-    # def dibujarPared(self,unaOrientacion):
-    #     pared = pygame.Surface((self.ancho,100))
-    #     pared.fill((255,0,0))
-    #     pygame.draw.rect(pared,(0,0,0),pared.get_rect(),3)
-    #     self.screen.blit(pared,(0,0))
-    #     pygame.display.update()
+    def dibujarPared(self,unaForma,unPuntoX,unPuntoY,ancho,alto):
+       if unaForma.norte.esPared():
+            pared = pygame.image.load("graphics/paredNorte.png").convert_alpha()
+            for x in range(0,int(ancho),21):
+                    self.screen.blit(pared,(unPuntoX+x,unPuntoY))
+       if unaForma.sur.esPared():
+            pared = pygame.image.load("graphics/paredSur.png").convert_alpha()
+            for x in range(0,int(ancho),21):
+                    self.screen.blit(pared,(unPuntoX+x,unPuntoY+alto-4))
+       if unaForma.este.esPared():
+            pared = pygame.image.load("graphics/paredEste.png").convert_alpha()
+            for y in range(0,int(alto)-21,21):
+                    self.screen.blit(pared,(unPuntoX+ancho-11,unPuntoY+y))
+       if unaForma.oeste.esPared():
+            pared = pygame.image.load("graphics/paredOeste.png").convert_alpha()
+            for y in range(0,int(alto)-21,21):
+                self.screen.blit(pared,(unPuntoX,unPuntoY+y))
+
+    def dibujarPuerta(self,unaForma,unPuntoX,unPuntoY,ancho,alto):
+       if unaForma.norte.esPuerta():
+            if unaForma.norte.abierta:
+                puertaNorte = pygame.image.load("graphics/puertaNorteAbierta.png").convert_alpha()
+            else:
+                puertaNorte = pygame.image.load("graphics/puertaNorte.png").convert_alpha()
+            # colocar la puerta en el medio del ancho de la habitacion
+            
+            puertaNorte = pygame.transform.scale(puertaNorte,(128,64))
+            self.screen.blit(puertaNorte,(unPuntoX+ancho/2-60,unPuntoY-64))
+       if unaForma.oeste.esPuerta():
+            if unaForma.oeste.abierta:
+                puertaOeste = pygame.image.load("graphics/puertaOesteAbierta.png").convert_alpha()
+
+            else:
+                puertaOeste = pygame.image.load("graphics/puertaOeste.png").convert_alpha()
+            
+            pared1 = pygame.image.load("graphics/paredOeste.png").convert_alpha()
+            for y in range(0,(int(unPuntoX/2)-198),22):
+                self.screen.blit(pared1,(unPuntoX,unPuntoY+y))
+                self.screen.blit(pared1,(unPuntoX,unPuntoY+alto-y-22))
+
+            puertaOeste = pygame.transform.scale(puertaOeste,(12,128))
+            self.screen.blit(puertaOeste,(unPuntoX,unPuntoY+alto/2-60))
+           
+    
 
 vista = LaberintoGUI()
 vista.iniciarJuego()

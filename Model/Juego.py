@@ -14,6 +14,7 @@ from model.Este import Este
 from model.Baul import Baul
 from model.Espada import Espada
 from model.Fuego import Fuego
+from model.Moneda import Moneda
 from model.Norte import Norte
 from model.Oeste import Oeste
 from model.Perezoso import Perezoso
@@ -257,6 +258,9 @@ class Juego:
     
     def fabricarModoPerezoso(self):
         return Perezoso()
+    
+    def fabricarMoneda(self,valor):
+        return Moneda(valor)
    
     def fabricarNorte(self):
         return Norte()

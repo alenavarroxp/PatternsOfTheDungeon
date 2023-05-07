@@ -60,14 +60,14 @@ while True:
     while True:
         if activado:
             if abierto:
-                operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Cerrar Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Salir\n")
+                operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Cerrar Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Añadir monedas a la mochila\n8. Quitar monedas de la mochila\n9. Salir")
             else:
-                operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Abrir Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Salir\n")
+                operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Abrir Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Añadir monedas a la mochila\n8. Quitar monedas de la mochila\n9. Salir")
         else:
             if abierto:
-                operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Cerrar Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Salir\n")
+                operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Cerrar Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Añadir monedas a la mochila\n8. Quitar monedas de la mochila\n9. Salir\n")
             else:
-                operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Abrir Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Salir\n")
+                operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Abrir Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Añadir monedas a la mochila\n8. Quitar monedas de la mochila\n9. Salir\n")
 
         try:
             operacion = int(operacion)
@@ -113,15 +113,63 @@ while True:
                 if juego.personaje == None:
                     print("No hay ningun personaje en el laberinto")
                 else:
+                    
                     #Prueba de movimiento
-                    juego.personaje.irAlSur()
+                    #juego.personaje.irAlSur()
                     #TODO: Entrar a tunel BIEN HECHO (Esto solo para prueba)
-                    #juego.laberinto.hijos[0].hijos[0].entrar(personaje)
+                    juego.laberinto.hijos[0].hijos[1].entrar(personaje)
                 print(juego)
-                juego
+               
             
             elif operacion == 7:
-                break
+                if juego.personaje != None:
+                    print("¿Que monedas quieres añadir a la mochila de ",personaje.nickname,'?')
+                    kindOfCoin = input("1. Moneda de 1\n2. Moneda de 2\n3. Moneda de 5\n4. Moneda de 10\n")
+                    kindOfCoin = int(kindOfCoin)
+                    if kindOfCoin == 1:
+                        moneda1 = juego.fabricarMoneda(1)
+                        personaje.agregarObjeto(moneda1)
+                        personaje.abrirMochila()
+                    elif kindOfCoin == 2:
+                        moneda2 = juego.fabricarMoneda(2)
+                        personaje.agregarObjeto(moneda2)
+                        personaje.abrirMochila()
+                    elif kindOfCoin == 3:
+                        moneda5 = juego.fabricarMoneda(5)
+                        personaje.agregarObjeto(moneda5)
+                        personaje.abrirMochila()
+                    elif kindOfCoin == 4:
+                        moneda10 = juego.fabricarMoneda(10)
+                        personaje.agregarObjeto(moneda10)
+                        personaje.abrirMochila()
+                    else:
+                        print("\n\nOpción no válida.\n\n")
+                else:
+                    print("No hay ningun personaje en el laberinto")
+
+            elif operacion == 8:
+                if juego.personaje != None:
+                    print("¿Que monedas quieres añadir a la mochila de ",personaje.nickname,'?')
+                    kindOfCoin = input("1. Moneda de 1\n2. Moneda de 2\n3. Moneda de 5\n4. Moneda de 10\n")
+                    kindOfCoin = int(kindOfCoin)
+                    if kindOfCoin == 1:
+                        personaje.quitarObjeto(moneda1)
+                        personaje.abrirMochila()
+                    elif kindOfCoin == 2:
+                        personaje.quitarObjeto(moneda2)
+                        personaje.abrirMochila()
+                    elif kindOfCoin == 3:
+                        personaje.quitarObjeto(moneda5)
+                        personaje.abrirMochila()
+                    elif kindOfCoin == 4:
+                        personaje.quitarObjeto(moneda10)
+                        personaje.abrirMochila()
+                    else:
+                        print("\n\nOpción no válida.\n\n")
+                else:
+                    print("No hay ningun personaje en el laberinto")    
+            elif operacion == 9:
+               break;
             else:
                 print("\n\nOpción no válida.\n\n")
         except ValueError:
