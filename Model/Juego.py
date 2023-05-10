@@ -113,6 +113,7 @@ class Juego:
     def abrirPuerta(self,unaPuerta):
         if unaPuerta.esPuerta():
             unaPuerta.abrir()
+        
     def abrirPuertas(self):
         self.laberinto.recorrer(self.abrirPuerta)
 
@@ -602,11 +603,6 @@ class Juego:
         self.laberinto.agregarHabitacion(hab4)
     
         print("------------------------------------------------")
-    
-
-       
-
-# PLAYGROUND
 
 
 
