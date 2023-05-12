@@ -1,6 +1,6 @@
 import pygame,sys
-from model.Personaje import Personaje
-from model.Director import Director
+from src.model.Personaje import Personaje
+from src.model.Director import Director
 
 
 class LaberintoGUI():
@@ -102,7 +102,6 @@ class LaberintoGUI():
         abrir = False
         while running:
             keys = pygame.key.get_pressed()
-            self.screen.blit(self.personaje,(self.pX,self.pY))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -118,58 +117,67 @@ class LaberintoGUI():
                         pygame.display.flip()        
 
             
-            if keys[pygame.K_LSHIFT]:
-                shift = 2
-            else:
-                shift = 0
+                if keys[pygame.K_LSHIFT]:
+                    shift = 2
+                else:
+                    shift = 0
 
-            if keys[pygame.K_LEFT] or keys[pygame.K_a]:
-                self.pX = self.origenX/2 + 50 
-                self.pY = ((self.alto)/2) + self.origenY/2 + self.origenX
-                self.redibujar()
-                self.comprobarElemento(self.habActual,self.habActual.forma.oeste)
-                
-                #voltear 
-                if not mirando_izquierda:
-                    mirando_izquierda = True
-                    self.personaje = pygame.transform.flip(self.personaje,True,False)
+                if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+                    self.pX = self.origenX -(30/2) + 50
+                    self.pY = self.origenY + ((self.alto)/2) -(30/2)
+                    
+                    print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
+                    self.redibujar()
+                    self.comprobarElemento(self.habActual,self.habActual.forma.oeste)
+                    
+                    #voltear 
+                    if not mirando_izquierda:
+                        mirando_izquierda = True
+                        self.personaje = pygame.transform.flip(self.personaje,True,False)
 
-            if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-                self.pX = self.ancho - 50
-                self.pY = ((self.alto)/2) + self.origenY/2 + self.origenX
-                self.redibujar()
-                self.comprobarElemento(self.habActual,self.habActual.forma.este)
-                
-                #voltear
-                if mirando_izquierda:
-                    mirando_izquierda = False
-                    self.personaje = pygame.transform.flip(self.personaje,True,False)
-                
-            if keys[pygame.K_UP] or keys[pygame.K_w]:
-                self.pX = self.origenX + (self.ancho/2) - (30/2)
-                self.pY = self.origenY + (self.alto/5) - (30/2)
-                self.redibujar()
-                self.comprobarElemento(self.habActual,self.habActual.forma.norte)
+                if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+                    self.pX = self.origenX - (30/2) - 50 + self.ancho
+                    self.pY = self.origenY + ((self.alto)/2) -(30/2)
+                    print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
+                    self.redibujar()
+                    self.comprobarElemento(self.habActual,self.habActual.forma.este)
+                    
+                    #voltear
+                    if mirando_izquierda:
+                        mirando_izquierda = False
+                        self.personaje = pygame.transform.flip(self.personaje,True,False)
+                    
+                if keys[pygame.K_UP] or keys[pygame.K_w]:
+                    self.pX = self.origenX + (self.ancho/2) - (30/2)
+                    self.pY = self.origenY + (self.alto/5) - (30/2)
+                    
+                    print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
+                    self.redibujar()
+                    self.comprobarElemento(self.habActual,self.habActual.forma.norte)
 
-            if keys[pygame.K_DOWN] or keys[pygame.K_s]:
-                self.pX = self.origenX + (self.ancho/2) - (30/2)
-                self.pY = self.origenY + (self.alto-85) - (30/2)
-                self.redibujar()
-                self.comprobarElemento(self.habActual,self.habActual.forma.sur)
-                # self.juego.personaje.irAlSur()
+                if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+                    self.pX = self.origenX + (self.ancho/2) - (30/2)
+                    self.pY = self.origenY + (self.alto-85) - (30/2)
+                    
+                    print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
+                    self.redibujar()
+                    self.comprobarElemento(self.habActual,self.habActual.forma.sur)
+                    # self.juego.personaje.irAlSur()
             
-            # self.screen.blit(self.personaje,(self.pX,self.pY))
+            self.screen.blit(self.personaje,(self.pX,self.pY))
             pygame.display.update()
             clock.tick(60)
     
     def moverPersonajeHabitacion(self):
         self.pX = (self.habActual.forma.puntoX+(self.ancho/2)-30/2) 
         self.pY = self.habActual.forma.puntoY+(self.alto/2)-30/2
+        self.origenX = self.habActual.forma.puntoX
+        self.origenY = self.habActual.forma.puntoY
         self.screen.blit(self.personaje,(self.pX,self.pY))
             
     def redibujar(self):
         for hijo in self.juego.laberinto.hijos:
-                    self.dibujarContenedorRectangularEscala(hijo.forma, 1)
+                    self.dibujarContenedorRectangularEscala(hijo,hijo.forma, 1)
                     self.ocultar()
 
     def comprobarElemento(self,unaHabitacion,unaOrientacion):
@@ -179,10 +187,12 @@ class LaberintoGUI():
                     if self.pasadoPuerta:
                         self.habActual = unaOrientacion.lado1
                         self.pasadoPuerta = False
+                        self.moverPersonajeHabitacion()
                     else:
                         self.habActual = unaOrientacion.lado2
                         self.pasadoPuerta = True
-                    self.moverPersonajeHabitacion()
+                        self.moverPersonajeHabitacion()
+                    
                     print("Estas en la habitacion: ",self.habActual.num)
                 else:
                     print("Puerta cerrada")
@@ -215,7 +225,7 @@ class LaberintoGUI():
         self.habActual = self.person.posicion
       
     def ocultar(self):
-        ocultar = pygame.Surface((11,self.height-60))
+        ocultar = pygame.Surface((30,self.height-60))
         ocultar.fill((50,50,50))
         self.screen.blit(ocultar,(1140,50))
 
@@ -248,7 +258,7 @@ class LaberintoGUI():
     def visitarHabitacion(self,unaHabitacion):
         print('Habitacion visitada')
         #dibujar
-        self.dibujarContenedorRectangularEscala(unaHabitacion.forma, 1)
+        self.dibujarContenedorRectangularEscala(unaHabitacion,unaHabitacion.forma, 1)
         
     
     def visitarPuerta(self,unaPuerta):
@@ -264,7 +274,7 @@ class LaberintoGUI():
         print('Tunel visitado')
         #dibujar
 
-    def dibujarContenedorRectangularEscala(self,unaForma,escala):
+    def dibujarContenedorRectangularEscala(self,unaHab,unaForma,escala):
        unPuntoX = unaForma.puntoX
        unPuntoY = unaForma.puntoY
        ancho = (unaForma.extentX)/escala
@@ -272,21 +282,20 @@ class LaberintoGUI():
 
        unaForma.extentX = ancho
        unaForma.extentY = alto
-     
        
-      
-       
-       
-       rect =pygame.Rect(unPuntoX,unPuntoY,ancho,alto)
-       pygame.draw.rect(self.screen,(255,0,0),rect)
-       if unPuntoX == 10 and unPuntoY == 50:
-            suelo = pygame.image.load("graphics/suelo.png").convert_alpha()
-       if unPuntoX == 10 and unPuntoY == 370:
-            suelo = pygame.image.load("graphics/suelo2.png").convert_alpha()
-       if unPuntoX == 575 and unPuntoY == 50:
-            suelo = pygame.image.load("graphics/suelo3.png").convert_alpha()
-       if unPuntoX == 575 and unPuntoY == 370:
-            suelo = pygame.image.load("graphics/suelo4.png").convert_alpha()
+       suelo = pygame.image.load("graphics/suelo.png").convert_alpha()
+
+       if self.juego.laberinto.hijos.__len__() == 4:
+        rect =pygame.Rect(unPuntoX,unPuntoY,ancho,alto)
+        pygame.draw.rect(self.screen,(255,0,0),rect)
+        if unPuntoX == 10 and unPuntoY == 50:
+                suelo = pygame.image.load("graphics/suelo.png").convert_alpha()
+        if unPuntoX == 10 and unPuntoY == 370:
+                suelo = pygame.image.load("graphics/suelo2.png").convert_alpha()
+        if unPuntoX == 575 and unPuntoY == 50:
+                suelo = pygame.image.load("graphics/suelo3.png").convert_alpha()
+        if unPuntoX == 575 and unPuntoY == 370:
+                suelo = pygame.image.load("graphics/suelo4.png").convert_alpha()
 
        suelo = pygame.transform.scale(suelo,(64,64))
        for x in range(0, int(ancho), 64):
@@ -298,6 +307,22 @@ class LaberintoGUI():
        self.screen.blit(rect,(unPuntoX,unPuntoY))        
        self.dibujarPared(unaForma,unPuntoX,unPuntoY,ancho,alto)
        self.dibujarPuerta(unaForma,unPuntoX,unPuntoY,ancho,alto)
+       for hijo in unaHab.hijos:
+            if hijo.esArmario():
+                self.dibujarArmario(hijo.forma,unPuntoX,unPuntoY,ancho,alto)
+
+    def dibujarArmario(self,unaForma,unPuntoX,unPuntoY,ancho,alto):
+        if unaForma.este.esPuerta():
+            if unaForma.este.abierta:
+                armario = pygame.image.load("graphics/armarioAbierto.png").convert_alpha()
+                armario = pygame.transform.scale(armario,(62,83))
+                self.screen.blit(armario,(unPuntoX+ancho/2-120,unPuntoY))
+            else:
+                armario = pygame.image.load("graphics/armarioCerrado.png").convert_alpha()
+                armario = pygame.transform.scale(armario,(45,83))
+                self.screen.blit(armario,(unPuntoX+ancho/2-110 ,unPuntoY))
+            
+            
     
     def dibujarPared(self,unaForma,unPuntoX,unPuntoY,ancho,alto):
        if unaForma.norte.esPared():
@@ -341,7 +366,9 @@ class LaberintoGUI():
 
             puertaOeste = pygame.transform.scale(puertaOeste,(12,128))
             self.screen.blit(puertaOeste,(unPuntoX,unPuntoY+alto/2-60))
-           
+
+    
+                   
     
 
 vista = LaberintoGUI()

@@ -1,7 +1,7 @@
-from model.Director import Director
-from model.Juego import Juego
-from model.LaberintoFactory import LaberintoFactory
-from model.Personaje import Personaje
+from src.model.Director import Director
+from src.model.Juego import Juego
+from src.model.LaberintoFactory import LaberintoFactory
+from src.model.Personaje import Personaje
 
 
 while True:
