@@ -1,11 +1,14 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 
+from src.model.Abrir import Abrir
 from src.model.ElementoMapa import ElementoMapa
+from src.model.Cerrar import Cerrar
 
 class Puerta(ElementoMapa):
 
     def __init__(self):
+        super().__init__()
         self.abierta = False
         self.lado1 = None
         self.lado2 = None
@@ -48,14 +51,37 @@ class Puerta(ElementoMapa):
         else:
             print('La puerta está cerrada.')
             
-    def abrir(self):
+    # def abrir(self):
+    #     self.abierta = True
+    #     print('Puerta abierta')
+
+    def abrir(self,alguien):
         self.abierta = True
-        print('Puerta abierta')
+        if alguien is None:
+            print('Puerta abierta')
+        else:
+            print(alguien,' abre la puerta')
+            self.quitarAbrir()
 
-    def cerrar(self):
+    def quitarAbrir(self):
+        for comando in self.comandos:
+            if comando.esAbrir():
+                self.quitarComando(comando)
+                self.agregarComando(Cerrar(),self)
+
+    def cerrar(self,alguien):
         self.abierta = False
-        print('Puerta cerrada')
-
+        if alguien is None:
+            print('Puerta cerrada')
+        else:
+            print(alguien,' cierra la puerta')
+            self.quitarCerrar()
+    def quitarCerrar(self):
+        for comando in self.comandos:
+            if comando.esCerrar():
+                self.quitarComando(comando)
+                self.agregarComando(Abrir(),self)
+                
     def estaCerrada(self):
         return self.abierta
     
@@ -68,7 +94,7 @@ class Puerta(ElementoMapa):
         else:
             estado = 'Cerrada'
 
-        return f"Puerta ({estado})"
+        return f"Puerta ({estado}) Comandos:{self.comandos}"
 
 
 

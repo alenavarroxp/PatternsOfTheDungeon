@@ -4,7 +4,15 @@
 class ElementoMapa:
     def __init__(self):
         self.padre = None
+        self.comandos = []
     
+    def agregarComando(self,unComando,puerta):
+        self.comandos.append(unComando)
+        unComando.receptor = puerta
+    
+    def quitarComando(self,unComando):
+        self.comandos.remove(unComando)
+
     def aceptar(self,unVisitor):
         pass
     

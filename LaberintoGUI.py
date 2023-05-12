@@ -28,7 +28,7 @@ class LaberintoGUI():
 
     def iniciarJuego(self):
         director = Director()
-        director.procesar('laberintos/lab4Hab4Arm4BichosTunel.json')
+        director.procesar('laberintos/lab2Hab2Arm.json')
         self.juego=director.obtenerJuego()
         self.mostrarLaberinto()
         self.agregarPersonaje("Mario")
@@ -110,11 +110,11 @@ class LaberintoGUI():
                     if not abrir:
                         abrir = True
                         self.juego.abrirPuertas()
-                        pygame.display.flip()
+                        self.redibujar()
                     else:
                         abrir = False
                         self.juego.cerrarPuertas()
-                        pygame.display.flip()        
+                        self.redibujar()        
 
             
                 if keys[pygame.K_LSHIFT]:

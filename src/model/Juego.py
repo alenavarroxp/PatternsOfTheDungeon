@@ -2,6 +2,8 @@
 #-*- coding: utf-8 -*-
 import copy
 import threading
+from src.model.Final import Final
+from src.model.Inicial import Inicial
 from src.model.Cuadrado import Cuadrado
 from src.model.Forma import Forma
 from src.model.Laberinto import Laberinto
@@ -30,6 +32,7 @@ class Juego:
         self.personaje = None
         self.prototipo = None
         self.hilos = dict()
+        self.fase = Inicial()
     
     def __str__(self):
         infoBicho = ""
@@ -86,6 +89,9 @@ class Juego:
         unBicho.juego = self
 
     def agregarPersonaje(self,unPersonaje):
+        self.fase.agregarPersonajeJuego(unPersonaje,self
+                                        )
+    def puedeAgregarPersonaje(self,unPersonaje):
         self.personaje = unPersonaje
         self.personaje.juego = self
         self.personaje.vidas = 100
@@ -112,14 +118,14 @@ class Juego:
 
     def abrirPuerta(self,unaPuerta):
         if unaPuerta.esPuerta():
-            unaPuerta.abrir()
+            unaPuerta.abrir(None)
         
     def abrirPuertas(self):
         self.laberinto.recorrer(self.abrirPuerta)
 
     def cerrarPuerta(self,unaPuerta):
         if unaPuerta.esPuerta():
-            unaPuerta.cerrar()
+            unaPuerta.cerrar(None)
     def cerrarPuertas(self):
         self.laberinto.recorrer(self.cerrarPuerta)
 
@@ -144,12 +150,16 @@ class Juego:
                 print("Fin del juego. Gana el personaje.")
             else:
                 print("Fin del juego. Han ganado los bichos.")
+            self.finJuego()
 
     def personajeMuere(self):
         print("Fin del juego.",self.personaje.nickname," ha muerto.")
         self.personaje = None
+        self.finJuego()
         self.terminarBichos()
     
+    def finJuego(self):
+        self.fase = Final()
    
     ##
 

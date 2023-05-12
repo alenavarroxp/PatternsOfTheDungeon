@@ -1,3 +1,4 @@
+from src.model.Abrir import Abrir
 from src.model.Agresivo import Agresivo
 from src.model.Armario import Armario
 from src.model.Baul import Baul
@@ -170,6 +171,8 @@ class LaberintoBuilder():
         cadena1 = getattr(juegoaux,'fabricar' + ori1)()
         cadena2 = getattr(juegoaux,'fabricar' + ori2)()
         puerta = self.fabricarPuerta(hab1, hab2)
+        puerta.agregarComando(Abrir(),puerta)
+        
         hab1.ponerEnElemento(cadena1, puerta)
         hab2.ponerEnElemento(cadena2, puerta)
     

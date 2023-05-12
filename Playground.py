@@ -1,3 +1,4 @@
+from src.model.Abrir import Abrir
 from src.model.Director import Director
 from src.model.Juego import Juego
 from src.model.LaberintoFactory import LaberintoFactory
@@ -60,14 +61,14 @@ while True:
     while True:
         if activado:
             if abierto:
-                operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Cerrar Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Añadir monedas a la mochila\n8. Quitar monedas de la mochila\n9. Salir")
+                operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Cerrar Todas Las Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Añadir monedas a la mochila\n8. Quitar monedas de la mochila\n9. Abrir Puerta\n10. Salir\n")
             else:
-                operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Abrir Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Añadir monedas a la mochila\n8. Quitar monedas de la mochila\n9. Salir")
+                operacion = input("¿Qué quieres hacer?\n1. Desactivar Bombas\n2. Abrir Todas Las Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Añadir monedas a la mochila\n8. Quitar monedas de la mochila\n9. Abrir Puerta\n10. Salir\n")
         else:
             if abierto:
-                operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Cerrar Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Añadir monedas a la mochila\n8. Quitar monedas de la mochila\n9. Salir\n")
+                operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Cerrar Todas Las Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Añadir monedas a la mochila\n8. Quitar monedas de la mochila\n9. Abrir Puerta\n10. Salir\n")
             else:
-                operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Abrir Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Añadir monedas a la mochila\n8. Quitar monedas de la mochila\n9. Salir\n")
+                operacion = input("¿Qué quieres hacer?\n1. Activar Bombas\n2. Abrir Todas Las Puertas\n3. Lanzar Bichos\n4. Terminar Bichos\n5. Añadir personaje\n6. Entrar en tunel\n7. Añadir monedas a la mochila\n8. Quitar monedas de la mochila\n9. Abrir Puerta\n10. Salir\n")
 
         try:
             operacion = int(operacion)
@@ -82,6 +83,7 @@ while True:
             elif operacion == 2:
                 if abierto:
                     juego.cerrarPuertas()
+
                     abierto = False
                 else:
                     juego.abrirPuertas()
@@ -117,7 +119,17 @@ while True:
                     #Prueba de movimiento
                     #juego.personaje.irAlSur()
                     #TODO: Entrar a tunel BIEN HECHO (Esto solo para prueba)
-                    juego.laberinto.hijos[0].hijos[1].entrar(personaje)
+                    hayTunel = False
+                    for hab in juego.laberinto.hijos:
+                        for tunel in hab.hijos:
+                            if tunel.esTunel():
+                                hayTunel = True
+                                tunel.entrar(personaje)
+                                print("Entrando en tunel")
+                                break;
+                        if hayTunel:
+                            break;
+                    
                 print(juego)
                
             
@@ -169,6 +181,39 @@ while True:
                 else:
                     print("No hay ningun personaje en el laberinto")    
             elif operacion == 9:
+                if juego.personaje != None:
+                    print("¿Que puerta quieres abrir",personaje.nickname,'?')
+                    print("El personaje esta en la habitacion: ",personaje.posicion.num)
+                    print(personaje.posicion)
+                    puerta = input("1. Puerta Norte\n2. Puerta Sur\n3. Puerta Este\n4. Puerta Oeste\n")
+                    puerta = int(puerta)
+                    if puerta == 1:
+                        if juego.personaje.posicion.forma.norte.esPuerta():
+                            juego.personaje.posicion.forma.norte.comandos[0].ejecutar(juego.personaje)
+                        else:
+                            print("No hay puerta en esa dirección")
+                    elif puerta == 2:
+                        if juego.personaje.posicion.forma.sur.esPuerta():
+                            juego.personaje.posicion.forma.sur.comandos[0].ejecutar(juego.personaje)
+                        else:
+                            print("No hay puerta en esa dirección")
+                       
+                    elif puerta == 3:
+                        if juego.personaje.posicion.forma.este.esPuerta():
+                            juego.personaje.posicion.forma.este.comandos[0].ejecutar(juego.personaje)
+                        else:
+                            print("No hay puerta en esa dirección")                        
+                    elif puerta == 4:
+                        if juego.personaje.posicion.forma.oeste.esPuerta():
+                            juego.personaje.posicion.forma.oeste.comandos[0].ejecutar(juego.personaje)
+                        else:
+                            print("No hay puerta en esa dirección")
+                    else:
+                        print("\n\nOpción no válida.\n\n")
+                else:
+                    print("No hay ningun personaje en el laberinto")
+                print(juego)
+            elif operacion == 10:
                break;
             else:
                 print("\n\nOpción no válida.\n\n")
