@@ -2,6 +2,10 @@
 #-*- coding: utf-8 -*-
 import copy
 import threading
+from src.model.Noreste import Noreste
+from src.model.Noroeste import Noroeste
+from src.model.Sureste import Sureste
+from src.model.Suroeste import Suroeste
 from src.model.Abrir import Abrir
 from src.model.Mochila import Mochila
 from src.model.Mercader import Mercader
@@ -104,6 +108,7 @@ class Juego:
     
     def clonarLaberinto(self):
         self.prototipo = copy.deepcopy(self)
+        self.prototipo.laberinto.num = self.laberinto.num + 1
         return self.prototipo.laberinto
     
     # Métodos ITERATOR
@@ -282,6 +287,18 @@ class Juego:
    
     def fabricarNorte(self):
         return Norte()
+    
+    def fabricarNoreste(self):
+        return Noreste()
+    
+    def fabricarNoroeste(self):
+        return Noroeste()
+    
+    def fabricarSureste(self):
+        return Sureste()
+    
+    def fabricarSuroeste(self):
+        return Suroeste()
  
     def fabricarOeste(self):
         return Oeste()

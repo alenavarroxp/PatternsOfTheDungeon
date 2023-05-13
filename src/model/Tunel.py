@@ -14,21 +14,32 @@ class Tunel(Hoja):
     
     def entrar(self,alguien):
         if self.laberinto == None:
+            vueltaTunel = False
             self.laberinto = alguien.juego.clonarLaberinto()
-        self.laberinto.entrar(alguien) 
-        # TODO: Pensar como hacer que el tunel te traiga de vuelta
+            
+            for hab in self.laberinto.hijos:
+                for tunel in hab.hijos:
+                    if tunel.esTunel():
+                        vueltaTunel = True
+                        tunel.laberinto = alguien.juego.laberinto
+                        break
+                if vueltaTunel:
+                    break
+        self.laberinto.entrar(alguien)
+        
         
 
     def __str__(self):
-        if self.laberinto == None:
+        if self.laberinto is None:
             laberinto = 'No Laberinto'
         else:
-            laberinto = 'Tiene Laberinto'
-        return f"Tunel ({laberinto}) [{self.laberinto}]"
+            laberinto = f"Tiene Laberinto [{self.laberinto.num}]"
+        return f"Tunel ({laberinto})"
+
     
     def __repr__(self):
-        if self.laberinto == None:
+        if self.laberinto is None:
             laberinto = 'No Laberinto'
         else:
-            laberinto = 'Tiene Laberinto'
-        return f"Tunel ({laberinto}) [{self.laberinto}]"
+            laberinto = f"Tiene Laberinto [{self.laberinto.num}]"
+        return f"Tunel ({laberinto})"

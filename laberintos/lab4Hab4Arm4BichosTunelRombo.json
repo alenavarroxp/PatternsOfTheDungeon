@@ -1,5 +1,5 @@
 {
-    "forma":"cuadrado",
+    "forma":"rombo",
     "laberinto":[
         {"tipo":"habitacion","num":1,"hijos":[
             {"tipo":"armario","num":1,"hijos":[]},
@@ -17,10 +17,10 @@
        ]}
     ],
     "puertas":[
-        [1,"Sur",2,"Norte"],
-        [1,"Este",3,"Oeste"],
-        [2,"Este",4,"Oeste"],
-        [3,"Sur",4,"Norte"]
+        [1,"Sureste",2,"Noroeste"],
+        [1,"Noreste",3,"Suroeste"],
+        [3,"Sureste",4,"Noroeste"],
+        [2,"Noreste",4,"Suroeste"]
     ],
     "bichos":[
        {"modo":"agresivo","posicion":1},

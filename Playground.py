@@ -12,7 +12,7 @@ while True:
     metodo = input(Fore.MAGENTA+"¿Quieres usar el builder para crear el laberinto?\n"+Style.RESET_ALL+"1. Sí\n2. No\n")
     metodo = int(metodo)
     if metodo == 1:
-        opcion1 = input(Fore.MAGENTA+"¿Qué JSON quieres elegir para crear el laberinto?\n"+Style.RESET_ALL+Fore.LIGHTWHITE_EX+"1. Laberinto 2 habitaciones (VERTICAL)\n2. Laberinto 2 habitacion (HORIZONTAL)\n3. Laberinto 2 habitaciones y 2 armarios\n4. Laberinto 2 habitaciones y 2 bichos\n5. Laberinto 2 habitaciones y tunel\n6. Laberinto 4 habitaciones,4 armarios\n7. Laberinto 4 habitaciones, 4 armarios y 4 bichos\n8. Laberinto 4 habitaciones, 4 armarios, 4 bichos y tunel\n"+Style.RESET_ALL)
+        opcion1 = input(Fore.MAGENTA+"¿Qué JSON quieres elegir para crear el laberinto?\n"+Style.RESET_ALL+Fore.LIGHTWHITE_EX+"1. Laberinto 2 habitaciones (VERTICAL)\n2. Laberinto 2 habitacion (HORIZONTAL)\n3. Laberinto 2 habitaciones y 2 armarios\n4. Laberinto 2 habitaciones y 2 bichos\n5. Laberinto 2 habitaciones y tunel\n6. Laberinto 4 habitaciones,4 armarios\n7. Laberinto 4 habitaciones, 4 armarios y 4 bichos\n8. Laberinto 4 habitaciones, 4 armarios, 4 bichos y tunel\n9. Laberinto 4 habitaciones, 4 armarios, 4 bichos y tunel ROMBO\n"+Style.RESET_ALL)
         opcion1 = int(opcion1)
         switch = {
             1: 'laberintos/lab2HabVertical.json',
@@ -22,7 +22,8 @@ while True:
             5: 'laberintos/lab2HabTunel.json',
             6: 'laberintos/lab4Hab4Arm.json',
             7: 'laberintos/lab4Hab4Arm4Bichos.json',
-            8: 'laberintos/lab4Hab4Arm4BichosTunel.json'
+            8: 'laberintos/lab4Hab4Arm4BichosTunel.json',
+            9: 'laberintos/lab4Hab4Arm4BichosTunelRombo.json'
         }
         unArchivo = switch.get(opcion1, "\n\nEl carácter ingresado no es correcto.\n\n")
         director = Director()
@@ -124,20 +125,15 @@ while True:
                 if juego.personaje == None:
                     print("No hay ningun personaje en el laberinto")
                 else:
-                    
-                    #Prueba de movimiento
-                    #juego.personaje.irAlSur()
-                    #TODO: Entrar a tunel BIEN HECHO (Esto solo para prueba)
                     hayTunel = False
-                    for hab in juego.laberinto.hijos:
-                        for tunel in hab.hijos:
+                    for tunel in juego.personaje.posicion.hijos:
                             if tunel.esTunel():
                                 hayTunel = True
                                 tunel.entrar(personaje)
                                 print("Entrando en tunel")
                                 break;
-                        if hayTunel:
-                            break;
+                            if hayTunel:
+                                break;
                     
                 print(juego)
                

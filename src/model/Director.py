@@ -2,6 +2,7 @@
 #-*- coding: utf-8 -*-
 
 import json
+from src.model.LaberintoRomboBuilder import LaberintoRomboBuilder
 from src.model.LaberintoBuilder import LaberintoBuilder
 
 
@@ -11,8 +12,10 @@ class Director():
         self.builder = None
     
     def iniBuilder(self):
-        self.builder = LaberintoBuilder()
-
+        if self.dict['forma'] == 'cuadrado':
+            self.builder = LaberintoBuilder()
+        if self.dict['forma'] == 'rombo':
+            self.builder = LaberintoRomboBuilder()
     def obtenerJuego(self):
         return self.builder.juego
     

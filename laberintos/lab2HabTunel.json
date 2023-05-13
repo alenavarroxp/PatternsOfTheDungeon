@@ -1,10 +1,12 @@
 {
+    "forma":"cuadrado",
     "laberinto":[
         {"tipo":"habitacion","num":1,"hijos":[
             {"tipo":"tunel"}
         ]},
         {"tipo":"habitacion","num":2,"hijos":[
-            {"tipo":"bomba"}
+            {"tipo":"bomba"},
+            {"tipo":"tunel"}
         ]}
     ],
     "puertas":[
