@@ -1,3 +1,4 @@
+from src.model.Cuadrado import Cuadrado
 from src.model.Final import Final
 from src.model.Abrir import Abrir
 from src.model.Director import Director
@@ -194,31 +195,58 @@ while True:
                     print("¿Que puerta quieres abrir",personaje.nickname,'?')
                     print("El personaje esta en la habitacion: ",personaje.posicion.num)
                     print(personaje.posicion)
-                    puerta = input("1. Puerta Norte\n2. Puerta Sur\n3. Puerta Este\n4. Puerta Oeste\n")
-                    puerta = int(puerta)
-                    if puerta == 1:
-                        if juego.personaje.posicion.forma.norte.esPuerta():
-                            juego.personaje.posicion.forma.norte.comandos[0].ejecutar(juego.personaje)
+                    if isinstance(personaje.posicion.forma,Cuadrado):
+                        puerta = input("1. Puerta Norte\n2. Puerta Sur\n3. Puerta Este\n4. Puerta Oeste\n")
+                        puerta = int(puerta)
+                        if puerta == 1:
+                            if juego.personaje.posicion.forma.norte.esPuerta():
+                                juego.personaje.posicion.forma.norte.comandos[0].ejecutar(juego.personaje)
+                            else:
+                                print("No hay puerta en esa dirección")
+                        elif puerta == 2:
+                            if juego.personaje.posicion.forma.sur.esPuerta():
+                                juego.personaje.posicion.forma.sur.comandos[0].ejecutar(juego.personaje)
+                            else:
+                                print("No hay puerta en esa dirección")
+                        
+                        elif puerta == 3:
+                            if juego.personaje.posicion.forma.este.esPuerta():
+                                juego.personaje.posicion.forma.este.comandos[0].ejecutar(juego.personaje)
+                            else:
+                                print("No hay puerta en esa dirección")                        
+                        elif puerta == 4:
+                            if juego.personaje.posicion.forma.oeste.esPuerta():
+                                juego.personaje.posicion.forma.oeste.comandos[0].ejecutar(juego.personaje)
+                            else:
+                                print("No hay puerta en esa dirección")
                         else:
-                            print("No hay puerta en esa dirección")
-                    elif puerta == 2:
-                        if juego.personaje.posicion.forma.sur.esPuerta():
-                            juego.personaje.posicion.forma.sur.comandos[0].ejecutar(juego.personaje)
-                        else:
-                            print("No hay puerta en esa dirección")
-                       
-                    elif puerta == 3:
-                        if juego.personaje.posicion.forma.este.esPuerta():
-                            juego.personaje.posicion.forma.este.comandos[0].ejecutar(juego.personaje)
-                        else:
-                            print("No hay puerta en esa dirección")                        
-                    elif puerta == 4:
-                        if juego.personaje.posicion.forma.oeste.esPuerta():
-                            juego.personaje.posicion.forma.oeste.comandos[0].ejecutar(juego.personaje)
-                        else:
-                            print("No hay puerta en esa dirección")
+                            print("\n\nOpción no válida.\n\n")
                     else:
-                        print("\n\nOpción no válida.\n\n")
+                        puerta = input("1. Puerta Noreste\n2. Puerta Sureste\n3. Puerta Suroeste\n4. Puerta Noroeste\n")
+                        puerta = int(puerta)
+                        if puerta == 1:
+                            if juego.personaje.posicion.forma.noreste.esPuerta():
+                                juego.personaje.posicion.forma.noreste.comandos[0].ejecutar(juego.personaje)
+                            else:
+                                print("No hay puerta en esa dirección")
+                        elif puerta == 2:
+                            if juego.personaje.posicion.forma.sureste.esPuerta():
+                                juego.personaje.posicion.forma.sureste.comandos[0].ejecutar(juego.personaje)
+                            else:
+                                print("No hay puerta en esa dirección")
+                        
+                        elif puerta == 3:
+                            if juego.personaje.posicion.forma.suroeste.esPuerta():
+                                juego.personaje.posicion.forma.suroeste.comandos[0].ejecutar(juego.personaje)
+                            else:
+                                print("No hay puerta en esa dirección")                        
+                        elif puerta == 4:
+                            if juego.personaje.posicion.forma.noroeste.esPuerta():
+                                juego.personaje.posicion.forma.noroeste.comandos[0].ejecutar(juego.personaje)
+                            else:
+                                print("No hay puerta en esa dirección")
+                        else:
+                            print("\n\nOpción no válida.\n\n")                        
                 else:
                     print("No hay ningun personaje en el laberinto")
                 print(juego)
@@ -226,17 +254,30 @@ while True:
                 if juego.personaje != None:
                     print("¿A donde quieres mover a ",personaje.nickname,'?')
                     print("El personaje esta en la habitacion: ",personaje.posicion)
-                    direccion = input("W. Norte\nS. Sur\nD. Este\nA. Oeste\n")
-                    if direccion == 'W' or direccion == 'w':
-                        juego.personaje.irAlNorte()
-                    elif direccion == 'S' or direccion == 's':
-                        juego.personaje.irAlSur()
-                    elif direccion == 'D' or direccion == 'd':
-                        juego.personaje.irAlEste()
-                    elif direccion == 'A' or direccion == 'a':
-                        juego.personaje.irAlOeste()
+                    if isinstance(personaje.posicion.forma,Cuadrado):
+                        direccion = input("W. Norte\nS. Sur\nD. Este\nA. Oeste\n")
+                        if direccion == 'W' or direccion == 'w':
+                            juego.personaje.irAlNorte()
+                        elif direccion == 'S' or direccion == 's':
+                            juego.personaje.irAlSur()
+                        elif direccion == 'D' or direccion == 'd':
+                            juego.personaje.irAlEste()
+                        elif direccion == 'A' or direccion == 'a':
+                            juego.personaje.irAlOeste()
+                        else:
+                            print("\n\nOpción no válida.\n\n")
                     else:
-                        print("\n\nOpción no válida.\n\n")
+                        direccion = input("E. Noreste\nD. Sureste\nS. Suroeste\nW. Noroeste\n")
+                        if direccion == 'E' or direccion == 'e':
+                            juego.personaje.irAlNoreste()
+                        elif direccion == 'D' or direccion == 'd':
+                            juego.personaje.irAlSureste()
+                        elif direccion == 'S' or direccion == 's':
+                            juego.personaje.irAlSuroeste()
+                        elif direccion == 'W' or direccion == 'w':
+                            juego.personaje.irAlNoroeste()
+                        else:
+                            print("\n\nOpción no válida.\n\n")
                 else:
                     print("No hay ningun personaje en el laberinto")
                 print(juego)

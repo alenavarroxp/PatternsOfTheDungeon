@@ -49,3 +49,20 @@ class Ente():
     def irAlSur(self):
         print(self, "yendo al Sur")
         self.irA(self.juego.fabricarSur())
+
+    def irAlNoreste(self):
+        print(self, "yendo al Noreste")
+        self.irA(self.juego.fabricarNoreste())
+    
+    def irAlNoroeste(self):
+        print(self, "yendo al Noroeste")
+        self.irA(self.juego.fabricarNoroeste())
+
+    def irAlSureste(self):
+        print(self, "yendo al Sureste")
+        self.irA(self.juego.fabricarSureste())
+    
+    def irAlSuroeste(self):
+        print(self, "yendo al Suroeste")
+        self.irA(self.juego.fabricarSuroeste())
+    

@@ -1,7 +1,14 @@
 from src.model.Orientacion import Orientacion
 
 
-class Suroeste(Orientacion):
+class Suroeste(Orientacion): 
+    UnicaInstancia = None
+
+    def __new__(cls):
+        if cls.UnicaInstancia is None:
+            cls.UnicaInstancia = super().__new__(cls)
+        return cls.UnicaInstancia
+    
     def ir(self,alguien):
         contenedor = alguien.posicion.forma
         contenedor.suroeste.entrar(alguien)
