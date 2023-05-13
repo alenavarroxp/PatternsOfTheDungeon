@@ -46,6 +46,9 @@ class ElementoMapa:
     def esTunel(self):
         return False
     
+    def esTienda(self):
+        return False
+    
     def recorrer(self,unBloque):
         unBloque(self)
 

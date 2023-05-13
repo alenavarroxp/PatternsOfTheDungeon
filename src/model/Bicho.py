@@ -19,7 +19,7 @@ class Bicho(Ente):
     def heMuerto(self):
         self.estado= Muerto()
         print(self, " ha muerto")
-        self.juego.muereBicho()
+        self.juego.muereBicho(self)
 
     def puedeActuar(self):
         self.modo.actua(self)

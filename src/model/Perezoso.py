@@ -2,6 +2,8 @@
 #-*- coding: utf-8 -*-
 
 from time import sleep
+
+import colorama
 from src.model.Modo import Modo
 
 
@@ -16,4 +18,5 @@ class Perezoso(Modo):
         return True
     
     def __str__(self):
-        return "Perezoso"
+        colorama.init()
+        return ""+colorama.Fore.BLUE+"Perezoso"+colorama.Style.RESET_ALL

@@ -3,7 +3,7 @@ from src.model.Vivo import Vivo
 
 class Ente():
     def __init__(self):
-        self.poder = None
+        self.poder = 10
         self.vidas = 50
         self.posicion = None
         self.juego = None
@@ -25,9 +25,10 @@ class Ente():
 
     def puedeSerAtacadoPor(self,alguien):
         print(alguien,' ataca a ',self)
-        self.vidas -= alguien.poder
+        self.vidas -= int(alguien.poder)
         print(self,' tiene ',self.vidas,' vidas')
         if self.vidas <= 0:
+            self.vidas = 0
             self.heMuerto()
 
     def irA(self,unaOrientacion):

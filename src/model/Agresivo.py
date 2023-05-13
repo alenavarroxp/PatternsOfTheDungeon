@@ -3,7 +3,7 @@
 
 from time import sleep
 from src.model.Modo import Modo
-
+import colorama
 
 class Agresivo(Modo):
     def __init__(self):
@@ -16,4 +16,5 @@ class Agresivo(Modo):
         return True
     
     def __str__(self):
-        return "Agresivo"
+        colorama.init()
+        return ""+colorama.Fore.LIGHTYELLOW_EX+"Agresivo"+colorama.Style.RESET_ALL

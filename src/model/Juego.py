@@ -2,6 +2,10 @@
 #-*- coding: utf-8 -*-
 import copy
 import threading
+from src.model.Abrir import Abrir
+from src.model.Mochila import Mochila
+from src.model.Mercader import Mercader
+from src.model.Tienda import Tienda
 from src.model.Final import Final
 from src.model.Inicial import Inicial
 from src.model.Cuadrado import Cuadrado
@@ -23,10 +27,11 @@ from src.model.Perezoso import Perezoso
 from src.model.Sur import Sur
 from src.model.Pared import Pared
 from src.model.Puerta import Puerta
-
+from colorama import init, Fore, Style
 
 class Juego:
     def __init__(self):
+        init()
         self.laberinto = None
         self.bichos = []
         self.personaje = None
@@ -89,12 +94,12 @@ class Juego:
         unBicho.juego = self
 
     def agregarPersonaje(self,unPersonaje):
-        self.fase.agregarPersonajeJuego(unPersonaje,self
-                                        )
+        self.fase.agregarPersonajeJuego(unPersonaje,self)
     def puedeAgregarPersonaje(self,unPersonaje):
         self.personaje = unPersonaje
         self.personaje.juego = self
         self.personaje.vidas = 100
+        self.personaje.poder = 50
         self.laberinto.entrar(self.personaje)
     
     def clonarLaberinto(self):
@@ -144,12 +149,14 @@ class Juego:
                 return self.personaje
         return None
     
-    def muereBicho(self):
+    def muereBicho(self,unBicho):
+        init()
+        self.bichos.remove(unBicho)
         if self.todosMuertos():
             if self.personaje is not None:
-                print("Fin del juego. Gana el personaje.")
+                print(Fore.YELLOW+"\n\nFin del juego. Gana el personaje.\n\n")
             else:
-                print("Fin del juego. Han ganado los bichos.")
+                print(Fore.YELLOW+"\n\nFin del juego. Han ganado los bichos.\n\n")
             self.finJuego()
 
     def personajeMuere(self):
@@ -270,8 +277,8 @@ class Juego:
     def fabricarModoPerezoso(self):
         return Perezoso()
     
-    def fabricarMoneda(self,valor):
-        return Moneda(valor)
+    def fabricarMoneda(self,valor,ubicacion):
+        return Moneda(valor,ubicacion)
    
     def fabricarNorte(self):
         return Norte()
@@ -286,6 +293,7 @@ class Juego:
         puerta = Puerta()
         puerta.lado1 = unaHab
         puerta.lado2 = otraHab
+        puerta.agregarComando(Abrir(),puerta)
         return puerta
     
     def fabricarPuertaEstado(self,unaHab:Habitacion,otraHab:Habitacion,estado:bool):
@@ -297,6 +305,36 @@ class Juego:
     
     def fabricarSur(self):
         return Sur()
+    
+    def fabricarMochila(self):
+        mochila = Mochila()
+        return mochila
+    
+    def fabricarMercader(self):
+        mercader = Mercader('Antonio')
+        mercader.agregarObjeto(self.fabricarEspada(),50)
+        mochila = self.fabricarMochila()
+        mochila.agregarObjeto(self.fabricarMoneda(10,mochila))
+        mochila.agregarObjeto(self.fabricarMoneda(20,mochila))
+        mercader.agregarObjeto(mochila,150)
+        return mercader
+    
+    def fabricarTienda(self,num):
+        tienda = Tienda(num)
+        tienda.forma = self.fabricarForma()
+        tienda.forma.num = num
+        mercader = self.fabricarMercader()
+        tienda.mercader = mercader
+        tienda.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
+        tienda.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
+        tienda.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
+        tienda.ponerEnElemento(self.fabricarSur(),self.fabricarPared())
+        tienda.agregarOrientacion(self.fabricarNorte())
+        tienda.agregarOrientacion(self.fabricarEste())
+        tienda.agregarOrientacion(self.fabricarOeste())
+        tienda.agregarOrientacion(self.fabricarSur())
+        tienda.abrirTienda()
+        return tienda
 
     def laberinto2Habitaciones(self):
         
@@ -325,7 +363,35 @@ class Juego:
     
         print("------------------------------------------------")
 
+    def laberinto2HabitacionesTienda(self):
+            print("\n--- LABERINTO 2 HABITACIONES CON TIENDA --")
+            self.laberinto = self.fabricarLaberinto()
+            hab1 = self.fabricarHabitacion(1)
+            hab2 = self.fabricarHabitacion(2)
 
+            puerta = self.fabricarPuerta(hab1,hab2)
+            hab1.forma.norte = self.fabricarPared()
+            hab1.forma.oeste = self.fabricarPared()
+            hab1.forma.este = self.fabricarPared()
+
+            hab2.forma.sur = self.fabricarPared()
+            hab2.forma.oeste = self.fabricarPared()
+            hab2.forma.este = self.fabricarPared()
+
+            hab1.forma.sur = puerta
+            hab2.forma.norte = puerta
+
+            tienda1 = self.fabricarTienda(1)
+            puertaTienda = self.fabricarPuerta(tienda1,hab1)
+            tienda1.ponerEnElemento(self.fabricarOeste(),puertaTienda)
+
+            hab1.agregarHijo(tienda1)
+
+
+            self.laberinto.agregarHabitacion(hab1)
+            self.laberinto.agregarHabitacion(hab2)
+        
+            print("------------------------------------------------")
     def laberinto2HabitacionesFM(self):
         print("\n--- LABERINTO 2 HABITACIONES (FACTORY METHOD) --")
         self.laberinto = self.fabricarLaberinto()

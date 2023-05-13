@@ -4,6 +4,7 @@ from src.model.Objeto import Objeto
 class Mochila(Objeto):
     def __init__(self):
         #Aproximación de flyweight para reducir el uso de memoria
+        super().__init__()
         self.objetos = []
 
     def agregarObjeto(self, objeto):
@@ -26,4 +27,9 @@ class Mochila(Objeto):
     def __str__(self):
         if len(self.objetos) == 0:
             return "Mochila vacía"
-        return f"Mochila: [{self.objetos}]"
+        return f"Mochila: [{self.objetos}] Precio: {self.precio}"
+    
+    def __repr__(self):
+        if len(self.objetos) == 0:
+            return "Mochila vacía"
+        return f"Mochila: [{self.objetos}] Precio: {self.precio}"
