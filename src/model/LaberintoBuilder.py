@@ -63,12 +63,14 @@ class LaberintoBuilder():
         return Baul(num)
     
     def fabricarBaulEn(self,unContenedor,num,contenido):
-        baul = Baul(num)
+        baul = self.fabricarBaul(num)
+        baul.forma = self.fabricarForma()
         baul.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
         baul.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
         baul.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
         baul.ponerEnElemento(self.fabricarSur(),self.fabricarPared())
-        baul.agregarHijo(contenido)
+        cadena1 = getattr(self,'fabricar' + contenido)()
+        baul.agregarHijo(cadena1)
         baul.agregarOrientacion(self.fabricarNorte())
         baul.agregarOrientacion(self.fabricarEste())
         baul.agregarOrientacion(self.fabricarOeste())

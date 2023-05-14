@@ -4,11 +4,15 @@
 from src.model.Objeto import Objeto
 class Espada(Objeto):
     def __init__(self):
+        super().__init__()
         self.estado = True
 
     def esEspada(self):
         return True
     
+    def recorrer(self,unBloque):
+        print('Recorriendo espada')
+
     def __str__(self):
         if self.estado:
             estado = 'Afilada'

@@ -47,7 +47,7 @@ class Director():
         elif laberinto['tipo'] == 'tunel':
             tmp1 = self.builder.fabricarTunelEn(root)
         elif laberinto['tipo'] == 'baul':
-            tmp1 = self.builder.fabricarBaul(laberinto['num'])
+            tmp1 = self.builder.fabricarBaulEn(root,laberinto['num'],laberinto['contenido'])
         elif laberinto['tipo'] == 'bomba':
             tmp1 = self.builder.fabricarBombaEn(root)
         

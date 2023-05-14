@@ -128,10 +128,9 @@ while True:
             elif operacion == 5:
                 personaje = Personaje()
                 personaje.nickname = input("¿Cuál es tu nickname?\n")
-                personaje.poder = input("¿Cuánto es tu poder?(0-100)\n")
-                personaje.vidas = input("¿Cuántas vidas tienes?(0-100)\n")
+                # personaje.poder = input("¿Cuánto es tu poder?(0-100)\n")
+                # personaje.vidas = input("¿Cuántas vidas tienes?(0-100)\n")
                 juego.agregarPersonaje(personaje)
-                print("Personaje ",personaje.nickname," añadido al laberinto")
                 print(juego)
             elif operacion == 6:
                 

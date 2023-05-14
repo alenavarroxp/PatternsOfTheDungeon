@@ -2,6 +2,7 @@
 #-*- coding: utf-8 -*-
 import copy
 import threading
+from src.model.Jugando import Jugando
 from src.model.Hechicero import Hechicero
 from src.model.Brujo import Brujo
 from src.model.Noreste import Noreste
@@ -136,6 +137,7 @@ class Juego:
 
     def agregarPersonaje(self,unPersonaje):
         self.fase.agregarPersonajeJuego(unPersonaje,self)
+        self.fase = Jugando()
 
     def puedeAgregarPersonaje(self,unPersonaje):
         self.personaje = unPersonaje
@@ -470,7 +472,12 @@ class Juego:
             puertaTienda = self.fabricarPuerta(tienda1,hab1)
             tienda1.ponerEnElemento(self.fabricarOeste(),puertaTienda)
 
+            tienda2 = self.fabricarTienda(2)
+            puertaTienda = self.fabricarPuerta(tienda2,hab2)
+            tienda2.ponerEnElemento(self.fabricarOeste(),puertaTienda)
+
             hab1.agregarHijo(tienda1)
+            hab2.agregarHijo(tienda2)
 
 
             self.laberinto.agregarHabitacion(hab1)
