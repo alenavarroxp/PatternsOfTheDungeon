@@ -22,11 +22,11 @@
         [2,"Este",4,"Oeste"],
         [3,"Sur",4,"Norte"]
     ],
-    "bichos":[
-       {"modo":"agresivo","posicion":1},
-       {"modo":"agresivo","posicion":3},
-       {"modo":"perezoso","posicion":2},
-       {"modo":"perezoso","posicion":4}
-    ],
-    "hechiceros":[]
+    "bichos":[],
+    "hechiceros":[
+       {"modo":"mago","posicion":2},
+       {"modo":"mago","posicion":3},
+       {"modo":"brujo","posicion":1},
+       {"modo":"brujo","posicion":4}
+    ]
 }

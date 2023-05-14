@@ -2,6 +2,8 @@
 #-*- coding: utf-8 -*-
 import copy
 import threading
+from src.model.Hechicero import Hechicero
+from src.model.Brujo import Brujo
 from src.model.Noreste import Noreste
 from src.model.Noroeste import Noroeste
 from src.model.Sureste import Sureste
@@ -38,6 +40,7 @@ class Juego:
         init()
         self.laberinto = None
         self.bichos = []
+        self.hechiceros = []
         self.personaje = None
         self.prototipo = None
         self.hilos = dict()
@@ -45,13 +48,16 @@ class Juego:
     
     def __str__(self):
         infoBicho = ""
+        infoHechicero = ""
         for bicho in self.bichos:
             infoBicho += f"  {bicho}\n"
+        for hechicero in self.hechiceros:
+            infoHechicero += f"  {hechicero}\n"
         personaje= ""
         if self.personaje is None:
-            return f"Juego:\n Personaje: No hay personaje\n {self.laberinto}\n Hay {len(self.bichos)} bichos en el laberinto:\n {infoBicho}"
+            return f"Juego:\n Personaje: No hay personaje\n {self.laberinto}\n Hay {len(self.bichos)} bichos en el laberinto:\n {infoBicho}\n Hay {len(self.hechiceros)} hechiceros en el laberinto:\n {infoHechicero}"
         else:
-            return f"Juego:\n Personaje: {self.personaje}\n {self.laberinto}\n Hay {len(self.bichos)} bichos en el laberinto:\n {infoBicho}"
+            return f"Juego:\n Personaje: {self.personaje}\n {self.laberinto}\n Hay {len(self.bichos)} bichos en el laberinto:\n {infoBicho}\n Hay {len(self.hechiceros)} hechiceros en el laberinto:\n {infoHechicero}"
 
     def __repr__(self):
         infoBicho = ""
@@ -59,35 +65,62 @@ class Juego:
             infoBicho += f"  {bicho}\n"
         return f"Juego:\n {self.personaje}\n{self.laberinto}\n Hay {len(self.bichos)} bichos en el laberinto:\n {infoBicho}"
     # Gestión de los hilos#
-    def agregarHiloDe(self,unHilo,unBicho):
-        self.hilos[unBicho] = unHilo
+    def agregarHiloDe(self,unHilo,unEnte):
+        self.hilos[unEnte] = unHilo
 
     def lanzarBichos(self):
         for bicho in self.bichos:
             self.lanzarHilo(bicho)
 
-    def lanzarHilo(self, unBicho):
-        hilo = threading.Thread(target=lambda: self.hiloBicho(unBicho))
-        self.agregarHiloDe(hilo, unBicho)
+    def lanzarHechiceros(self):
+        for hechicero in self.hechiceros:
+            self.lanzarHilo(hechicero)
+
+        
+
+    def lanzarHilo(self, unEnte):
+        if isinstance(unEnte,Bicho):
+            hilo = threading.Thread(target=lambda: self.hiloBicho(unEnte))
+            self.agregarHiloDe(hilo, unEnte)
+        if isinstance(unEnte,Hechicero):
+            hilo = threading.Thread(target=lambda: self.hiloHechicero(unEnte))
+            self.agregarHiloDe(hilo, unEnte)
         hilo.start()
         
     def hiloBicho(self, unBicho):
         while unBicho.estaVivo():
             unBicho.actua()
 
+    def hiloHechicero(self,unHechicero):
+        while unHechicero.estaVivo():
+            unHechicero.conjura()
+
     def terminarBichos(self):
         for bicho in self.bichos:
             self.terminarHilo(bicho)
     
-    def terminarHilo(self,unBicho):
-        unBicho.heMuerto()
-        
+    def terminarHechiceros(self):
+        for hechicero in self.hechiceros:
+            self.terminarHilo(hechicero)
 
-    def todosMuertos(self):
+    def terminarHilo(self,unEnte):
+        unEnte.heMuerto()
+
+    def todosBichosMuertos(self):
         result = None
         for bicho in self.bichos:
             if bicho.estaVivo():
                 result = bicho
+        if result is None:
+            return True
+        result = None
+        return False
+    
+    def todosHechicerosMuertos(self):
+        result = None
+        for hechicero in self.hechiceros:
+            if isinstance(hechicero.modohechicero,Brujo) and hechicero.estaVivo():
+                result = hechicero
         if result is None:
             return True
         result = None
@@ -97,8 +130,13 @@ class Juego:
         self.bichos.append(unBicho)
         unBicho.juego = self
 
+    def agregarHechicero(self,unHechicero):
+        self.hechiceros.append(unHechicero)
+        unHechicero.juego = self
+
     def agregarPersonaje(self,unPersonaje):
         self.fase.agregarPersonajeJuego(unPersonaje,self)
+
     def puedeAgregarPersonaje(self,unPersonaje):
         self.personaje = unPersonaje
         self.personaje.juego = self
@@ -118,6 +156,8 @@ class Juego:
 
     def activarBombas(self):
         self.laberinto.recorrer(self.activarBomba)
+        if self.prototipo is not None:
+            self.prototipo.laberinto.recorrer(self.activarBomba)
 
     def desactivarBomba(self,unaBomba):
         if unaBomba.esBomba():
@@ -125,6 +165,8 @@ class Juego:
 
     def desactivarBombas(self):
         self.laberinto.recorrer(self.desactivarBomba)  
+        if self.prototipo is not None:
+            self.prototipo.laberinto.recorrer(self.desactivarBomba)
 
     def abrirPuerta(self,unaPuerta):
         if unaPuerta.esPuerta():
@@ -132,12 +174,17 @@ class Juego:
         
     def abrirPuertas(self):
         self.laberinto.recorrer(self.abrirPuerta)
+        if self.prototipo is not None:
+            self.prototipo.laberinto.recorrer(self.abrirPuerta)
 
     def cerrarPuerta(self,unaPuerta):
         if unaPuerta.esPuerta():
             unaPuerta.cerrar(None)
+            
     def cerrarPuertas(self):
         self.laberinto.recorrer(self.cerrarPuerta)
+        if self.prototipo is not None:
+            self.prototipo.laberinto.recorrer(self.cerrarPuerta)
 
     ##
     def buscarBicho(self):
@@ -145,6 +192,14 @@ class Juego:
         for bicho in self.bichos:
             if bicho.estaVivo and bicho.posicion == pos:
                 return bicho
+        return None
+    
+    def buscarBrujo(self):
+        pos = self.personaje.posicion
+        for brujo in self.hechiceros:
+            if isinstance(brujo.modohechicero,Brujo):
+                if brujo.estaVivo and brujo.posicion == pos:
+                    return brujo
         return None
     
     def buscarPersonaje(self,unBicho):
@@ -157,21 +212,34 @@ class Juego:
     def muereBicho(self,unBicho):
         init()
         self.bichos.remove(unBicho)
-        if self.todosMuertos():
-            if self.personaje is not None:
-                print(Fore.YELLOW+"\n\nFin del juego. Gana el personaje.\n\n")
-            else:
-                print(Fore.YELLOW+"\n\nFin del juego. Han ganado los bichos.\n\n")
-            self.finJuego()
+        if self.todosBichosMuertos():
+            if self.todosHechicerosMuertos():
+                if self.personaje is not None:
+                    print(Fore.YELLOW+"\n\nFin del juego. Gana el personaje.\n\n"+Style.RESET_ALL)
+                else:
+                    print(Fore.YELLOW+"\n\nFin del juego. Han ganado los enemigos.\n\n"+Style.RESET_ALL)
+                self.finJuego()
+
+    def muereHechicero(self,unHechicero):
+        init()
+        self.hechiceros.remove(unHechicero)
+        if self.todosHechicerosMuertos():
+            if self.todosBichosMuertos():
+                if self.personaje is not None:
+                    print(Fore.YELLOW+"\n\nFin del juego. Gana el personaje.\n\n")
+                else:
+                    print(Fore.YELLOW+"\n\nFin del juego. Han ganado los enemigos.\n\n")
+                self.finJuego()
 
     def personajeMuere(self):
         print("Fin del juego.",self.personaje.nickname," ha muerto.")
         self.personaje = None
         self.finJuego()
-        self.terminarBichos()
     
     def finJuego(self):
         self.fase = Final()
+        self.terminarBichos()
+        self.terminarHechiceros()
    
     ##
 

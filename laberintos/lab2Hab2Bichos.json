@@ -14,5 +14,6 @@
     "bichos":[
        {"modo":"agresivo","posicion":1},
        {"modo":"perezoso","posicion":2}
-    ]
+    ],
+    "hechiceros":[]
 }

@@ -11,6 +11,6 @@
     "puertas":[
         [1,"Este",2,"Oeste"]
     ],
-    "bichos":[
-    ]
+    "bichos":[],
+    "hechiceros":[]
 }

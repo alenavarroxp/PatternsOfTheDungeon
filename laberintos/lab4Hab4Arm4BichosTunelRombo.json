@@ -27,5 +27,6 @@
        {"modo":"agresivo","posicion":3},
        {"modo":"perezoso","posicion":2},
        {"modo":"perezoso","posicion":4}
-    ]
+    ],
+    "hechiceros":[]
 }

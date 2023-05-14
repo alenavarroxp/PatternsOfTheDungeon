@@ -26,5 +26,8 @@ class Personaje(Ente):
     def buscarEnemigo(self):
         return self.juego.buscarBicho()
     
+    def buscarBrujo (self):
+        return self.juego.buscarBrujo()
+    
     def __str__(self):
         return f"\n\t Nickname: {self.nickname}\n\t Vidas: {self.vidas}\n\t Poder: {self.poder}\n\t Dinero: {self.dinero}\n\t Posicion:[\n\t{self.posicion}]\n\t {self.inventario}\n\t" 

@@ -1,3 +1,6 @@
+from src.model.Brujo import Brujo
+from src.model.Hechicero import Hechicero
+from src.model.Mago import Mago
 from src.model.Abrir import Abrir
 from src.model.Agresivo import Agresivo
 from src.model.Armario import Armario
@@ -106,6 +109,38 @@ class LaberintoBuilder():
         bicho.posicion = self.juego.obtenerHabitacion(unaHabitacion)
         return bicho
     
+    def fabricarHechiceroMago(self):
+        hechicero = Hechicero()
+        hechicero.modohechicero = self.fabricarModoHechiceroMago()
+        hechicero.vidas = 10
+        hechicero.poder = 10
+        return hechicero
+    
+    def fabricarHechiceroMagoPosicion(self,unaHabitacion):
+        hechicero = Hechicero()
+        hechicero.modohechicero = self.fabricarModoHechiceroMago()
+        hechicero.vidas = 10
+        hechicero.poder = 10
+        hechicero.posicion = self.juego.obtenerHabitacion(unaHabitacion)
+        return hechicero
+    
+    def fabricarHechiceroBrujo(self):
+        hechicero = Hechicero()
+        hechicero.modohechicero = self.fabricarModoHechiceroBrujo()
+        hechicero.vidas = 10
+        hechicero.poder = 10
+        return hechicero
+    
+    def fabricarHechiceroBrujoPosicion(self,unaHabitacion):
+        hechicero = Hechicero()
+        hechicero.modohechicero = self.fabricarModoHechiceroBrujo()
+        hechicero.vidas = 10
+        hechicero.poder = 10
+        hechicero.posicion = self.juego.obtenerHabitacion(unaHabitacion)
+        return hechicero
+    
+
+    
     def fabricarBomba(self):
         return Bomba()
     
@@ -148,6 +183,12 @@ class LaberintoBuilder():
     
     def fabricarModoPerezoso(self):
         return Perezoso()
+    
+    def fabricarModoHechiceroMago(self):
+        return Mago()
+    
+    def fabricarModoHechiceroBrujo(self):
+        return Brujo()
    
     def fabricarNorte(self):
         return Norte()
@@ -167,9 +208,8 @@ class LaberintoBuilder():
     def fabricarPuertaBuilder(self,num1, ori1, num2, ori2):
         hab1 = self.laberinto.obtenerHabitacion(num1)
         hab2 = self.laberinto.obtenerHabitacion(num2)
-        juegoaux = Juego()
-        cadena1 = getattr(juegoaux,'fabricar' + ori1)()
-        cadena2 = getattr(juegoaux,'fabricar' + ori2)()
+        cadena1 = getattr(self,'fabricar' + ori1)()
+        cadena2 = getattr(self,'fabricar' + ori2)()
         puerta = self.fabricarPuerta(hab1, hab2)
         puerta.agregarComando(Abrir(),puerta)
         

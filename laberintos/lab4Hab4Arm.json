@@ -20,5 +20,6 @@
         [2,"Este",4,"Oeste"],
         [3,"Sur",4,"Norte"]
     ],
-    "bichos":[]
+    "bichos":[],
+    "hechiceros":[]
 }

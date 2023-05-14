@@ -26,6 +26,11 @@ class Director():
                 self.builder.juego.agregarBicho(self.builder.fabricarBichoAgresivoPosicion(bicho['posicion']))
             else:
                 self.builder.juego.agregarBicho(self.builder.fabricarBichoPerezosoPosicion(bicho['posicion']))
+        for hechicero in self.dict['hechiceros']:
+            if hechicero['modo'] == 'mago':
+                self.builder.juego.agregarHechicero(self.builder.fabricarHechiceroMagoPosicion(hechicero['posicion']))
+            else:
+                self.builder.juego.agregarHechicero(self.builder.fabricarHechiceroBrujoPosicion(hechicero['posicion']))
 
     def crearLaberinto(self):
         self.builder.fabricarLaberinto()

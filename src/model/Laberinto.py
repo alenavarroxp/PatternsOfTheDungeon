@@ -28,6 +28,6 @@ class Laberinto(Contenedor):
         hab1.entrar(alguien)
         
     def recorrer(self,unBloque):
-        print('Recorriendo el laberinto')
+        print('Recorriendo el laberinto:'+str(self.num))
         for habitacion in self.hijos:
             habitacion.recorrer(unBloque)

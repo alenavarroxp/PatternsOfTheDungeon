@@ -1,3 +1,5 @@
+from src.model.Brujo import Brujo
+from src.model.Mago import Mago
 from src.model.Vivo import Vivo
 
 
@@ -13,12 +15,26 @@ class Ente():
         ente = self.buscarEnemigo()
         if ente is not None:
             ente.esAtacadoPor(self)
+        ente = self.buscarBrujo()
+        if ente is not None:
+            ente.esAtacadoPor(self)
+
+    def hechizar(self):
+        ente = self.buscarEnemigo()
+        if ente is not None:
+            ente.esHechizadoPor(self)
 
     def buscarEnemigo(self):
         pass
-
+    
+    def buscarBrujo(self):
+        pass
+    
     def esAtacadoPor(self,alguien):
         self.estado.enteEsAtacadoPor(self,alguien)
+
+    def esHechizadoPor(self,alguien):
+        self.estado.enteEsHechizadoPor(self,alguien)
 
     def heMuerto(self):
         pass
@@ -30,7 +46,22 @@ class Ente():
         if self.vidas <= 0:
             self.vidas = 0
             self.heMuerto()
-
+            
+    def puedeSerHechizadoPor(self,alguien):
+        
+        if isinstance(alguien.modohechicero,Mago):
+            self.poder += 5
+            self.vidas += 5
+            print(alguien,'hechiza a ',self,' y le da 5 vidas y 5 de poder')
+        elif isinstance(alguien.modohechicero,Brujo):
+            self.poder -= 5
+            self.vidas -= 5
+            print(alguien,'hechiza a ',self,' y le quita 5 vidas y 5 de poder')
+        
+        if self.vidas <= 0:
+            self.vidas = 0
+            self.heMuerto()
+            
     def irA(self,unaOrientacion):
         unaOrientacion.ir(self)
 

@@ -28,5 +28,10 @@
        {"modo":"perezoso","posicion":2},
        {"modo":"perezoso","posicion":4}
     ],
-    "hechiceros":[]
+    "hechiceros":[
+       {"modo":"mago","posicion":1},
+       {"modo":"mago","posicion":3},
+       {"modo":"brujo","posicion":2},
+       {"modo":"brujo","posicion":4}
+    ]
 }

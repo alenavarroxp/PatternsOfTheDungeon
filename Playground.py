@@ -13,7 +13,7 @@ while True:
     metodo = input(Fore.MAGENTA+"¿Quieres usar el builder para crear el laberinto?\n"+Style.RESET_ALL+"1. Sí\n2. No\n")
     metodo = int(metodo)
     if metodo == 1:
-        opcion1 = input(Fore.MAGENTA+"¿Qué JSON quieres elegir para crear el laberinto?\n"+Style.RESET_ALL+Fore.LIGHTWHITE_EX+"1. Laberinto 2 habitaciones (VERTICAL)\n2. Laberinto 2 habitacion (HORIZONTAL)\n3. Laberinto 2 habitaciones y 2 armarios\n4. Laberinto 2 habitaciones y 2 bichos\n5. Laberinto 2 habitaciones y tunel\n6. Laberinto 4 habitaciones,4 armarios\n7. Laberinto 4 habitaciones, 4 armarios y 4 bichos\n8. Laberinto 4 habitaciones, 4 armarios, 4 bichos y tunel\n9. Laberinto 4 habitaciones, 4 armarios, 4 bichos y tunel ROMBO\n"+Style.RESET_ALL)
+        opcion1 = input(Fore.MAGENTA+"¿Qué JSON quieres elegir para crear el laberinto?\n"+Style.RESET_ALL+Fore.LIGHTWHITE_EX+"1. Laberinto 2 habitaciones (VERTICAL)\n2. Laberinto 2 habitacion (HORIZONTAL)\n3. Laberinto 2 habitaciones y 2 armarios\n4. Laberinto 2 habitaciones y 2 bichos\n5. Laberinto 2 habitaciones y tunel\n6. Laberinto 4 habitaciones,4 armarios\n7. Laberinto 4 habitaciones, 4 armarios y 4 bichos\n8. Laberinto 4 habitaciones, 4 armarios, 4 bichos y tunel\n9. Laberinto 4 habitaciones, 4 armarios, 4 bichos y tunel ROMBO\n10. Laberinto 4 habitaciones, 4 armarios, 4 bichos, 4 hechiceros y tunel\n11. Laberinto 4 habitaciones, 4 armarios, 4 hechiceros y tunel\n"+Style.RESET_ALL)
         opcion1 = int(opcion1)
         switch = {
             1: 'laberintos/lab2HabVertical.json',
@@ -24,7 +24,9 @@ while True:
             6: 'laberintos/lab4Hab4Arm.json',
             7: 'laberintos/lab4Hab4Arm4Bichos.json',
             8: 'laberintos/lab4Hab4Arm4BichosTunel.json',
-            9: 'laberintos/lab4Hab4Arm4BichosTunelRombo.json'
+            9: 'laberintos/lab4Hab4Arm4BichosTunelRombo.json',
+            10: 'laberintos/lab4Hab4Arm4Bichos4HechicerosTunel.json',
+            11: 'laberintos/lab4Hab4Arm4HechicerosTunel.json'
         }
         unArchivo = switch.get(opcion1, "\n\nEl carácter ingresado no es correcto.\n\n")
         director = Director()
@@ -67,14 +69,14 @@ while True:
     while juego.fase.esFinal() == False:
         if activado:
             if abierto:
-                operacion = input(Fore.MAGENTA+"\n¿Qué quieres hacer?\n"+Fore.RED+"0. Atacar\n"+Fore.LIGHTBLUE_EX+"1. Desactivar Todas Las Bombas\n2. Cerrar Todas Las Puertas\n"+Fore.LIGHTGREEN_EX+"3. Lanzar Bichos\n4. Terminar Bichos\n"+Fore.LIGHTWHITE_EX+"5. Añadir personaje\n6. Entrar en tunel\n"+Fore.YELLOW+"7. Añadir monedas al inventario\n8. Quitar monedas del inventario\n"+Fore.BLUE+"9. Abrir Puerta\n"+Fore.CYAN+"10. Mover personaje\n"+Fore.LIGHTMAGENTA_EX+"11. Entrar a la tienda\n"+Fore.WHITE+"12. Salir\n"+Style.RESET_ALL)
+                operacion = input(Fore.MAGENTA+"\n¿Qué quieres hacer?\n"+Fore.RED+"0. Atacar\n"+Fore.LIGHTBLUE_EX+"1. Desactivar Todas Las Bombas\n2. Cerrar Todas Las Puertas\n"+Fore.LIGHTGREEN_EX+"3. Lanzar Hilos\n4. Terminar Hilos\n"+Fore.LIGHTWHITE_EX+"5. Añadir personaje\n6. Entrar en tunel\n"+Fore.YELLOW+"7. Añadir monedas al inventario\n8. Quitar monedas del inventario\n"+Fore.BLUE+"9. Abrir Puerta\n"+Fore.CYAN+"10. Mover personaje\n"+Fore.LIGHTMAGENTA_EX+"11. Entrar a la tienda\n"+Fore.WHITE+"12. Salir\n"+Style.RESET_ALL)
             else:
-                operacion = input(Fore.MAGENTA+"\n¿Qué quieres hacer?\n"+Fore.RED+"0. Atacar\n"+Fore.LIGHTBLUE_EX+"1. Desactivar Todas Las Bombas\n2. Abrir Todas Las Puertas\n"+Fore.LIGHTGREEN_EX+"3. Lanzar Bichos\n4. Terminar Bichos\n"+Fore.LIGHTWHITE_EX+"5. Añadir personaje\n6. Entrar en tunel\n"+Fore.YELLOW+"7. Añadir monedas al inventario\n8. Quitar monedas del inventario\n"+Fore.BLUE+"9. Abrir Puerta\n"+Fore.CYAN+"10. Mover personaje\n"+Fore.LIGHTMAGENTA_EX+"11. Entrar a la tienda\n"+Fore.WHITE+"12. Salir\n"+Style.RESET_ALL)
+                operacion = input(Fore.MAGENTA+"\n¿Qué quieres hacer?\n"+Fore.RED+"0. Atacar\n"+Fore.LIGHTBLUE_EX+"1. Desactivar Todas Las Bombas\n2. Abrir Todas Las Puertas\n"+Fore.LIGHTGREEN_EX+"3. Lanzar Hilos\n4. Terminar Hilos\n"+Fore.LIGHTWHITE_EX+"5. Añadir personaje\n6. Entrar en tunel\n"+Fore.YELLOW+"7. Añadir monedas al inventario\n8. Quitar monedas del inventario\n"+Fore.BLUE+"9. Abrir Puerta\n"+Fore.CYAN+"10. Mover personaje\n"+Fore.LIGHTMAGENTA_EX+"11. Entrar a la tienda\n"+Fore.WHITE+"12. Salir\n"+Style.RESET_ALL)
         else:
             if abierto:
-                operacion = input(Fore.MAGENTA+"\n¿Qué quieres hacer?\n"+Fore.RED+"0. Atacar\n"+Fore.LIGHTBLUE_EX+"1. Activar Todas Las Bombas\n2. Cerrar Todas Las Puertas\n"+Fore.LIGHTGREEN_EX+"3. Lanzar Bichos\n4. Terminar Bichos\n"+Fore.LIGHTWHITE_EX+"5. Añadir personaje\n6. Entrar en tunel\n"+Fore.YELLOW+"7. Añadir monedas al inventario\n8. Quitar monedas del inventario\n"+Fore.BLUE+"9. Abrir Puerta\n"+Fore.CYAN+"10. Mover personaje\n"+Fore.LIGHTMAGENTA_EX+"11. Entrar a la tienda\n"+Fore.WHITE+"12. Salir\n"+Style.RESET_ALL)
+                operacion = input(Fore.MAGENTA+"\n¿Qué quieres hacer?\n"+Fore.RED+"0. Atacar\n"+Fore.LIGHTBLUE_EX+"1. Activar Todas Las Bombas\n2. Cerrar Todas Las Puertas\n"+Fore.LIGHTGREEN_EX+"3. Lanzar Hilos\n4. Terminar Hilos\n"+Fore.LIGHTWHITE_EX+"5. Añadir personaje\n6. Entrar en tunel\n"+Fore.YELLOW+"7. Añadir monedas al inventario\n8. Quitar monedas del inventario\n"+Fore.BLUE+"9. Abrir Puerta\n"+Fore.CYAN+"10. Mover personaje\n"+Fore.LIGHTMAGENTA_EX+"11. Entrar a la tienda\n"+Fore.WHITE+"12. Salir\n"+Style.RESET_ALL)
             else:
-                operacion = input(Fore.MAGENTA+"\n¿Qué quieres hacer?\n"+Fore.RED+"0. Atacar\n"+Fore.LIGHTBLUE_EX+"1. Activar Todas Las Bombas\n2. Abrir Todas Las Puertas\n"+Fore.LIGHTGREEN_EX+"3. Lanzar Bichos\n4. Terminar Bichos\n"+Fore.LIGHTWHITE_EX+"5. Añadir personaje\n6. Entrar en tunel\n"+Fore.YELLOW+"7. Añadir monedas al inventario\n8. Quitar monedas del inventario\n"+Fore.BLUE+"9. Abrir Puerta\n"+Fore.CYAN+"10. Mover personaje\n"+Fore.LIGHTMAGENTA_EX+"11. Entrar a la tienda\n"+Fore.WHITE+"12. Salir\n"+Style.RESET_ALL)
+                operacion = input(Fore.MAGENTA+"\n¿Qué quieres hacer?\n"+Fore.RED+"0. Atacar\n"+Fore.LIGHTBLUE_EX+"1. Activar Todas Las Bombas\n2. Abrir Todas Las Puertas\n"+Fore.LIGHTGREEN_EX+"3. Lanzar Hilos\n4. Terminar Hilos\n"+Fore.LIGHTWHITE_EX+"5. Añadir personaje\n6. Entrar en tunel\n"+Fore.YELLOW+"7. Añadir monedas al inventario\n8. Quitar monedas del inventario\n"+Fore.BLUE+"9. Abrir Puerta\n"+Fore.CYAN+"10. Mover personaje\n"+Fore.LIGHTMAGENTA_EX+"11. Entrar a la tienda\n"+Fore.WHITE+"12. Salir\n"+Style.RESET_ALL)
 
         try:
             operacion = int(operacion)
@@ -104,14 +106,24 @@ while True:
                 while True:
                     if len(juego.bichos) == 0:
                         print("\n\nNo hay bichos en el laberinto.\n\n")
+                        if len(juego.hechiceros) > 0:
+                            juego.lanzarHechiceros()
+                        
+                        break
+                    elif len(juego.hechiceros) == 0:
+                        print("\n\nNo hay hechiceros en el laberinto.\n\n")
+                        if len(juego.bichos) > 0:
+                            juego.lanzarBichos()
                         break
                     else:
                         juego.lanzarBichos()
-                        print("Todos los bichos lanzados")
+                        juego.lanzarHechiceros()
+                        print("Todos los hilos lanzados")
                         break
                 print('\n',juego)
             elif operacion == 4:
                 juego.terminarBichos()
+                juego.terminarHechiceros()
                 print("Todos los hilos terminados")
             elif operacion == 5:
                 personaje = Personaje()
