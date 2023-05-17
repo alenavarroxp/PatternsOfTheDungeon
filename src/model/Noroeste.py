@@ -16,6 +16,9 @@ class Noroeste(Orientacion):
     def ponerElemento(self,unEM,unaHab):
         unaHab.noroeste = unEM
 
+    def obtenerComandosDe(self,unaForma):
+        return unaForma.noroeste.obtenerComandos()
+    
     def recorrerEn(self, unBloque, unContenedor):
         if unContenedor.noroeste is not None:
             unContenedor.noroeste.recorrer(unBloque)

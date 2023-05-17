@@ -20,5 +20,9 @@ class Orientacion(ABC):
     def ponerElemento(self,unEM,unaForma):
         pass
 
+    def obtenerComandosDe(self,unaForma):
+        pass
+
     def obtenerElementoEn(self,unContenedor):
         pass
+

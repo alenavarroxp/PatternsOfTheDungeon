@@ -18,6 +18,7 @@ class Modo():
         print("Bicho camina")
         orientacion = bicho.obtenerOrientacionAleatoria()
         bicho.irA(orientacion)
+        bicho.notificar()
     
     def ataca(self,bicho):
         bicho.atacar()

@@ -16,6 +16,9 @@ class Sureste(Orientacion):
     def ponerElemento(self,unEM,unaHab):
         unaHab.sureste = unEM
 
+    def obtenerComandosDe(self,unaForma):
+        return unaForma.sureste.obtenerComandos()
+    
     def recorrerEn(self, unBloque, unContenedor):
         if unContenedor.sureste is not None:
             unContenedor.sureste.recorrer(unBloque)

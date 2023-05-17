@@ -56,6 +56,7 @@ class LaberintoBuilder():
         arm.agregarOrientacion(self.fabricarOeste())
         arm.agregarOrientacion(self.fabricarSur())
         puerta = self.fabricarPuerta(arm,unContenedor)
+        puerta.agregarComando(Abrir(),puerta)
         arm.ponerEnElemento(self.fabricarEste(),puerta)
         unContenedor.agregarHijo(arm)
 

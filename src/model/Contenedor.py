@@ -27,7 +27,15 @@ class Contenedor(ElementoMapa):
         self.sur = None
         self.forma = None
         self.num = num
-        
+    
+
+    def obtenerComandos(self):
+        lista = []
+        for hijo in self.hijos:
+            lista.extend(hijo.obtenerComandos())
+        lista.extend(self.forma.obtenerComandos())
+        return lista
+
 
     def agregarHijo(self,unHijo):
         unHijo.padre = self

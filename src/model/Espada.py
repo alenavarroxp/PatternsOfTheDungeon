@@ -7,6 +7,9 @@ class Espada(Objeto):
         super().__init__()
         self.estado = True
 
+    def obtenerComandos(self):
+        pass
+    
     def esEspada(self):
         return True
     

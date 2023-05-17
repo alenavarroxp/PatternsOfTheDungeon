@@ -27,6 +27,10 @@ class Sur(Orientacion):
     def ir(self,alguien):
         contenedor = alguien.posicion.forma
         contenedor.sur.entrar(alguien)
+        alguien.notificar()
+    
+    def obtenerComandosDe(self,unaForma):
+        return unaForma.sur.obtenerComandos()
     
     def obtenerElementoEn(self,unContenedor):
         return unContenedor.sur

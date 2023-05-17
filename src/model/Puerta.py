@@ -76,6 +76,7 @@ class Puerta(ElementoMapa):
         else:
             print(alguien,' cierra la puerta')
             self.quitarCerrar()
+            
     def quitarCerrar(self):
         for comando in self.comandos:
             if comando.esCerrar():

@@ -34,8 +34,8 @@
     ],
     "hechiceros":[
        {"modo":"mago","posicion":1},
-       {"modo":"mago","posicion":3},
-       {"modo":"brujo","posicion":2},
+       {"modo":"mago","posicion":2},
+       {"modo":"brujo","posicion":3},
        {"modo":"brujo","posicion":4}
     ]
 }

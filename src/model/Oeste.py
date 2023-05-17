@@ -27,7 +27,11 @@ class Oeste(Orientacion):
     def ir(self,alguien):
         contenedor = alguien.posicion.forma
         contenedor.oeste.entrar(alguien)
+        alguien.notificar()
 
+    def obtenerComandosDe(self,unaForma):
+        return unaForma.oeste.obtenerComandos()
+    
     def obtenerElementoEn(self,unContenedor):
         return unContenedor.oeste
     

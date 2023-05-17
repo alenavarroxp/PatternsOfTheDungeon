@@ -7,4 +7,4 @@ from src.model.ElementoMapa import ElementoMapa
 
 class Hoja(ElementoMapa):
     def __init__(self):
-        pass
+        super().__init__()

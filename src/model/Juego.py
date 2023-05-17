@@ -97,11 +97,11 @@ class Juego:
             unHechicero.conjura()
 
     def terminarBichos(self):
-        for bicho in self.bichos:
+        for bicho in self.bichos[:]:
             self.terminarHilo(bicho)
     
     def terminarHechiceros(self):
-        for hechicero in self.hechiceros:
+        for hechicero in self.hechiceros[:]:
             self.terminarHilo(hechicero)
 
     def terminarHilo(self,unEnte):
@@ -232,6 +232,10 @@ class Juego:
                 else:
                     print(Fore.YELLOW+"\n\nFin del juego. Han ganado los enemigos.\n\n")
                 self.finJuego()
+    
+    def muereMago(self):
+        for hechicero in self.hechiceros[:]:
+            self.hechiceros.remove(hechicero)
 
     def personajeMuere(self):
         print("Fin del juego.",self.personaje.nickname," ha muerto.")
@@ -242,6 +246,7 @@ class Juego:
         self.fase = Final()
         self.terminarBichos()
         self.terminarHechiceros()
+        self.muereMago()
    
     ##
 

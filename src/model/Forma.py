@@ -6,6 +6,11 @@ class Forma():
         self.extentX = 0 
         self.extentY = 0
 
+    def obtenerComandos(self):
+        lista = []
+        for orientacion in self.orientaciones:
+            lista.extend(orientacion.obtenerComandosDe(self))
+        return lista
     
     def aceptar(self,unVisitor):
         for orientacion in self.orientaciones:
