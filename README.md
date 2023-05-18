@@ -29,8 +29,8 @@
 | Command          | Patrón que encapsula una petición como un objeto, permitiendo parametrizar a los clientes con diferentes peticiones y soportar operaciones deshacer. |
 
 ## Dependencias<br/>
-**PYGAME:** pip install pygame 
-**COLORAMA:** pip install colorama
+**PYGAME:** pip install pygame <br/>
+**COLORAMA:** pip install colorama <br/>
 
 
 
