@@ -32,7 +32,7 @@ class LaberintoGUI():
 
     def iniciarJuego(self):
         director = Director()
-        director.procesar('laberintos/lab4Hab4Arm4HechicerosTunel.json')
+        director.procesar('laberintos/lab4Hab4Arm4Bichos4HechicerosTunel.json')
         self.juego=director.obtenerJuego()
         self.mostrarLaberinto()
         #Abrir ventana

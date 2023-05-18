@@ -2,22 +2,17 @@
     "forma":"cuadrado",
     "laberinto":[
         {"tipo":"habitacion","num":1,"hijos":[
-            {"tipo":"armario","num":1,"hijos":[]},
-            {"tipo":"tunel"},
-            {"tipo":"baul","num":1,"contenido":"Espada","hijos":[]}
+            {"tipo":"armario","num":1,"hijos":[]}
         ]},
         {"tipo":"habitacion","num":2,"hijos":[
-            {"tipo":"armario","num":2,"hijos":[]},
-            {"tipo":"baul","num":1,"contenido":"Espada","hijos":[]}
+            {"tipo":"armario","num":2,"hijos":[]}
             
        ]},
        {"tipo":"habitacion","num":3,"hijos":[
-            {"tipo":"armario","num":3,"hijos":[]},
-            {"tipo":"baul","num":1,"contenido":"Espada","hijos":[]}
+            {"tipo":"armario","num":3,"hijos":[]}
        ]},
        {"tipo":"habitacion","num":4,"hijos":[
-            {"tipo":"armario","num":4,"hijos":[]},
-            {"tipo":"baul","num":1,"contenido":"Espada","hijos":[]}
+            {"tipo":"armario","num":4,"hijos":[]}
        ]}
     ],
     "puertas":[
