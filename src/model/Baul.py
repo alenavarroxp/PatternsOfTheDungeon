@@ -9,6 +9,12 @@ class Baul(Contenedor):
     def __init__(self, num):
         super().__init__(num)
         
+    def aceptar(self,unVisitor):    
+        unVisitor.visitarBaul(self)
+        #PARA EL CONTENIDO TIPO LAS ESPADAS Y DEMAS QUE SON HIJOS DEL CONTENEDOR
+        # for hijo in self.hijos:
+        #     hijo.aceptar(unVisitor)
+        self.forma.aceptar(unVisitor)
 
     def entrar(self):
         print('Estas en el baul',self.num)

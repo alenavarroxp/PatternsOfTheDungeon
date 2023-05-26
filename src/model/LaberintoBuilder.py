@@ -47,10 +47,10 @@ class LaberintoBuilder():
         num = unContenedor.num
         arm = self.fabricarArmario(num)
         arm.forma = self.fabricarForma()
-        arm.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
-        arm.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
-        arm.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
-        arm.ponerEnElemento(self.fabricarSur(),self.fabricarPared())
+        arm.ponerEnElemento(self.fabricarNorte(),self.fabricarPared(arm))
+        arm.ponerEnElemento(self.fabricarEste(),self.fabricarPared(arm))
+        arm.ponerEnElemento(self.fabricarOeste(),self.fabricarPared(arm))
+        arm.ponerEnElemento(self.fabricarSur(),self.fabricarPared(arm))
         arm.agregarOrientacion(self.fabricarNorte())
         arm.agregarOrientacion(self.fabricarEste())
         arm.agregarOrientacion(self.fabricarOeste())
@@ -66,10 +66,10 @@ class LaberintoBuilder():
     def fabricarBaulEn(self,unContenedor,num,contenido):
         baul = self.fabricarBaul(num)
         baul.forma = self.fabricarForma()
-        baul.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
-        baul.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
-        baul.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
-        baul.ponerEnElemento(self.fabricarSur(),self.fabricarPared())
+        baul.ponerEnElemento(self.fabricarNorte(),self.fabricarPared(baul))
+        baul.ponerEnElemento(self.fabricarEste(),self.fabricarPared(baul))
+        baul.ponerEnElemento(self.fabricarOeste(),self.fabricarPared(baul))
+        baul.ponerEnElemento(self.fabricarSur(),self.fabricarPared(baul))
         cadena1 = getattr(self,'fabricar' + contenido)()
         baul.agregarHijo(cadena1)
         baul.agregarOrientacion(self.fabricarNorte())
@@ -166,10 +166,10 @@ class LaberintoBuilder():
         hab = Habitacion(num)
         hab.forma = self.fabricarForma()
         hab.forma.num = num
-        hab.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
-        hab.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
-        hab.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
-        hab.ponerEnElemento(self.fabricarSur(),self.fabricarPared())
+        hab.ponerEnElemento(self.fabricarNorte(),self.fabricarPared(hab))
+        hab.ponerEnElemento(self.fabricarEste(),self.fabricarPared(hab))
+        hab.ponerEnElemento(self.fabricarOeste(),self.fabricarPared(hab))
+        hab.ponerEnElemento(self.fabricarSur(),self.fabricarPared(hab))
         hab.agregarOrientacion(self.fabricarNorte())
         hab.agregarOrientacion(self.fabricarEste())
         hab.agregarOrientacion(self.fabricarOeste())
@@ -199,13 +199,16 @@ class LaberintoBuilder():
     def fabricarOeste(self):
         return Oeste()
     
-    def fabricarPared(self):
-        return Pared()
+    def fabricarPared(self,padre):
+        pared = Pared()
+        pared.padre = padre
+        return pared
     
     def fabricarPuerta(self,unaHab:Habitacion,otraHab:Habitacion):
         puerta = Puerta()
         puerta.lado1 = unaHab
         puerta.lado2 = otraHab
+        puerta.padre = unaHab
         return puerta
     
     def fabricarPuertaBuilder(self,num1, ori1, num2, ori2):
@@ -223,6 +226,7 @@ class LaberintoBuilder():
         puerta = Puerta()
         puerta.lado1 = unaHab
         puerta.lado2 = otraHab
+        puerta.padre = unaHab
         puerta.abierta = estado
         return puerta
     

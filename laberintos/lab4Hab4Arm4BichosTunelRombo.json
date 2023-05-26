@@ -13,7 +13,8 @@
             {"tipo":"armario","num":3,"hijos":[]}
        ]},
        {"tipo":"habitacion","num":4,"hijos":[
-            {"tipo":"armario","num":4,"hijos":[]}
+            {"tipo":"armario","num":4,"hijos":[]},
+            {"tipo":"tunel"}
        ]}
     ],
     "puertas":[

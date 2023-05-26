@@ -1,4 +1,5 @@
 import pygame,sys
+from src.model.Habitacion import Habitacion
 from src.model.Sur import Sur
 from src.model.Norte import Norte
 from src.model.Mago import Mago
@@ -117,6 +118,12 @@ class LaberintoGUI():
         iniciarJuegoText = fuente.render("Iniciar juego", True, (255, 255, 255))
         self.screen.blit(iniciarJuegoText, (iniciarJuego.x + 10, iniciarJuego.y + 10))
 
+
+        activarBombas = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 200, 200, 50))
+        activarBombasText = fuente.render("Activar bombas", True, (255, 255, 255))
+        self.screen.blit(activarBombasText, (activarBombas.x + 10, activarBombas.y + 10))
+        activar = False
+
         while running:
             #TODO:
             #self.dibujarComandos()
@@ -145,10 +152,27 @@ class LaberintoGUI():
                             abrirPuertasText = fuente.render("Abrir puertas", True, (255, 255, 255))
                             self.screen.blit(abrirPuertasText, (abrirPuertas.x + 10, abrirPuertas.y + 10))
                             self.redibujar()  
+
                     if iniciarJuego.collidepoint(mouse_pos):
                         print("Iniciar juego")
                         self.juego.lanzarBichos()
                         self.juego.lanzarHechiceros()
+
+                    if activarBombas.collidepoint(mouse_pos):
+                        if not activar:
+                            activar = True
+                            self.juego.activarBombas()
+                            activarBombas = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 200, 200, 50))
+                            activarBombasText = fuente.render("Desactivar bombas", True, (255, 255, 255))
+                            self.screen.blit(activarBombasText, (activarBombas.x + 10, activarBombas.y + 10))
+                            self.redibujar()
+                        else:
+                            activar = False
+                            self.juego.desactivarBombas()
+                            activarBombas = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 200, 200, 50))
+                            activarBombasText = fuente.render("Activar bombas", True, (255, 255, 255))
+                            self.screen.blit(activarBombasText, (activarBombas.x + 10, activarBombas.y + 10))
+                            self.redibujar()
 
                 if keys[pygame.K_LEFT] or keys[pygame.K_a]:
                     self.pX = self.origenX -(30/2) + 50
@@ -261,9 +285,16 @@ class LaberintoGUI():
         self.redibujar()
             
     def redibujar(self):
-        for hijo in self.juego.laberinto.hijos:
-                    self.dibujarContenedorRectangularEscala(hijo,hijo.forma, 1)
-                    self.ocultar()
+        self.juego.laberinto.aceptar(self)
+        self.ocultar()
+        # for hijo in self.juego.laberinto.hijos:
+        #             self.dibujarContenedorRectangularEscala(hijo,hijo.forma, 1)
+        #             self.ocultar()
+        #             for hijo2 in hijo.hijos:
+        #                 if hijo2.esTunel():
+        #                     self.dibujarTunel(hijo2.padre)
+        
+        
         self.mostrarBichos()
         self.mostrarHechiceros()
 
@@ -331,7 +362,7 @@ class LaberintoGUI():
         text = miFuente.render("Vidas: " + str(self.person.vidas), True, (255, 0, 0))
         rectText = text.get_rect()
         rectText.center = (80, 30)
-        rect = pygame.Rect(rectText.left - 5, rectText.top - 5, rectText.width + 10, rectText.height + 10)
+        rect = pygame.Rect(rectText.left - 5, rectText.top - 5, rectText.width + 10, rectText.height + 7)
         if pygame.display.get_active():
             pygame.draw.rect(self.screen, (50, 50, 50), rect)  # Dibuja el rectángulo negro detrás del texto
             self.screen.blit(text, rectText)
@@ -342,35 +373,81 @@ class LaberintoGUI():
 
 
     def visitarArmario(self,unArmario):
-        print('Armario visitado')
+        # print('Armario visitado')
         #dibujar
+        unPuntoX = unArmario.padre.forma.puntoX
+        unPuntoY = unArmario.padre.forma.puntoY
+        ancho = unArmario.padre.forma.extentX
+        alto = unArmario.padre.forma.extentY
+        self.dibujarArmario(unArmario.forma,unPuntoX,unPuntoY,ancho,alto)
     
     def visitarBomba(self,unaBomba):
         print('Bomba visitada')
         #dibujar
+        unPuntoX = unaBomba.padre.forma.puntoX
+        unPuntoY = unaBomba.padre.forma.puntoY
+        ancho = unaBomba.padre.forma.extentX
+        alto = unaBomba.padre.forma.extentY
+        self.dibujarBomba(unaBomba, unPuntoX,unPuntoY,ancho,alto)
+
+    def dibujarBomba(self,unaBomba,unPuntoX,unPuntoY,ancho,alto):
+        if unaBomba.activa:
+                bomba = pygame.image.load("graphics/bombActive.png").convert_alpha()
+                bomba = pygame.transform.scale(bomba,(100,100))
+                self.screen.blit(bomba,(unPuntoX+ancho/2+50,unPuntoY+20))
+        else:
+                bomba = pygame.image.load("graphics/bombNoActive.png").convert_alpha()
+                bomba = pygame.transform.scale(bomba,(100,100))
+                self.screen.blit(bomba,(unPuntoX+ancho/2+50 ,unPuntoY+20))
 
     def visitarBaul(self,unBaul):
-        print('Baul visitado')
+        # print('Baul visitado')
         #dibujar    
+        unPuntoX = unBaul.padre.forma.puntoX
+        unPuntoY = unBaul.padre.forma.puntoY
+        ancho = unBaul.padre.forma.extentX
+        alto = unBaul.padre.forma.extentY
+        self.dibujarBaul(unBaul.forma,unPuntoX,unPuntoY,ancho,alto)
     
     def visitarHabitacion(self,unaHabitacion):
-        print('Habitacion visitada')
+        # print('Habitacion visitada')
         #dibujar
         self.dibujarContenedorRectangularEscala(unaHabitacion,unaHabitacion.forma, 1)
         
     
     def visitarPuerta(self,unaPuerta):
-        print('Puerta visitada')
-        #dibujar
+        # print('Puerta visitada')
+        # #dibujar
+        # puntoX = unaPuerta.padre.forma.puntoX
+        # puntoY = unaPuerta.padre.forma.puntoY
+        # extentX =unaPuerta.padre.forma.extentX
+        # extentY =unaPuerta.padre.forma.extentY
+        # if isinstance(unaPuerta.padre, Habitacion):
+        #     self.dibujarPuerta(unaPuerta.padre.forma,puntoX,puntoY,extentX,extentY)
+        pass
     
     def visitarPared(self,unaPared):
-        print('Pared visitada')
+        # print('Pared visitada')
         #dibujar
+        puntoX = unaPared.padre.forma.puntoX
+        puntoY = unaPared.padre.forma.puntoY
+        extentX = unaPared.padre.forma.extentX
+        extentY = unaPared.padre.forma.extentY
+        self.dibujarPared(unaPared.padre.forma,puntoX,puntoY,extentX,extentY)
         
 
     def visitarTunel(self,unTunel):
-        print('Tunel visitado')
+        # print('Tunel visitado')
         #dibujar
+        self.dibujarTunel(unTunel.padre)
+
+    def dibujarTunel(self,unaHab):
+        archivo = "graphics/tunel.png"
+        #rotar
+        imagen = pygame.image.load(archivo).convert_alpha()
+        imagen = pygame.transform.rotate(imagen, -180)
+        imagen = pygame.transform.scale(imagen,(50,50))
+        self.screen.blit(imagen,(unaHab.forma.puntoX,unaHab.forma.puntoY+unaHab.forma.extentY-60))
 
     def dibujarContenedorRectangularEscala(self,unaHab,unaForma,escala):
        unPuntoX = unaForma.puntoX
@@ -403,24 +480,24 @@ class LaberintoGUI():
        
        pygame.draw.rect(rect,(0,0,0),rect.get_rect(),2)
        self.screen.blit(rect,(unPuntoX,unPuntoY))        
-       self.dibujarPared(unaForma,unPuntoX,unPuntoY,ancho,alto)
+    #    self.dibujarPared(unaForma,unPuntoX,unPuntoY,ancho,alto)
        self.dibujarPuerta(unaForma,unPuntoX,unPuntoY,ancho,alto)
-       for hijo in unaHab.hijos:
-            if hijo.esArmario():
-                self.dibujarArmario(hijo.forma,unPuntoX,unPuntoY,ancho,alto)
-            if hijo.esBaul():
-                self.dibujarBaul(hijo.forma,unPuntoX,unPuntoY,ancho,alto)
+    #    for hijo in unaHab.hijos:
+    #         if hijo.esArmario():
+    #             self.dibujarArmario(hijo.forma,unPuntoX,unPuntoY,ancho,alto)
+    #         if hijo.esBaul():
+    #             self.dibujarBaul(hijo.forma,unPuntoX,unPuntoY,ancho,alto)
 
     def dibujarArmario(self,unaForma,unPuntoX,unPuntoY,ancho,alto):
         if unaForma.este.esPuerta():
             if unaForma.este.abierta:
                 armario = pygame.image.load("graphics/armarioAbierto.png").convert_alpha()
                 armario = pygame.transform.scale(armario,(62,83))
-                self.screen.blit(armario,(unPuntoX+ancho/2-120,unPuntoY))
+                self.screen.blit(armario,(unPuntoX+ancho-80,unPuntoY+30))
             else:
                 armario = pygame.image.load("graphics/armarioCerrado.png").convert_alpha()
                 armario = pygame.transform.scale(armario,(45,83))
-                self.screen.blit(armario,(unPuntoX+ancho/2-110 ,unPuntoY))
+                self.screen.blit(armario,(unPuntoX+ancho-70 ,unPuntoY+30))
     
     def dibujarBaul(self,unaForma,unPuntoX,unPuntoY,ancho,alto):
         if unaForma.este.esPuerta():
@@ -468,12 +545,7 @@ class LaberintoGUI():
 
             else:
                 puertaOeste = pygame.image.load("graphics/puertaOeste.png").convert_alpha()
-            
-            pared1 = pygame.image.load("graphics/paredOeste.png").convert_alpha()
-            for y in range(0,(int(unPuntoX/2)-198),22):
-                self.screen.blit(pared1,(unPuntoX,unPuntoY+y))
-                self.screen.blit(pared1,(unPuntoX,unPuntoY+alto-y-22))
-
+        
             puertaOeste = pygame.transform.scale(puertaOeste,(12,128))
             self.screen.blit(puertaOeste,(unPuntoX,unPuntoY+alto/2-60))
 

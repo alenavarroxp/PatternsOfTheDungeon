@@ -8,7 +8,7 @@ class Espada(Objeto):
         self.estado = True
 
     def obtenerComandos(self):
-        pass
+        return ['Atacar']
     
     def esEspada(self):
         return True
