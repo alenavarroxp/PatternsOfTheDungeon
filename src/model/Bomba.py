@@ -5,6 +5,7 @@ from src.model.Decorator import Decorator
 
 class Bomba(Decorator):
     def __init__(self):
+        super().__init__()
         self.activa = False
         
     def aceptar(self,unVisitor):

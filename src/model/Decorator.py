@@ -6,4 +6,5 @@ from src.model.Hoja import Hoja
 
 class Decorator(Hoja,ABC):
     def __init__(self):
+        super().__init__()
         self.component = None

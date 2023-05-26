@@ -1,4 +1,4 @@
-import pygame,sys
+import pygame,sys,os
 from src.model.Habitacion import Habitacion
 from src.model.Sur import Sur
 from src.model.Norte import Norte
@@ -29,15 +29,150 @@ class LaberintoGUI():
         self.habActual = None
         self.person = None
         self.pasadoPuerta = False
-        
+    
+    def pantallaInicial(self):
+        pygame.init()
+        pygame.font.init()
+        self.screen.fill((50, 50, 50))
+        pygame.display.set_caption("Patterns of the Dungeon")
+        self.screen.blit(pygame.image.load("graphics/Inicio.jpg"), (0, 0))
 
-    def iniciarJuego(self):
+        empezar = pygame.Surface((250, 75), pygame.SRCALPHA)
+        self.screen.blit(empezar, (self.width/2-125, self.height/2+235))
+
+        pygame.display.flip()
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                elif event.type == pygame.MOUSEMOTION:  # Evento de movimiento del ratón
+                    mouse_pos = pygame.mouse.get_pos()
+                    if empezar.get_rect(x=self.width/2-125, y=self.height/2+235).collidepoint(mouse_pos):
+                        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+                    else:
+                        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                elif event.type == pygame.MOUSEBUTTONDOWN:  # Evento de clic del ratón
+                    mouse_pos = pygame.mouse.get_pos()
+                    if empezar.get_rect(x=self.width/2-125, y=self.height/2+235).collidepoint(mouse_pos):
+                        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)  # Restaurar el cursor predeterminado
+                        self.seleccionarJuego()
+
+    def obtenerLaberintos(self, directorio):
+        laberintos = []
+        for file in os.listdir(directorio):
+            if file.endswith(".json") and "Rombo" not in file:
+                laberintos.append(file)
+        return laberintos
+
+    def seleccionarJuego(self):
+        pygame.init()
+        pygame.font.init()
+        self.screen.fill((50, 50, 50))
+        pygame.display.set_caption("Seleccionar juego - Patterns of the Dungeon")
+        self.screen.blit(pygame.image.load("graphics/SeleccionJuego.jpg"), (0, 0))
+
+        seleccionar = pygame.Surface((275, 500), pygame.SRCALPHA)
+        self.screen.blit(seleccionar, (self.width - 300, 190))
+
+        directorio = "laberintos/"
+        laberintos = self.obtenerLaberintos(directorio)
+        laberintos_rects = []
+        font = pygame.font.SysFont("Arial", 24)
+        seleccionado = None
+
+        scroll_offset = 0  # Desplazamiento del scroll
+        max_visible_items = min(8, len(laberintos))  # Número máximo de elementos visibles en la lista
+        if scroll_offset + max_visible_items > len(laberintos):
+            scroll_offset = max(0, len(laberintos) - max_visible_items)
+
+        imagen_laberinto = None  # Variable para almacenar la imagen del laberinto seleccionado
+        rect_preview = pygame.Rect(self.width - 750, self.height // 2 - 191, 674, 382)  # Rectángulo para la vista previa del laberinto
+
+        while True:
+            self.screen.fill((50, 50, 50))
+            self.screen.blit(pygame.image.load("graphics/SeleccionJuego.jpg"), (0, 0))
+
+            seleccionar = pygame.Surface((275, 500), pygame.SRCALPHA)
+            self.screen.blit(seleccionar, (self.width - 300, 190))
+
+            # Dentro del bucle principal
+            for i in range(scroll_offset, scroll_offset + max_visible_items):
+                if i >= len(laberintos):
+                    break
+                laberinto = laberintos[i]
+                rect = pygame.Rect(30, 190 + ((i - scroll_offset) * 60), 500, 50)
+                laberintos_rects.append(rect)
+                pygame.draw.rect(self.screen, (255, 255, 255), rect)
+                text = font.render(laberinto, True, (0, 0, 0))
+                self.screen.blit(text, (rect.x + 10, rect.y + 10))
+
+                # Verificar si el laberinto está seleccionado
+                if seleccionado == laberinto:
+                    # Rectángulo de resaltado
+                    resaltado_rect = pygame.Rect(rect.x, rect.y, rect.width, rect.height)
+                    pygame.draw.rect(self.screen, (222, 186, 122), resaltado_rect, 3)
+
+            # Barra de scroll
+            scroll_bar_rect = pygame.Rect(self.width - 20, 190, 10, 500)
+            pygame.draw.rect(self.screen, (100, 100, 100), scroll_bar_rect)
+
+            # Cálculo del tamaño y posición del scroll thumb
+            visible_ratio = max_visible_items / len(laberintos)
+            thumb_height = int(scroll_bar_rect.height * visible_ratio)
+            thumb_pos = int(scroll_bar_rect.y + (scroll_offset / len(laberintos)) * scroll_bar_rect.height)
+
+            # Scroll thumb
+            thumb_rect = pygame.Rect(self.width - 20, thumb_pos, 10, thumb_height)
+            pygame.draw.rect(self.screen, (200, 200, 200), thumb_rect)
+
+            if imagen_laberinto is not None:
+                self.screen.blit(imagen_laberinto, rect_preview)
+
+            pygame.display.flip()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+
+                elif event.type == pygame.MOUSEMOTION:  # Evento de movimiento del ratón
+                    mouse_pos = pygame.mouse.get_pos()
+                    if seleccionar.get_rect(x=self.width - 300, y=190).collidepoint(mouse_pos):
+                        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+                    else:
+                        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:  # Botón izquierdo del ratón
+                        for i, rect in enumerate(laberintos_rects):
+                            if i >= len(laberintos):
+                                break
+                            if rect.collidepoint(event.pos):
+                                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                                seleccionado = laberintos[i + scroll_offset]
+                                laberinto_nombre = os.path.splitext(seleccionado)[0]
+                                imagen_laberinto = pygame.image.load(f"graphics/preview/{laberinto_nombre}.png")
+                                break
+
+                        if seleccionado is not None:
+                            if seleccionar.get_rect(x=self.width - 300, y=190).collidepoint(event.pos):
+                                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                                self.iniciarJuego(directorio + seleccionado)
+
+                    elif event.button == 4:  # Rueda hacia arriba
+                        scroll_offset = max(0, scroll_offset - 1)
+                    elif event.button == 5:  # Rueda hacia abajo
+                        scroll_offset = min(len(laberintos) - max_visible_items, scroll_offset + 1)
+                        if scroll_offset + max_visible_items > len(laberintos):
+                            scroll_offset = max(0, len(laberintos) - max_visible_items)
+
+    def iniciarJuego(self,json):
         director = Director()
-        director.procesar('laberintos/lab4Hab4Arm4Bichos4HechicerosTunel.json')
+        director.procesar(json)
         self.juego=director.obtenerJuego()
         self.mostrarLaberinto()
         #Abrir ventana
         self.agregarPersonaje("Mario")
+        self.screen.fill((50, 50, 50))
         self.dibujarLaberinto()
         
         self.mostrarVentana()
@@ -68,6 +203,7 @@ class LaberintoGUI():
             unPuntoY = hijo.forma.puntoY
             hijo.forma.puntoX = abs(unPuntoX + self.minX)
             hijo.forma.puntoY = abs(unPuntoY + self.minY)
+
     def calcularDimensiones(self):
         
         for hijo in self.juego.laberinto.hijos:
@@ -92,7 +228,7 @@ class LaberintoGUI():
 
     def mostrarVentana(self):
         pygame.init()
-        pygame.display.set_caption("Laberinto")
+        pygame.display.set_caption("Juego - Patterns of the Dungeon")
         clock = pygame.time.Clock()
         running = True
         self.pX = self.origenX + (self.ancho/2) - (30/2)
@@ -124,7 +260,7 @@ class LaberintoGUI():
         self.screen.blit(activarBombasText, (activarBombas.x + 10, activarBombas.y + 10))
         activar = False
 
-        while running:
+        while self.juego.fase.esFinal() == False:
             #TODO:
             #self.dibujarComandos()
             keys = pygame.key.get_pressed()
@@ -226,6 +362,42 @@ class LaberintoGUI():
 
             pygame.display.update()
             clock.tick(60)
+        self.pantallaFinal()
+
+    def pantallaFinal(self):
+        pygame.init()
+        pygame.font.init()
+        self.screen.fill((50, 50, 50))
+        pygame.display.set_caption("Fin del juego - Patterns of the Dungeon")
+       
+        if self.juego.personaje is not None:
+            self.__init__()
+            self.screen.blit(pygame.image.load("graphics/FinDeJuego.jpg"), (0, 0))
+        else:
+            self.__init__()
+            self.screen.blit(pygame.image.load("graphics/FinDeJuegoPerder.jpg"), (0, 0))
+        
+
+        volver = pygame.Surface((450, 50), pygame.SRCALPHA)
+        self.screen.blit(volver, (self.width/2-225, self.height/2+240))
+
+        pygame.display.flip()
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                elif event.type == pygame.MOUSEMOTION:  # Evento de movimiento del ratón
+                    mouse_pos = pygame.mouse.get_pos()
+                    if volver.get_rect(x=self.width/2-125, y=self.height/2+235).collidepoint(mouse_pos):
+                        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+                    else:
+                        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                elif event.type == pygame.MOUSEBUTTONDOWN:  # Evento de clic del ratón
+                    mouse_pos = pygame.mouse.get_pos()
+                    if volver.get_rect(x=self.width/2-125, y=self.height/2+235).collidepoint(mouse_pos):
+                        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)  # Restaurar el cursor predeterminado
+                        self.pantallaInicial()
+
 
     def update(self):
         self.mostrarVidasPersonaje()
@@ -287,14 +459,6 @@ class LaberintoGUI():
     def redibujar(self):
         self.juego.laberinto.aceptar(self)
         self.ocultar()
-        # for hijo in self.juego.laberinto.hijos:
-        #             self.dibujarContenedorRectangularEscala(hijo,hijo.forma, 1)
-        #             self.ocultar()
-        #             for hijo2 in hijo.hijos:
-        #                 if hijo2.esTunel():
-        #                     self.dibujarTunel(hijo2.padre)
-        
-        
         self.mostrarBichos()
         self.mostrarHechiceros()
 
@@ -332,7 +496,6 @@ class LaberintoGUI():
     def dibujarLaberinto(self):
         if self.juego is None:
             return self
-        
         self.juego.laberinto.aceptar(self)
         self.ocultar()
         self.mostrarVidasPersonaje()
@@ -549,12 +712,13 @@ class LaberintoGUI():
             puertaOeste = pygame.transform.scale(puertaOeste,(12,128))
             self.screen.blit(puertaOeste,(unPuntoX,unPuntoY+alto/2-60))
 
-    
-                   
-    
+
+
+
 
 vista = LaberintoGUI()
-vista.iniciarJuego()
+vista.pantallaInicial()
+
 juego = vista.juego
 print(vista.juego)
 
