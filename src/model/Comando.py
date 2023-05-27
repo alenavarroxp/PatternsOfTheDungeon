@@ -10,3 +10,7 @@ class Comando():
     
     def esCerrar(self):
         return False
+    
+    def esEntrar(self):
+        return False
+    

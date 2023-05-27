@@ -33,7 +33,7 @@ while True:
         director.procesar(unArchivo)
         juego = director.builder.juego
         print(juego)
-    else:
+    elif metodo == 2:
         juego = Juego()
         opcion = input(Fore.MAGENTA+"¿Qué opción quieres elegir?\n"+Style.RESET_ALL+Fore.LIGHTWHITE_EX+"1. Laberinto 2 habitaciones\n2. EJERCICIO 1: Laberinto 2 habitaciones (Factory Method)\n3. Laberinto 2 habitaciones (FM & Decorator)\n4. Laberinto 4 habitaciones y 4 bichos\n5. Laberinto 4 habitaciones, 4 armarios y 4 bichos\n6. Laberinto 4 habitaciones,4 armarios, 4 bombas y 4 bichos\n7. EJERCICIO 2 Laberinto 4 habitaciones y 2 baúles\n8. Laberinto 4 habitaciones,4 armarios, 4 bombas y 4 bichos (ABSTRACT FACTORY)\n9. Laberinto 2 habitaciones y tienda\n"+Style.RESET_ALL)
         try:
@@ -64,19 +64,22 @@ while True:
                     print("------------------------------------------------")
         except ValueError:
             print("\n\nNo se admiten letras ni otro carácter fuera del rango.\n\n")
+    else:
+        print("\n\nNo se admiten letras ni otro carácter fuera del rango.\n\n")
+        break
     activado = False
     abierto = False
     while juego.fase.esFinal() == False:
         if activado:
             if abierto:
-                operacion = input(Fore.MAGENTA+"\n¿Qué quieres hacer?\n"+Fore.RED+"0. Atacar\n"+Fore.LIGHTBLUE_EX+"1. Desactivar Todas Las Bombas\n2. Cerrar Todas Las Puertas\n"+Fore.LIGHTGREEN_EX+"3. Lanzar Hilos\n4. Terminar Hilos\n"+Fore.LIGHTWHITE_EX+"5. Añadir personaje\n6. Entrar en tunel\n"+Fore.YELLOW+"7. Añadir monedas al inventario\n8. Quitar monedas del inventario\n"+Fore.BLUE+"9. Abrir Puerta\n"+Fore.CYAN+"10. Mover personaje\n"+Fore.LIGHTMAGENTA_EX+"11. Entrar a la tienda\n"+Fore.WHITE+"12. Salir\n"+Style.RESET_ALL)
+                operacion = input(Fore.MAGENTA+"\n¿Qué quieres hacer?\n"+Fore.RED+"0. Atacar\n"+Fore.LIGHTBLUE_EX+"1. Desactivar Todas Las Bombas\n2. Cerrar Todas Las Puertas\n"+Fore.LIGHTGREEN_EX+"3. Lanzar Hilos\n4. Terminar Hilos\n"+Fore.LIGHTWHITE_EX+"5. Añadir personaje\n6. Entrar en tunel\n"+Fore.YELLOW+"7. Añadir monedas al inventario\n8. Quitar monedas del inventario\n"+Fore.BLUE+"9. Abrir Puerta\n"+Fore.CYAN+"10. Mover personaje\n"+Fore.LIGHTMAGENTA_EX+"11. Entrar a la tienda\n"+Fore.WHITE+"12. ¿QUÉ PUEDO HACER EN ESTA POSICIÓN?\n13. Salir\n"+Style.RESET_ALL)
             else:
-                operacion = input(Fore.MAGENTA+"\n¿Qué quieres hacer?\n"+Fore.RED+"0. Atacar\n"+Fore.LIGHTBLUE_EX+"1. Desactivar Todas Las Bombas\n2. Abrir Todas Las Puertas\n"+Fore.LIGHTGREEN_EX+"3. Lanzar Hilos\n4. Terminar Hilos\n"+Fore.LIGHTWHITE_EX+"5. Añadir personaje\n6. Entrar en tunel\n"+Fore.YELLOW+"7. Añadir monedas al inventario\n8. Quitar monedas del inventario\n"+Fore.BLUE+"9. Abrir Puerta\n"+Fore.CYAN+"10. Mover personaje\n"+Fore.LIGHTMAGENTA_EX+"11. Entrar a la tienda\n"+Fore.WHITE+"12. Salir\n"+Style.RESET_ALL)
+                operacion = input(Fore.MAGENTA+"\n¿Qué quieres hacer?\n"+Fore.RED+"0. Atacar\n"+Fore.LIGHTBLUE_EX+"1. Desactivar Todas Las Bombas\n2. Abrir Todas Las Puertas\n"+Fore.LIGHTGREEN_EX+"3. Lanzar Hilos\n4. Terminar Hilos\n"+Fore.LIGHTWHITE_EX+"5. Añadir personaje\n6. Entrar en tunel\n"+Fore.YELLOW+"7. Añadir monedas al inventario\n8. Quitar monedas del inventario\n"+Fore.BLUE+"9. Abrir Puerta\n"+Fore.CYAN+"10. Mover personaje\n"+Fore.LIGHTMAGENTA_EX+"11. Entrar a la tienda\n"+Fore.WHITE+"12. ¿QUE PUEDO HACER EN ESTA POSICIÓN?\n13. Salir\n"+Style.RESET_ALL)
         else:
             if abierto:
-                operacion = input(Fore.MAGENTA+"\n¿Qué quieres hacer?\n"+Fore.RED+"0. Atacar\n"+Fore.LIGHTBLUE_EX+"1. Activar Todas Las Bombas\n2. Cerrar Todas Las Puertas\n"+Fore.LIGHTGREEN_EX+"3. Lanzar Hilos\n4. Terminar Hilos\n"+Fore.LIGHTWHITE_EX+"5. Añadir personaje\n6. Entrar en tunel\n"+Fore.YELLOW+"7. Añadir monedas al inventario\n8. Quitar monedas del inventario\n"+Fore.BLUE+"9. Abrir Puerta\n"+Fore.CYAN+"10. Mover personaje\n"+Fore.LIGHTMAGENTA_EX+"11. Entrar a la tienda\n"+Fore.WHITE+"12. Salir\n"+Style.RESET_ALL)
+                operacion = input(Fore.MAGENTA+"\n¿Qué quieres hacer?\n"+Fore.RED+"0. Atacar\n"+Fore.LIGHTBLUE_EX+"1. Activar Todas Las Bombas\n2. Cerrar Todas Las Puertas\n"+Fore.LIGHTGREEN_EX+"3. Lanzar Hilos\n4. Terminar Hilos\n"+Fore.LIGHTWHITE_EX+"5. Añadir personaje\n6. Entrar en tunel\n"+Fore.YELLOW+"7. Añadir monedas al inventario\n8. Quitar monedas del inventario\n"+Fore.BLUE+"9. Abrir Puerta\n"+Fore.CYAN+"10. Mover personaje\n"+Fore.LIGHTMAGENTA_EX+"11. Entrar a la tienda\n"+Fore.WHITE+"12. ¿QUE PUEDO HACER EN ESTA POSICIÓN?\n13. Salir\n"+Style.RESET_ALL)
             else:
-                operacion = input(Fore.MAGENTA+"\n¿Qué quieres hacer?\n"+Fore.RED+"0. Atacar\n"+Fore.LIGHTBLUE_EX+"1. Activar Todas Las Bombas\n2. Abrir Todas Las Puertas\n"+Fore.LIGHTGREEN_EX+"3. Lanzar Hilos\n4. Terminar Hilos\n"+Fore.LIGHTWHITE_EX+"5. Añadir personaje\n6. Entrar en tunel\n"+Fore.YELLOW+"7. Añadir monedas al inventario\n8. Quitar monedas del inventario\n"+Fore.BLUE+"9. Abrir Puerta\n"+Fore.CYAN+"10. Mover personaje\n"+Fore.LIGHTMAGENTA_EX+"11. Entrar a la tienda\n"+Fore.WHITE+"12. Salir\n"+Style.RESET_ALL)
+                operacion = input(Fore.MAGENTA+"\n¿Qué quieres hacer?\n"+Fore.RED+"0. Atacar\n"+Fore.LIGHTBLUE_EX+"1. Activar Todas Las Bombas\n2. Abrir Todas Las Puertas\n"+Fore.LIGHTGREEN_EX+"3. Lanzar Hilos\n4. Terminar Hilos\n"+Fore.LIGHTWHITE_EX+"5. Añadir personaje\n6. Entrar en tunel\n"+Fore.YELLOW+"7. Añadir monedas al inventario\n8. Quitar monedas del inventario\n"+Fore.BLUE+"9. Abrir Puerta\n"+Fore.CYAN+"10. Mover personaje\n"+Fore.LIGHTMAGENTA_EX+"11. Entrar a la tienda\n"+Fore.WHITE+"12. ¿QUE PUEDO HACER EN ESTA POSICIÓN?\n13. Salir\n"+Style.RESET_ALL)
 
         try:
             operacion = int(operacion)
@@ -342,6 +345,22 @@ while True:
                 else:
                     print("No hay ningun personaje en el laberinto")
             elif operacion == 12:
+                if juego.personaje is not None:
+                    print("¿Que quieres hacer ",personaje.nickname,' en ',personaje.posicion,'?')
+                    i = 0
+                    for comando in juego.personaje.obtenerComandos():
+                        i += 1
+                        print(str(i)+". "+str(comando))
+                    accion = input("¿Que accion quieres realizar?\n")
+                    accion = int(accion)
+                    if accion > 0 and accion <= len(juego.personaje.obtenerComandos()):
+                        juego.personaje.obtenerComandos()[accion-1].ejecutar(juego.personaje)
+                    else:
+                        print("\n\nOpción no válida.\n\n")
+                else:
+                    print("No hay ningun personaje en el laberinto")
+                print(juego)    
+            elif operacion == 13:
                break;
             else:
                 print("\n\nOpción no válida.\n\n")

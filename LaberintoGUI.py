@@ -1,4 +1,5 @@
 import pygame,sys,os
+from src.model.Armario import Armario
 from src.model.Habitacion import Habitacion
 from src.model.Sur import Sur
 from src.model.Norte import Norte
@@ -29,6 +30,7 @@ class LaberintoGUI():
         self.habActual = None
         self.person = None
         self.pasadoPuerta = False
+        self.longitud_comandos_anterior = 0
     
     def pantallaInicial(self):
         pygame.init()
@@ -259,10 +261,13 @@ class LaberintoGUI():
         activarBombasText = fuente.render("Activar bombas", True, (255, 255, 255))
         self.screen.blit(activarBombasText, (activarBombas.x + 10, activarBombas.y + 10))
         activar = False
-
+        
+        updateIntervalo = 2000
+        lastUpdate = pygame.time.get_ticks()
+        self.mouse_pos = None
         while self.juego.fase.esFinal() == False:
-            #TODO:
-            #self.dibujarComandos()
+            currentTime = pygame.time.get_ticks()
+            
             keys = pygame.key.get_pressed()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -270,10 +275,13 @@ class LaberintoGUI():
                     pygame.quit()
                     print(self.juego)
                     exit()
-
+                
+                
+                
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    mouse_pos = pygame.mouse.get_pos()
-                    if abrirPuertas.collidepoint(mouse_pos):
+                    self.mouse_pos = pygame.mouse.get_pos()
+                    
+                    if abrirPuertas.collidepoint(self.mouse_pos):
                         if not abrir:
                             abrir = True
                             self.juego.abrirPuertas()
@@ -289,12 +297,12 @@ class LaberintoGUI():
                             self.screen.blit(abrirPuertasText, (abrirPuertas.x + 10, abrirPuertas.y + 10))
                             self.redibujar()  
 
-                    if iniciarJuego.collidepoint(mouse_pos):
+                    if iniciarJuego.collidepoint(self.mouse_pos):
                         print("Iniciar juego")
                         self.juego.lanzarBichos()
                         self.juego.lanzarHechiceros()
 
-                    if activarBombas.collidepoint(mouse_pos):
+                    if activarBombas.collidepoint(self.mouse_pos):
                         if not activar:
                             activar = True
                             self.juego.activarBombas()
@@ -355,14 +363,53 @@ class LaberintoGUI():
                     
                     
                         
-            
+            self.dibujarComandos(self.mouse_pos)
             self.screen.blit(self.personaje,(self.pX,self.pY))
-            
+            self.mouse_pos = None
            
-
+            if currentTime - lastUpdate >= updateIntervalo:
+                self.update()
+                lastUpdate = currentTime
+                
             pygame.display.update()
             clock.tick(60)
         self.pantallaFinal()
+
+    def dibujarComandos(self, mouse_pos):
+        fuente = pygame.font.SysFont('radnika', 14)
+
+        comandos = self.juego.personaje.obtenerComandos()
+        longitud_anterior = self.longitud_comandos_anterior  # Obtener la longitud anterior
+        rect_borrar = pygame.Rect(1200, 300, 150, 30 + longitud_anterior * 60)  # Usar la longitud anterior
+        pygame.draw.rect(self.screen, (50, 50, 50), rect_borrar)
+
+        for i, comando in enumerate(comandos):
+            rect_comando = pygame.Rect(1200, 300 + i * 60, 150, 30)
+
+            if mouse_pos is not None and rect_comando.collidepoint(mouse_pos):
+                if comando.esAbrir() or comando.esEntrar() or comando.esCerrar():
+                    comando.ejecutar(self.juego.personaje)
+                    self.moverPersonajeHabitacion()
+                self.redibujar()
+            else:
+                pygame.draw.rect(self.screen, (50, 50, 50), rect_comando)
+
+            pygame.draw.rect(self.screen, (0, 255, 0), rect_comando)
+            comando_texto = fuente.render(str(comando), True, (255, 255, 255))
+            self.screen.blit(comando_texto, (rect_comando.x + 5, rect_comando.y + 5))
+
+        self.longitud_comandos_anterior = len(comandos)  # Almacenar la longitud actual para usar en la siguiente iteración
+        pygame.display.update()
+
+
+                        
+                        
+            
+         
+
+        
+
+
 
     def pantallaFinal(self):
         pygame.init()
@@ -400,11 +447,22 @@ class LaberintoGUI():
 
 
     def update(self):
-        self.mostrarVidasPersonaje()
-        self.mostrarBichos()
-        self.mostrarHechiceros()
-        self.redibujar()
-        
+        if self.juego is not None:
+            self.mostrarVidasPersonaje()
+            # self.mostrarPersonaje()
+            self.mostrarBichos()
+            self.mostrarHechiceros()
+            self.redibujar()
+            
+    # def mostrarPersonaje(self):
+    #     self.dibujarPersonaje(self.juego.personaje)
+
+    # def dibujarPersonaje(self,personaje):
+        # self.principal = pygame.image.load("graphics/principal.png").convert_alpha()
+        # self.principal = pygame.transform.scale(self.principal,(30*1.35,30*1.35))
+        # self.personaje = self.principal
+        # self.personaje = pygame.transform.scale(self.personaje,(30*1.35,30*1.35))
+
 
     def mostrarHechiceros(self):
         for hechicero in self.juego.hechiceros:
@@ -448,17 +506,24 @@ class LaberintoGUI():
             self.screen.blit(bicho,(unPuntoX+(ancho/3)+150,unPuntoY+(alto/3)+80))
         
     def moverPersonajeHabitacion(self):
-        self.pX = (self.habActual.forma.puntoX+(self.ancho/2)-30/2) 
-        self.pY = self.habActual.forma.puntoY+(self.alto/2)-30/2
-        self.origenX = self.habActual.forma.puntoX
-        self.origenY = self.habActual.forma.puntoY
+        self.habActual = self.juego.personaje.posicion
+        if isinstance(self.habActual,Armario):
+            self.pX = (self.habActual.padre.forma.puntoX+self.habActual.padre.forma.extentX-67)
+            self.pY = self.habActual.padre.forma.puntoY+63
+            self.origenX = self.habActual.padre.forma.puntoX
+            self.origenY = self.habActual.padre.forma.puntoY
+        else:
+            self.pX = (self.habActual.forma.puntoX+(self.ancho/2)-30/2) 
+            self.pY = self.habActual.forma.puntoY+(self.alto/2)-30/2
+            self.origenX = self.habActual.forma.puntoX
+            self.origenY = self.habActual.forma.puntoY
         self.personaje  = self.principal
-        print(self.juego.personaje.obtenerComandos())
         self.redibujar()
             
     def redibujar(self):
         self.juego.laberinto.aceptar(self)
         self.ocultar()
+        # self.mostrarPersonaje()
         self.mostrarBichos()
         self.mostrarHechiceros()
 
@@ -500,6 +565,7 @@ class LaberintoGUI():
         self.ocultar()
         self.mostrarVidasPersonaje()
         # Meter aqui los botones del menú
+        
         self.mostrarBichos()
         self.mostrarHechiceros()
 
@@ -518,7 +584,7 @@ class LaberintoGUI():
         self.screen.blit(ocultar,(1140,50))
 
     def mostrarVidasPersonaje(self):
-        if self.vidasM is None:
+        if self.vidasM is None or self.person is None:
             return None
         pygame.init()
         miFuente = pygame.font.SysFont('radnika', 30)

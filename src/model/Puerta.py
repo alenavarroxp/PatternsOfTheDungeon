@@ -1,6 +1,7 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 
+from src.model.Entrar import Entrar
 from src.model.Abrir import Abrir
 from src.model.ElementoMapa import ElementoMapa
 from src.model.Cerrar import Cerrar
@@ -47,7 +48,7 @@ class Puerta(ElementoMapa):
             else:
                 self.lado1.entrar(alguien)
                 alguien.posicion = self.lado1
-            print(alguien,' puede pasar al otro lado') #Puedo poner alguien en vez de 'Bicho'
+            print(alguien,' puede pasar al otro lado')
         else:
             print('La puerta está cerrada.')
             
@@ -61,12 +62,13 @@ class Puerta(ElementoMapa):
             print('Puerta abierta')
         else:
             print(alguien,' abre la puerta')
-            self.quitarAbrir()
+        self.quitarAbrir()
 
     def quitarAbrir(self):
         for comando in self.comandos:
             if comando.esAbrir():
                 self.quitarComando(comando)
+                self.agregarComando(Entrar(),self)
                 self.agregarComando(Cerrar(),self)
 
     def cerrar(self,alguien):
@@ -75,13 +77,19 @@ class Puerta(ElementoMapa):
             print('Puerta cerrada')
         else:
             print(alguien,' cierra la puerta')
-            self.quitarCerrar()
+        self.quitarCerrar()
+        self.quitarEntrar()
             
     def quitarCerrar(self):
         for comando in self.comandos:
             if comando.esCerrar():
                 self.quitarComando(comando)
                 self.agregarComando(Abrir(),self)
+
+    def quitarEntrar(self):
+        for comando in self.comandos:
+            if comando.esEntrar():
+                self.quitarComando(comando)
                 
     def estaCerrada(self):
         return self.abierta
