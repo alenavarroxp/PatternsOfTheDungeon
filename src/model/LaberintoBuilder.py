@@ -1,3 +1,8 @@
+from src.model.Comprar import Comprar
+from src.model.Moneda import Moneda
+from src.model.Mercader import Mercader
+from src.model.Mochila import Mochila
+from src.model.Tienda import Tienda
 from src.model.Activar import Activar
 from src.model.Brujo import Brujo
 from src.model.Hechicero import Hechicero
@@ -156,7 +161,8 @@ class LaberintoBuilder():
         return Este()
     
     def fabricarEspada(self):
-        return Espada()
+        espada = Espada()
+        return espada
     
     def fabricarFuego(self):
         return Fuego()
@@ -239,3 +245,58 @@ class LaberintoBuilder():
     
     def fabricarTunelEn(self,unContenedor):
         unContenedor.agregarHijo(self.fabricarTunel())
+
+    def fabricarTienda(self,num):
+        tienda = Tienda(num)
+        tienda.forma = self.fabricarForma()
+        tienda.forma.num = num
+        mercader = self.fabricarMercader()
+        tienda.mercader = mercader
+        tienda.ponerEnElemento(self.fabricarNorte(),self.fabricarPared(tienda))
+        tienda.ponerEnElemento(self.fabricarEste(),self.fabricarPared(tienda))
+        tienda.ponerEnElemento(self.fabricarOeste(),self.fabricarPared(tienda))
+        tienda.ponerEnElemento(self.fabricarSur(),self.fabricarPared(tienda))
+        tienda.agregarOrientacion(self.fabricarNorte())
+        tienda.agregarOrientacion(self.fabricarEste())
+        tienda.agregarOrientacion(self.fabricarOeste())
+        tienda.agregarOrientacion(self.fabricarSur())
+        tienda.abrirTienda()
+        return tienda
+    
+    def fabricarTiendaEn(self,unContenedor,num,objetos):
+        tienda = Tienda(num)
+        tienda.forma = self.fabricarForma()
+        tienda.forma.num = num
+        mercader = self.fabricarMercader(objetos)
+        tienda.mercader = mercader
+        tienda.ponerEnElemento(self.fabricarNorte(),self.fabricarPared(tienda))
+        tienda.ponerEnElemento(self.fabricarEste(),self.fabricarPared(tienda))
+        tienda.ponerEnElemento(self.fabricarOeste(),self.fabricarPared(tienda))
+        tienda.ponerEnElemento(self.fabricarSur(),self.fabricarPared(tienda))
+        tienda.agregarOrientacion(self.fabricarNorte())
+        tienda.agregarOrientacion(self.fabricarEste())
+        tienda.agregarOrientacion(self.fabricarOeste())
+        tienda.agregarOrientacion(self.fabricarSur())
+        puertaTienda = self.fabricarPuerta(tienda,unContenedor)
+        tienda.ponerEnElemento(self.fabricarOeste(),puertaTienda)
+        tienda.abrirTienda()
+        unContenedor.agregarHijo(tienda)
+        return tienda
+    
+    def fabricarMochila(self):
+        mochila = Mochila()
+        return mochila
+    
+    def fabricarMercader(self,objetos):
+        mercader = Mercader('Antonio')
+        for objeto in objetos:
+            precio = objeto['precio']
+            tipo = objeto['tipo']
+            objeto = getattr(self,'fabricar' + tipo.capitalize())()
+            objeto.agregarComando(Comprar(),objeto)
+            mercader.agregarObjeto(objeto,precio)
+       
+        return mercader
+    
+    def fabricarMoneda(self,valor,ubicacion):
+        return Moneda(valor,ubicacion)

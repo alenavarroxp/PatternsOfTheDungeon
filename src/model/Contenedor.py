@@ -29,10 +29,10 @@ class Contenedor(ElementoMapa):
         self.num = num
     
 
-    def obtenerComandos(self):
+    def obtenerComandos(self,alguien):
         lista = []
         for hijo in self.hijos:
-            lista.extend(hijo.obtenerComandos())
+            lista.extend(hijo.obtenerComandos(alguien))
         lista.extend(self.forma.obtenerComandos())
         return lista
 

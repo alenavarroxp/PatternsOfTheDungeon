@@ -30,7 +30,7 @@ class Sur(Orientacion):
         alguien.notificar()
     
     def obtenerComandosDe(self,unaForma):
-        return unaForma.sur.obtenerComandos()
+        return unaForma.sur.obtenerComandos(None)
     
     def obtenerElementoEn(self,unContenedor):
         return unContenedor.sur

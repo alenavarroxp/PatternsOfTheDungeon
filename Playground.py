@@ -25,7 +25,7 @@ while True:
             7: 'laberintos/lab4Hab4Arm4Bichos.json',
             8: 'laberintos/lab4Hab4Arm4BichosTunel.json',
             9: 'laberintos/lab4Hab4Arm4BichosTunelRombo.json',
-            10: 'laberintos/lab4Hab4Arm4Bichos4HechicerosTunel.json',
+            10: 'laberintos/lab4Hab4Arm2Bichos2HechicerosTunel.json',
             11: 'laberintos/lab4Hab4Arm4HechicerosTunel.json'
         }
         unArchivo = switch.get(opcion1, "\n\nEl carácter ingresado no es correcto.\n\n")
@@ -304,7 +304,7 @@ while True:
                             hijo.entrar(juego.personaje)
                             print("Entrando a la tienda")
                             while juego.personaje.posicion == hijo:
-                                comprar = False
+                                comprar = []
                                 print("¿Que quieres hacer en la tienda ",personaje.nickname,'?')
                                 accion = input("1. Comprar\n2. Salir\n")
                                 accion = int(accion)
@@ -317,12 +317,13 @@ while True:
                                         contObjetos += 1
                                         if juego.personaje.dinero >= objeto.precio:
                                             print(str(contObjetos)+". "+str(objeto)+" (Puedes comprarlo)")
-                                            comprar = True
+                                            comprar.append(True)
                                         else: 
                                             print(str(contObjetos)+". "+str(objeto))
+                                            comprar.append(False)
                                     obj = input("¿Que objeto quieres comprar?\n")
                                     obj = int(obj)
-                                    if comprar:
+                                    if comprar[obj-1] == True:
                                         if obj > 0 and obj <= len(hijo.mercader.objetos):
                                             hijo.enteCompraObjeto(juego.personaje,hijo.mercader.objetos[obj-1])
                                         if len(hijo.mercader.objetos) == 0:

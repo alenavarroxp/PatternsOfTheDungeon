@@ -26,10 +26,10 @@ class Mochila(Objeto):
 
     def __str__(self):
         if len(self.objetos) == 0:
-            return "Mochila vacía"
+            return f"Mochila vacía {self.precio}€"
         return f"Mochila: [{self.objetos}] Precio: {self.precio}"
     
     def __repr__(self):
         if len(self.objetos) == 0:
-            return "Mochila vacía"
+            return f"Mochila vacía {self.precio}€"
         return f"Mochila: [{self.objetos}] Precio: {self.precio}"

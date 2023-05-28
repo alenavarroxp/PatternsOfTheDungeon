@@ -33,7 +33,7 @@ class Norte(Orientacion):
         return unContenedor.norte
     
     def obtenerComandosDe(self,unaForma):
-        return unaForma.norte.obtenerComandos()
+        return unaForma.norte.obtenerComandos(None)
     
     def recorrerEn(self,unBloque,unContenedor):
          if unContenedor.norte is not None:

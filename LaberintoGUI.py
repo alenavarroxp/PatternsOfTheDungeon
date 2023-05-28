@@ -1,4 +1,6 @@
 import pygame,sys,os
+from src.model.Tienda import Tienda
+from src.model.Abierto import Abierto
 from src.model.Baul import Baul
 from src.model.Vivo import Vivo
 from src.model.Armario import Armario
@@ -26,6 +28,7 @@ class LaberintoGUI():
         self.minY = 0
         self.vidasM = 0
         self.poderM = 0
+        self.dineroM = 0
         self.origenX = 10
         self.origenY = 50
         self.pX = 0
@@ -269,7 +272,7 @@ class LaberintoGUI():
         lastUpdate = pygame.time.get_ticks()
         self.mouse_pos = None
         while self.juego.fase.esFinal() == False:
-            currentTime = pygame.time.get_ticks()
+            # currentTime = pygame.time.get_ticks()
             
             keys = pygame.key.get_pressed()
             for event in pygame.event.get():
@@ -322,48 +325,45 @@ class LaberintoGUI():
                     #         self.redibujar()
 
                 if keys[pygame.K_LEFT] or keys[pygame.K_a]:
-                    self.pX = self.origenX -(30/2) + 50
-                    self.pY = self.origenY + ((self.alto)/2) -(30/2)
-                    print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
-                    self.redibujar()
-                    self.personaje = principalOesteImage
-                    self.comprobarElemento(self.contActual,self.contActual.forma.oeste)
-                    
+                    if isinstance(self.contActual,Habitacion):
+                        self.pX = self.origenX -(30/2) + 50
+                        self.pY = self.origenY + ((self.alto)/2) -(30/2)
+                        print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
+                        self.redibujar()
+                        self.personaje = principalOesteImage
+                        self.comprobarElemento(self.contActual,self.contActual.forma.oeste)
+                        
          
                     
 
                 if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-                    self.pX = self.origenX - (30/2) - 50 + self.ancho
-                    self.pY = self.origenY + ((self.alto)/2) -(30/2)
-                    print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
-                    self.redibujar()
-                    self.personaje = principalOesteImage
-                    self.personaje = pygame.transform.flip(self.personaje,True,False)
-                    self.comprobarElemento(self.contActual,self.contActual.forma.este)
-                    
-                    
-                    
+                    if isinstance(self.contActual,Habitacion):
+                        self.pX = self.origenX - (30/2) - 50 + self.ancho
+                        self.pY = self.origenY + ((self.alto)/2) -(30/2)
+                        print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
+                        self.redibujar()
+                        self.personaje = principalOesteImage
+                        self.personaje = pygame.transform.flip(self.personaje,True,False)
+                        self.comprobarElemento(self.contActual,self.contActual.forma.este)
                     
                 if keys[pygame.K_UP] or keys[pygame.K_w]:
-                    self.pX = self.origenX + (self.ancho/2) - (30/2)
-                    self.pY = self.origenY + (self.alto/5) - (30/2)
-                    print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
-                    self.redibujar()
-                    self.personaje = principalNorteImage
-                    self.comprobarElemento(self.contActual,self.contActual.forma.norte)
-                    
-
-                    
-
+                    if isinstance(self.contActual,Habitacion):
+                        self.pX = self.origenX + (self.ancho/2) - (30/2)
+                        self.pY = self.origenY + (self.alto/5) - (30/2)
+                        print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
+                        self.redibujar()
+                        self.personaje = principalNorteImage
+                        self.comprobarElemento(self.contActual,self.contActual.forma.norte)
 
                 if keys[pygame.K_DOWN] or keys[pygame.K_s]:
-                    self.pX = self.origenX + (self.ancho/2) - (30/2)
-                    self.pY = self.origenY + (self.alto-85) - (30/2)
-                    print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
-                    self.redibujar()
-                    self.personaje = self.principal
-                    self.comprobarElemento(self.contActual,self.contActual.forma.sur)
-                    
+                    if isinstance(self.contActual,Habitacion):
+                        self.pX = self.origenX + (self.ancho/2) - (30/2)
+                        self.pY = self.origenY + (self.alto-85) - (30/2)
+                        print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
+                        self.redibujar()
+                        self.personaje = self.principal
+                        self.comprobarElemento(self.contActual,self.contActual.forma.sur)
+                        
 
                 if keys[pygame.K_l]:
                     self.juego.personaje.atacar()
@@ -384,16 +384,18 @@ class LaberintoGUI():
     def dibujarComandos(self, mouse_pos):
         fuente = pygame.font.SysFont('radnika', 14)
 
-        comandos = self.juego.personaje.obtenerComandos()
+        comandos = self.contActual.obtenerComandos(self.juego.personaje)
         longitud_anterior = self.longitud_comandos_anterior  # Obtener la longitud anterior
         rect_borrar = pygame.Rect(1175, 50, 210, 20 + longitud_anterior * 60)  # Usar la longitud anterior
         pygame.draw.rect(self.screen, (50, 50, 50), rect_borrar)
+        
+        # if isinstance(self.contActual,Habitacion):
 
         for i, comando in enumerate(comandos):
             rect_comando = pygame.Rect(1175, 50 + i * 30, 210, 30)
 
             if mouse_pos is not None and rect_comando.collidepoint(mouse_pos):
-                if comando.esAbrir() or comando.esEntrar() or comando.esCerrar() or comando.esActivar() or comando.esDesactivar():
+                if comando.esComprar() or comando.esAbrir() or comando.esEntrar() or comando.esCerrar() or comando.esActivar() or comando.esDesactivar():
                     comando.ejecutar(self.juego.personaje)
                     self.moverPersonajeHabitacion()
                 self.redibujar()
@@ -446,6 +448,7 @@ class LaberintoGUI():
         if self.juego is not None:
             self.mostrarVidasPersonaje()
             self.mostrarPoderPersonaje()
+            self.mostrarDineroPersonaje()
             # self.mostrarPersonaje()
             self.mostrarBichos()
             self.mostrarHechiceros()
@@ -542,6 +545,11 @@ class LaberintoGUI():
             self.pY = self.contActual.padre.forma.puntoY+26
             self.origenX = self.contActual.padre.forma.puntoX
             self.origenY = self.contActual.padre.forma.puntoY
+        elif isinstance(self.contActual,Tienda):
+            self.pX = (self.contActual.padre.forma.puntoX+self.contActual.padre.forma.extentX-70)
+            self.pY = self.contActual.padre.forma.puntoY+self.contActual.padre.forma.extentY-70
+            self.origenX = self.contActual.padre.forma.puntoX
+            self.origenY = self.contActual.padre.forma.puntoY
 
         else:
             self.pX = (self.contActual.forma.puntoX+(self.ancho/2)-30/2) 
@@ -570,7 +578,7 @@ class LaberintoGUI():
                         self.contActual = unaPuerta.lado2
                         self.pasadoPuerta = True
 
-                    comandos = unaPuerta.obtenerComandos()
+                    comandos = unaPuerta.obtenerComandos(self.juego.personaje)
 
                     for i, comando in enumerate(comandos):
                     
@@ -597,10 +605,12 @@ class LaberintoGUI():
         self.ocultar()
         self.mostrarVidasPersonaje()
         self.mostrarPoderPersonaje()
+        self.mostrarDineroPersonaje()
         # Meter aqui los botones del menú
         
         self.mostrarBichos()
         self.mostrarHechiceros()
+
 
     def agregarPersonaje(self,unaCadena):
         personaje = Personaje()
@@ -610,6 +620,7 @@ class LaberintoGUI():
         self.person.añadirDependencia(self)
         self.vidasM = self.person.vidas
         self.poderM = self.person.poder
+        self.dineroM = self.person.dinero
         self.contActual = self.person.posicion
       
     def ocultar(self):
@@ -645,7 +656,19 @@ class LaberintoGUI():
             self.screen.blit(text, rectText)
             pygame.display.update()
 
-    
+    def mostrarDineroPersonaje(self):
+        if self.dineroM is None or self.person is None:
+            return None
+        pygame.init()
+        miFuente = pygame.font.SysFont('radnika', 30)
+        text = miFuente.render("Dinero: " + str(self.person.dinero), True, (255, 0, 0))
+        rectText = text.get_rect()
+        rectText.center = (400, 30)
+        rect = pygame.Rect(rectText.left - 5, rectText.top - 5, rectText.width + 10, rectText.height + 7)
+        if pygame.display.get_active():
+            pygame.draw.rect(self.screen, (50, 50, 50), rect)  # Dibuja el rectángulo negro detrás del texto
+            self.screen.blit(text, rectText)
+            pygame.display.update()
 
 
     def visitarArmario(self,unArmario):
@@ -724,6 +747,25 @@ class LaberintoGUI():
         imagen = pygame.transform.rotate(imagen, -180)
         imagen = pygame.transform.scale(imagen,(50,50))
         self.screen.blit(imagen,(unaHab.forma.puntoX,unaHab.forma.puntoY+unaHab.forma.extentY-60))
+    
+    def visitarTienda(self,unaTienda):
+        print("Tienda visitada")
+        unPuntoX = unaTienda.padre.forma.puntoX
+        unPuntoY = unaTienda.padre.forma.puntoY
+        ancho = unaTienda.padre.forma.extentX
+        alto = unaTienda.padre.forma.extentY
+        self.dibujarTienda(unaTienda,unPuntoX,unPuntoY,ancho,alto)
+
+    def dibujarTienda(self,unaTienda,unPuntoX,unPuntoY,ancho,alto):
+        if isinstance(unaTienda.estadoTienda,Abierto):  
+            tienda = pygame.image.load("graphics/tiendaOpen.png").convert_alpha()
+            tienda = pygame.transform.scale(tienda,(100,100))
+            self.screen.blit(tienda,(unPuntoX+ancho-120,unPuntoY+alto-120))
+        else:
+            tienda = pygame.image.load("graphics/tiendaClose.png").convert_alpha()
+            tienda = pygame.transform.scale(tienda,(100,100))
+            self.screen.blit(tienda,(unPuntoX+ancho-120,unPuntoY+alto-120))
+       
 
     def dibujarContenedorRectangularEscala(self,unaHab,unaForma,escala):
        unPuntoX = unaForma.puntoX

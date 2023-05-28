@@ -420,10 +420,10 @@ class Juego:
         tienda.forma.num = num
         mercader = self.fabricarMercader()
         tienda.mercader = mercader
-        tienda.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
-        tienda.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
-        tienda.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
-        tienda.ponerEnElemento(self.fabricarSur(),self.fabricarPared())
+        tienda.ponerEnElemento(self.fabricarNorte(),self.fabricarPared(tienda))
+        tienda.ponerEnElemento(self.fabricarEste(),self.fabricarPared(tienda))
+        tienda.ponerEnElemento(self.fabricarOeste(),self.fabricarPared(tienda))
+        tienda.ponerEnElemento(self.fabricarSur(),self.fabricarPared(tienda))
         tienda.agregarOrientacion(self.fabricarNorte())
         tienda.agregarOrientacion(self.fabricarEste())
         tienda.agregarOrientacion(self.fabricarOeste())

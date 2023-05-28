@@ -10,16 +10,33 @@ class Tienda(Contenedor):
         self.mercader = None
         self.estadoTienda = Cerrado()
 
+    def aceptar(self, unVisitor):
+        unVisitor.visitarTienda(self)
+        self.forma.aceptar(unVisitor)
+    
+    def obtenerComandos(self,alguien):
+        lista = super().obtenerComandos(alguien)
+
+        if alguien.posicion is self:
+            for objeto in self.mercader.objetos:
+                lista.append(objeto.comandos[0])
+        
+        return lista
+
     def agregarMercader(self, mercader):
         self.mercader = mercader
 
     def enteCompraObjeto(self,personaje,objeto):
         if self.mercader is not None:
-            self.mercader.quitarObjeto(objeto)
-            personaje.cogerObjeto(objeto)
-            print(personaje,' compra ',objeto,' a ',self.mercader)
-            # Le tengo que quitar el precio del objeto al personaje
-            personaje.dinero -= objeto.precio
+            if personaje.dinero >= objeto.precio:
+                self.mercader.quitarObjeto(objeto)
+                if self.mercader.objetos.__len__() == 0:
+                    self.cerrarTienda()
+                print(personaje,' compra ',objeto,' a ',self.mercader)
+                personaje.dinero -= objeto.precio
+                personaje.cogerObjeto(objeto)
+               
+
 
         else:
             print('No hay mercader en la tienda: ',self.num)

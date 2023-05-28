@@ -19,3 +19,6 @@ class Comando():
     
     def esDesactivar(self):
         return False
+    
+    def esComprar(self):
+        return False    

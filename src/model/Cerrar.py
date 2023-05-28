@@ -1,3 +1,4 @@
+from src.model.Tienda import Tienda
 from src.model.Armario import Armario
 from src.model.Baul import Baul
 from src.model.Habitacion import Habitacion
@@ -19,6 +20,8 @@ class Cerrar(Comando):
             return "Cerrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Armario)"
         elif isinstance(self.receptor.lado1,Baul):
             return "Cerrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Baúl)"
+        elif isinstance(self.receptor.lado1,Tienda):
+            return "Cerrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Tienda)"
         else:
           return "Cerrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)
     
@@ -29,5 +32,7 @@ class Cerrar(Comando):
             return "Cerrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Armario)"
         elif isinstance(self.receptor.lado1,Baul):
             return "Cerrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Baúl)"
+        elif isinstance(self.receptor.lado1,Tienda):
+            return "Cerrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Tienda)"
         else:
           return "Cerrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)

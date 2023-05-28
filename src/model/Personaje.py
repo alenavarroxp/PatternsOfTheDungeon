@@ -8,13 +8,14 @@ class Personaje(Ente):
         super().__init__()
         self.nickname = None
         self.inventario = Inventario()
-        self.dinero = 0
+        self.dinero = 50
 
     def obtenerComandos(self):
         return self.posicion.obtenerComandos()
     
     def cogerObjeto(self,objeto):
         self.inventario.agregarObjeto(objeto)
+        self.notificar()
     
     def soltarObjeto(self,objeto):
         self.inventario.quitarObjeto(objeto)

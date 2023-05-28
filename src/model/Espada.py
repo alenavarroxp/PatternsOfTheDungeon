@@ -6,9 +6,6 @@ class Espada(Objeto):
     def __init__(self):
         super().__init__()
         self.estado = True
-
-    def obtenerComandos(self):
-        return ['Atacar']
     
     def esEspada(self):
         return True
@@ -21,11 +18,11 @@ class Espada(Objeto):
             estado = 'Afilada'
         else:
             estado = 'Rota'
-        return f"Espada ({estado}) Precio: {self.precio}"
+        return f"Espada ({estado}) {self.precio}€"
     
     def __repr__(self):
         if self.estado:
             estado = 'Afilada'
         else:
             estado = 'Rota'
-        return f"Espada ({estado}) Precio: {self.precio}"
+        return f"Espada ({estado}) {self.precio}€"

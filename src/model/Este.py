@@ -30,7 +30,7 @@ class Este(Orientacion):
         alguien.notificar()
 
     def obtenerComandosDe(self,unaForma):
-        return unaForma.este.obtenerComandos()
+        return unaForma.este.obtenerComandos(None)
 
     def obtenerElementoEn(self,unContenedor):
         return unContenedor.este
