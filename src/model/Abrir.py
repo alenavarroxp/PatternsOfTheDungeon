@@ -1,3 +1,6 @@
+from src.model.Armario import Armario
+from src.model.Baul import Baul
+from src.model.Habitacion import Habitacion
 from src.model.Comando import Comando
 
 
@@ -10,7 +13,20 @@ class Abrir(Comando):
         return True
     
     def __str__(self):
-       return "Abrir Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)
-    
+      if self.receptor.lado1 is not None and isinstance(self.receptor.lado1,Habitacion):
+          return "Abrir Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Habitacion)"
+      elif isinstance(self.receptor.lado1,Armario):
+          return "Abrir Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Armario)"
+      elif isinstance(self.receptor.lado1,Baul):
+          return "Abrir Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Baúl)"
+      else:
+         return "Abrir Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)
     def __repr__(self):
-       return "Abrir Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)
+        if self.receptor.lado1 is not None and isinstance(self.receptor.lado1,Habitacion):
+          return "Abrir Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Habitacion)"
+        elif isinstance(self.receptor.lado1,Armario):
+            return "Abrir Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Armario)"
+        elif isinstance(self.receptor.lado1,Baul):
+            return "Abrir Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Baúl)"
+        else:
+          return "Abrir Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)

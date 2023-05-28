@@ -1,7 +1,6 @@
 import unittest
 import os
 from colorama import init, Fore, Style
-from src.model.Cuadrado import Cuadrado
 from src.model.Rombo import Rombo
 from src.model.Director import Director
 from src.model.Juego import Juego

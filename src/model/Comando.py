@@ -14,3 +14,8 @@ class Comando():
     def esEntrar(self):
         return False
     
+    def esActivar(self):
+        return False
+    
+    def esDesactivar(self):
+        return False

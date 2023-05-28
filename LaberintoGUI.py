@@ -1,4 +1,6 @@
 import pygame,sys,os
+from src.model.Baul import Baul
+from src.model.Vivo import Vivo
 from src.model.Armario import Armario
 from src.model.Habitacion import Habitacion
 from src.model.Sur import Sur
@@ -23,11 +25,12 @@ class LaberintoGUI():
         self.minX = 0
         self.minY = 0
         self.vidasM = 0
+        self.poderM = 0
         self.origenX = 10
         self.origenY = 50
         self.pX = 0
         self.pY = 0
-        self.habActual = None
+        self.contActual = None
         self.person = None
         self.pasadoPuerta = False
         self.longitud_comandos_anterior = 0
@@ -247,20 +250,20 @@ class LaberintoGUI():
     
         
         self.screen.blit(self.personaje,(self.pX,self.pY))
-        abrirPuertas = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 100, 200, 50))
-        abrirPuertasText = fuente.render("Abrir puertas", True, (255, 255, 255))
-        self.screen.blit(abrirPuertasText, (abrirPuertas.x + 10, abrirPuertas.y + 10))
-        abrir = False
+        # abrirPuertas = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 100, 200, 50))
+        # abrirPuertasText = fuente.render("Abrir puertas", True, (255, 255, 255))
+        # self.screen.blit(abrirPuertasText, (abrirPuertas.x + 10, abrirPuertas.y + 10))
+        # abrir = False
 
-        iniciarJuego = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 150, 200, 50))
+        iniciarJuego = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 550, 200, 50))
         iniciarJuegoText = fuente.render("Iniciar juego", True, (255, 255, 255))
         self.screen.blit(iniciarJuegoText, (iniciarJuego.x + 10, iniciarJuego.y + 10))
 
 
-        activarBombas = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 200, 200, 50))
-        activarBombasText = fuente.render("Activar bombas", True, (255, 255, 255))
-        self.screen.blit(activarBombasText, (activarBombas.x + 10, activarBombas.y + 10))
-        activar = False
+        # activarBombas = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 200, 200, 50))
+        # activarBombasText = fuente.render("Activar bombas", True, (255, 255, 255))
+        # self.screen.blit(activarBombasText, (activarBombas.x + 10, activarBombas.y + 10))
+        # activar = False
         
         updateIntervalo = 2000
         lastUpdate = pygame.time.get_ticks()
@@ -281,42 +284,42 @@ class LaberintoGUI():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.mouse_pos = pygame.mouse.get_pos()
                     
-                    if abrirPuertas.collidepoint(self.mouse_pos):
-                        if not abrir:
-                            abrir = True
-                            self.juego.abrirPuertas()
-                            abrirPuertas = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 100, 200, 50))
-                            abrirPuertasText = fuente.render("Cerrar puertas", True, (255, 255, 255))
-                            self.screen.blit(abrirPuertasText, (abrirPuertas.x + 10, abrirPuertas.y + 10))
-                            self.redibujar()
-                        else:
-                            abrir = False
-                            self.juego.cerrarPuertas()
-                            abrirPuertas = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 100, 200, 50))
-                            abrirPuertasText = fuente.render("Abrir puertas", True, (255, 255, 255))
-                            self.screen.blit(abrirPuertasText, (abrirPuertas.x + 10, abrirPuertas.y + 10))
-                            self.redibujar()  
+                    # if abrirPuertas.collidepoint(self.mouse_pos):
+                    #     if not abrir:
+                    #         abrir = True
+                    #         self.juego.abrirPuertas()
+                    #         abrirPuertas = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 100, 200, 50))
+                    #         abrirPuertasText = fuente.render("Cerrar puertas", True, (255, 255, 255))
+                    #         self.screen.blit(abrirPuertasText, (abrirPuertas.x + 10, abrirPuertas.y + 10))
+                    #         self.redibujar()
+                    #     else:
+                    #         abrir = False
+                    #         self.juego.cerrarPuertas()
+                    #         abrirPuertas = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 100, 200, 50))
+                    #         abrirPuertasText = fuente.render("Abrir puertas", True, (255, 255, 255))
+                    #         self.screen.blit(abrirPuertasText, (abrirPuertas.x + 10, abrirPuertas.y + 10))
+                    #         self.redibujar()  
 
                     if iniciarJuego.collidepoint(self.mouse_pos):
                         print("Iniciar juego")
                         self.juego.lanzarBichos()
                         self.juego.lanzarHechiceros()
 
-                    if activarBombas.collidepoint(self.mouse_pos):
-                        if not activar:
-                            activar = True
-                            self.juego.activarBombas()
-                            activarBombas = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 200, 200, 50))
-                            activarBombasText = fuente.render("Desactivar bombas", True, (255, 255, 255))
-                            self.screen.blit(activarBombasText, (activarBombas.x + 10, activarBombas.y + 10))
-                            self.redibujar()
-                        else:
-                            activar = False
-                            self.juego.desactivarBombas()
-                            activarBombas = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 200, 200, 50))
-                            activarBombasText = fuente.render("Activar bombas", True, (255, 255, 255))
-                            self.screen.blit(activarBombasText, (activarBombas.x + 10, activarBombas.y + 10))
-                            self.redibujar()
+                    # if activarBombas.collidepoint(self.mouse_pos):
+                    #     if not activar:
+                    #         activar = True
+                    #         self.juego.activarBombas()
+                    #         activarBombas = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 200, 200, 50))
+                    #         activarBombasText = fuente.render("Desactivar bombas", True, (255, 255, 255))
+                    #         self.screen.blit(activarBombasText, (activarBombas.x + 10, activarBombas.y + 10))
+                    #         self.redibujar()
+                    #     else:
+                    #         activar = False
+                    #         self.juego.desactivarBombas()
+                    #         activarBombas = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 200, 200, 50))
+                    #         activarBombasText = fuente.render("Activar bombas", True, (255, 255, 255))
+                    #         self.screen.blit(activarBombasText, (activarBombas.x + 10, activarBombas.y + 10))
+                    #         self.redibujar()
 
                 if keys[pygame.K_LEFT] or keys[pygame.K_a]:
                     self.pX = self.origenX -(30/2) + 50
@@ -324,7 +327,8 @@ class LaberintoGUI():
                     print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
                     self.redibujar()
                     self.personaje = principalOesteImage
-                    self.comprobarElemento(self.habActual,self.habActual.forma.oeste)
+                    self.comprobarElemento(self.contActual,self.contActual.forma.oeste)
+                    
          
                     
 
@@ -335,7 +339,8 @@ class LaberintoGUI():
                     self.redibujar()
                     self.personaje = principalOesteImage
                     self.personaje = pygame.transform.flip(self.personaje,True,False)
-                    self.comprobarElemento(self.habActual,self.habActual.forma.este)
+                    self.comprobarElemento(self.contActual,self.contActual.forma.este)
+                    
                     
                     
                     
@@ -345,7 +350,8 @@ class LaberintoGUI():
                     print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
                     self.redibujar()
                     self.personaje = principalNorteImage
-                    self.comprobarElemento(self.habActual,self.habActual.forma.norte)
+                    self.comprobarElemento(self.contActual,self.contActual.forma.norte)
+                    
 
                     
 
@@ -356,23 +362,23 @@ class LaberintoGUI():
                     print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
                     self.redibujar()
                     self.personaje = self.principal
-                    self.comprobarElemento(self.habActual,self.habActual.forma.sur)
+                    self.comprobarElemento(self.contActual,self.contActual.forma.sur)
+                    
 
                 if keys[pygame.K_l]:
                     self.juego.personaje.atacar()
-                    
+                        
                     
                         
             self.dibujarComandos(self.mouse_pos)
             self.screen.blit(self.personaje,(self.pX,self.pY))
             self.mouse_pos = None
            
-            if currentTime - lastUpdate >= updateIntervalo:
-                self.update()
-                lastUpdate = currentTime
+            # if currentTime - lastUpdate >= updateIntervalo:
+            #     self.update()
+            #     lastUpdate = currentTime
                 
             pygame.display.update()
-            clock.tick(60)
         self.pantallaFinal()
 
     def dibujarComandos(self, mouse_pos):
@@ -380,14 +386,14 @@ class LaberintoGUI():
 
         comandos = self.juego.personaje.obtenerComandos()
         longitud_anterior = self.longitud_comandos_anterior  # Obtener la longitud anterior
-        rect_borrar = pygame.Rect(1200, 300, 150, 30 + longitud_anterior * 60)  # Usar la longitud anterior
+        rect_borrar = pygame.Rect(1175, 50, 210, 20 + longitud_anterior * 60)  # Usar la longitud anterior
         pygame.draw.rect(self.screen, (50, 50, 50), rect_borrar)
 
         for i, comando in enumerate(comandos):
-            rect_comando = pygame.Rect(1200, 300 + i * 60, 150, 30)
+            rect_comando = pygame.Rect(1175, 50 + i * 30, 210, 30)
 
             if mouse_pos is not None and rect_comando.collidepoint(mouse_pos):
-                if comando.esAbrir() or comando.esEntrar() or comando.esCerrar():
+                if comando.esAbrir() or comando.esEntrar() or comando.esCerrar() or comando.esActivar() or comando.esDesactivar():
                     comando.ejecutar(self.juego.personaje)
                     self.moverPersonajeHabitacion()
                 self.redibujar()
@@ -400,16 +406,6 @@ class LaberintoGUI():
 
         self.longitud_comandos_anterior = len(comandos)  # Almacenar la longitud actual para usar en la siguiente iteración
         pygame.display.update()
-
-
-                        
-                        
-            
-         
-
-        
-
-
 
     def pantallaFinal(self):
         pygame.init()
@@ -449,6 +445,7 @@ class LaberintoGUI():
     def update(self):
         if self.juego is not None:
             self.mostrarVidasPersonaje()
+            self.mostrarPoderPersonaje()
             # self.mostrarPersonaje()
             self.mostrarBichos()
             self.mostrarHechiceros()
@@ -479,16 +476,19 @@ class LaberintoGUI():
             hechicero = pygame.transform.scale(hechicero,(30*2,30*2))
             hechicero = pygame.transform.flip(hechicero,True,False)
             self.screen.blit(hechicero,(unPuntoX+(ancho/3)-10,unPuntoY+(alto/3)+80))
+            self.mostrarVidasEnemigo(unHechicero,unPuntoX+(ancho/3)-10,unPuntoY+(alto/3)+80)
         else:
             hechicero = pygame.image.load("graphics/hechiceroBrujo.png").convert_alpha()
             hechicero = pygame.transform.scale(hechicero,(30*1.75,30*1.75))
             self.screen.blit(hechicero,(unPuntoX+(ancho/3)+150,unPuntoY+(alto/3)))
+            self.mostrarVidasEnemigo(unHechicero,unPuntoX+(ancho/3)+150,unPuntoY+alto/3)
         
    
     def mostrarBichos(self):
         for bicho in self.juego.bichos:
             self.dibujarBicho(bicho)
 
+    
     def dibujarBicho(self,unBicho):
         unPuntoX = unBicho.posicion.forma.puntoX
         unPuntoY = unBicho.posicion.forma.puntoY
@@ -500,23 +500,54 @@ class LaberintoGUI():
             bicho = pygame.transform.scale(bicho,(30*1.75,30*1.75))
             bicho = pygame.transform.flip(bicho,True,False)
             self.screen.blit(bicho,(unPuntoX+ancho/3,unPuntoY+alto/3))
+            self.mostrarVidasEnemigo(unBicho,unPuntoX+ancho/3,unPuntoY+alto/3)
         else:
             bicho = pygame.image.load("graphics/bichoPerezoso.png").convert_alpha()
             bicho = pygame.transform.scale(bicho,(30*1.75,30*1.75))
             self.screen.blit(bicho,(unPuntoX+(ancho/3)+150,unPuntoY+(alto/3)+80))
+            self.mostrarVidasEnemigo(unBicho,unPuntoX+(ancho/3)+150,unPuntoY+(alto/3)+70)
+    
+    def mostrarVidasEnemigo(self,unEnemigo,unPuntoX,unPuntoY):
+        vida = pygame.Surface((65,1), pygame.SRCALPHA)
+        if isinstance(unEnemigo.estado,Vivo):
+            if unEnemigo.vidas == 50:
+                vida = pygame.image.load("graphics/50L.jpg").convert_alpha()
+            elif unEnemigo.vidas == 40:
+                vida = pygame.image.load("graphics/40L.jpg").convert_alpha()
+            elif unEnemigo.vidas == 30:
+                vida = pygame.image.load("graphics/30L.jpg").convert_alpha()
+            elif unEnemigo.vidas == 20:
+                vida = pygame.image.load("graphics/20L.jpg").convert_alpha()
+            elif unEnemigo.vidas == 10:
+                vida = pygame.image.load("graphics/10L.jpg").convert_alpha()
+            elif unEnemigo.vidas <= 0:
+                vida = pygame.Surface((65,1), pygame.SRCALPHA)
+                
+                
+            vida = pygame.transform.scale(vida,(65,1))
+            self.screen.blit(vida,(unPuntoX,unPuntoY))
+        pass
         
+
     def moverPersonajeHabitacion(self):
-        self.habActual = self.juego.personaje.posicion
-        if isinstance(self.habActual,Armario):
-            self.pX = (self.habActual.padre.forma.puntoX+self.habActual.padre.forma.extentX-67)
-            self.pY = self.habActual.padre.forma.puntoY+63
-            self.origenX = self.habActual.padre.forma.puntoX
-            self.origenY = self.habActual.padre.forma.puntoY
+        self.contActual = self.juego.personaje.posicion
+        if isinstance(self.contActual,Armario):
+            self.pX = (self.contActual.padre.forma.puntoX+self.contActual.padre.forma.extentX-67)
+            self.pY = self.contActual.padre.forma.puntoY+63
+            self.origenX = self.contActual.padre.forma.puntoX
+            self.origenY = self.contActual.padre.forma.puntoY
+
+        elif isinstance(self.contActual,Baul):
+            self.pX = (self.contActual.padre.forma.puntoX+self.contActual.padre.forma.extentX/2-173)
+            self.pY = self.contActual.padre.forma.puntoY+26
+            self.origenX = self.contActual.padre.forma.puntoX
+            self.origenY = self.contActual.padre.forma.puntoY
+
         else:
-            self.pX = (self.habActual.forma.puntoX+(self.ancho/2)-30/2) 
-            self.pY = self.habActual.forma.puntoY+(self.alto/2)-30/2
-            self.origenX = self.habActual.forma.puntoX
-            self.origenY = self.habActual.forma.puntoY
+            self.pX = (self.contActual.forma.puntoX+(self.ancho/2)-30/2) 
+            self.pY = self.contActual.forma.puntoY+(self.alto/2)-30/2
+            self.origenX = self.contActual.forma.puntoX
+            self.origenY = self.contActual.forma.puntoY
         self.personaje  = self.principal
         self.redibujar()
             
@@ -527,36 +558,37 @@ class LaberintoGUI():
         self.mostrarBichos()
         self.mostrarHechiceros()
 
-    def comprobarElemento(self,unaHabitacion,unaPuerta):
+    def comprobarElemento(self,unContenedor,unaPuerta):
             if unaPuerta.esPuerta():
                 if unaPuerta.abierta:
                     print("Puerta abierta")
                     if self.pasadoPuerta:
-                        self.habActual = unaPuerta.lado1
+                        self.contActual = unaPuerta.lado1
                         self.pasadoPuerta = False
                         
                     else:
-                        self.habActual = unaPuerta.lado2
+                        self.contActual = unaPuerta.lado2
                         self.pasadoPuerta = True
 
-                    self.habActual.entrar(self.juego.personaje)
-                    self.moverPersonajeHabitacion()
+                    comandos = unaPuerta.obtenerComandos()
+
+                    for i, comando in enumerate(comandos):
+                    
+                        if comando.esEntrar():
+                            comando.ejecutar(self.juego.personaje)
+                            self.moverPersonajeHabitacion()
+                            self.redibujar()
+                            break
 
                     
-                    print("Estas en la habitacion: ",self.habActual.num)
+                    print("Estas en la habitacion: ",self.contActual.num)
                 else:
                     print("Puerta cerrada")
-                    print("Estas en la habitacion: ",self.habActual.num)
+                    print("Estas en la habitacion: ",self.contActual.num)
             else: 
                 print("Te has chocado con una pared")
-                print("Estas en la habitacion: ",self.habActual.num)
-
-    def getImage(self,sheet,frame,width,height,scale,colour):
-        image = pygame.Surface((width,height)).convert_alpha()
-        image.blit(sheet,(0,0),((frame*width),0,width,height))
-        image = pygame.transform.scale(image,(width*scale,height*scale))
-        image.set_colorkey(colour)
-        return image         
+                print("Estas en la habitacion: ",self.contActual.num)
+        
     
     def dibujarLaberinto(self):
         if self.juego is None:
@@ -564,6 +596,7 @@ class LaberintoGUI():
         self.juego.laberinto.aceptar(self)
         self.ocultar()
         self.mostrarVidasPersonaje()
+        self.mostrarPoderPersonaje()
         # Meter aqui los botones del menú
         
         self.mostrarBichos()
@@ -576,7 +609,8 @@ class LaberintoGUI():
         self.person = self.juego.personaje
         self.person.añadirDependencia(self)
         self.vidasM = self.person.vidas
-        self.habActual = self.person.posicion
+        self.poderM = self.person.poder
+        self.contActual = self.person.posicion
       
     def ocultar(self):
         ocultar = pygame.Surface((30,self.height-60))
@@ -597,6 +631,19 @@ class LaberintoGUI():
             self.screen.blit(text, rectText)
             pygame.display.update()
 
+    def mostrarPoderPersonaje(self):
+        if self.poderM is None or self.person is None:
+            return None
+        pygame.init()
+        miFuente = pygame.font.SysFont('radnika', 30)
+        text = miFuente.render("Poder: " + str(self.person.poder), True, (255, 0, 0))
+        rectText = text.get_rect()
+        rectText.center = (240, 30)
+        rect = pygame.Rect(rectText.left - 5, rectText.top - 5, rectText.width + 10, rectText.height + 7)
+        if pygame.display.get_active():
+            pygame.draw.rect(self.screen, (50, 50, 50), rect)  # Dibuja el rectángulo negro detrás del texto
+            self.screen.blit(text, rectText)
+            pygame.display.update()
 
     
 

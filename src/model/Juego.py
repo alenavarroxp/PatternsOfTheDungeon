@@ -2,6 +2,7 @@
 #-*- coding: utf-8 -*-
 import copy
 import threading
+from src.model.Activar import Activar
 from src.model.Jugando import Jugando
 from src.model.Hechicero import Hechicero
 from src.model.Brujo import Brujo
@@ -143,7 +144,7 @@ class Juego:
         self.personaje = unPersonaje
         self.personaje.juego = self
         self.personaje.vidas = 100
-        self.personaje.poder = 50
+        self.personaje.poder = 10
         self.laberinto.entrar(self.personaje)
     
     def clonarLaberinto(self):
@@ -154,7 +155,7 @@ class Juego:
     # Métodos ITERATOR
     def activarBomba(self,unaBomba):
         if unaBomba.esBomba():
-            unaBomba.activar()
+            unaBomba.activar(None)
 
     def activarBombas(self):
         self.laberinto.recorrer(self.activarBomba)
@@ -163,7 +164,7 @@ class Juego:
 
     def desactivarBomba(self,unaBomba):
         if unaBomba.esBomba():
-            unaBomba.desactivar()
+            unaBomba.desactivar(None)
 
     def desactivarBombas(self):
         self.laberinto.recorrer(self.desactivarBomba)  
@@ -292,14 +293,14 @@ class Juego:
     def fabricarBichoAgresivo(self):
         bicho = Bicho()
         bicho.modo = self.fabricarModoAgresivo()
-        bicho.vidas = 10
+        bicho.vidas = 50
         bicho.poder = 10
         return bicho
     
     def fabricarBichoAgresivoPosicion(self,unaHabitacion):
         bicho = Bicho()
         bicho.modo = self.fabricarModoAgresivo()
-        bicho.vidas = 10
+        bicho.vidas = 50
         bicho.poder = 10
         bicho.posicion = unaHabitacion
         return bicho
@@ -307,20 +308,22 @@ class Juego:
     def fabricarBichoPerezoso(self):
         bicho = Bicho()
         bicho.modo = self.fabricarModoPerezoso()
-        bicho.vidas = 10
+        bicho.vidas = 50
         bicho.poder = 10
         return bicho
     
     def fabricarBichoPerezosoPosicion(self,unaHabitacion):
         bicho = Bicho()
         bicho.modo = self.fabricarModoPerezoso()
-        bicho.vidas = 10
+        bicho.vidas = 50
         bicho.poder = 10
         bicho.posicion = unaHabitacion
         return bicho
     
     def fabricarBomba(self):
-        return Bomba()
+        bomba = Bomba()
+        bomba.agregarComando(Activar(),bomba)
+        return bomba
     
     def fabricarEste(self):
         return Este()

@@ -1,6 +1,8 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 
+from src.model.Activar import Activar
+from src.model.Desactivar import Desactivar
 from src.model.Decorator import Decorator
 
 class Bomba(Decorator):
@@ -21,13 +23,33 @@ class Bomba(Decorator):
     def esBomba(self):
         return True
     
-    def activar(self):
+    def activar(self,alguien):
         self.activa = True
-        print('Bomba activada')
+        if alguien is None:
+            print('Bomba activada')
+        else: 
+            print(alguien," activa la bomba")
+        self.quitarActivar()
 
-    def desactivar(self):
+    def quitarActivar(self):
+        for comando in self.comandos:
+            if comando.esActivar():
+                self.quitarComando(comando)
+                self.agregarComando(Desactivar(),self)
+
+    def desactivar(self,alguien):
         self.activa = False
-        print('Bomba desactivada')
+        if alguien is None:
+            print('Bomba desactivada')
+        else:
+            print(alguien,' desactiva la bomba')
+        self.quitarDesactivar()
+
+    def quitarDesactivar(self):
+        for comando in self.comandos:
+            if comando.esDesactivar():
+                self.quitarComando(comando)
+                self.agregarComando(Activar(),self)
     
     def __str__(self):
         if self.activa:

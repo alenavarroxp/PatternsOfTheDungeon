@@ -1,3 +1,4 @@
+from src.model.Activar import Activar
 from src.model.Brujo import Brujo
 from src.model.Hechicero import Hechicero
 from src.model.Mago import Mago
@@ -56,7 +57,6 @@ class LaberintoBuilder():
         arm.agregarOrientacion(self.fabricarOeste())
         arm.agregarOrientacion(self.fabricarSur())
         puerta = self.fabricarPuerta(arm,unContenedor)
-        puerta.agregarComando(Abrir(),puerta)
         arm.ponerEnElemento(self.fabricarEste(),puerta)
         unContenedor.agregarHijo(arm)
 
@@ -85,14 +85,14 @@ class LaberintoBuilder():
     def fabricarBichoAgresivo(self):
         bicho = Bicho()
         bicho.modo = self.fabricarModoAgresivo()
-        bicho.vidas = 10
+        bicho.vidas = 50
         bicho.poder = 10
         return bicho
     
     def fabricarBichoAgresivoPosicion(self,unaHabitacion):
         bicho = Bicho()
         bicho.modo = self.fabricarModoAgresivo()
-        bicho.vidas = 10
+        bicho.vidas = 50
         bicho.poder = 10
         bicho.posicion = self.juego.obtenerHabitacion(unaHabitacion)
         return bicho
@@ -100,14 +100,14 @@ class LaberintoBuilder():
     def fabricarBichoPerezoso(self):
         bicho = Bicho()
         bicho.modo = self.fabricarModoPerezoso()
-        bicho.vidas = 10
+        bicho.vidas = 50
         bicho.poder = 10
         return bicho
     
     def fabricarBichoPerezosoPosicion(self,unaHabitacion):
         bicho = Bicho()
         bicho.modo = self.fabricarModoPerezoso()
-        bicho.vidas = 10
+        bicho.vidas = 50
         bicho.poder = 10
         bicho.posicion = self.juego.obtenerHabitacion(unaHabitacion)
         return bicho
@@ -115,14 +115,14 @@ class LaberintoBuilder():
     def fabricarHechiceroMago(self):
         hechicero = Hechicero()
         hechicero.modohechicero = self.fabricarModoHechiceroMago()
-        hechicero.vidas = 10
+        hechicero.vidas = 50
         hechicero.poder = 10
         return hechicero
     
     def fabricarHechiceroMagoPosicion(self,unaHabitacion):
         hechicero = Hechicero()
         hechicero.modohechicero = self.fabricarModoHechiceroMago()
-        hechicero.vidas = 10
+        hechicero.vidas = 50
         hechicero.poder = 10
         hechicero.posicion = self.juego.obtenerHabitacion(unaHabitacion)
         return hechicero
@@ -130,14 +130,14 @@ class LaberintoBuilder():
     def fabricarHechiceroBrujo(self):
         hechicero = Hechicero()
         hechicero.modohechicero = self.fabricarModoHechiceroBrujo()
-        hechicero.vidas = 10
+        hechicero.vidas = 50
         hechicero.poder = 10
         return hechicero
     
     def fabricarHechiceroBrujoPosicion(self,unaHabitacion):
         hechicero = Hechicero()
         hechicero.modohechicero = self.fabricarModoHechiceroBrujo()
-        hechicero.vidas = 10
+        hechicero.vidas = 50
         hechicero.poder = 10
         hechicero.posicion = self.juego.obtenerHabitacion(unaHabitacion)
         return hechicero
@@ -145,7 +145,9 @@ class LaberintoBuilder():
 
     
     def fabricarBomba(self):
-        return Bomba()
+        bomba = Bomba()
+        bomba.agregarComando(Activar(),bomba)
+        return bomba
     
     def fabricarBombaEn(self,unContenedor):
         unContenedor.agregarHijo(self.fabricarBomba())
@@ -209,6 +211,7 @@ class LaberintoBuilder():
         puerta.lado1 = unaHab
         puerta.lado2 = otraHab
         puerta.padre = unaHab
+        puerta.agregarComando(Abrir(),puerta)
         return puerta
     
     def fabricarPuertaBuilder(self,num1, ori1, num2, ori2):
@@ -217,8 +220,6 @@ class LaberintoBuilder():
         cadena1 = getattr(self,'fabricar' + ori1)()
         cadena2 = getattr(self,'fabricar' + ori2)()
         puerta = self.fabricarPuerta(hab1, hab2)
-        puerta.agregarComando(Abrir(),puerta)
-        
         hab1.ponerEnElemento(cadena1, puerta)
         hab2.ponerEnElemento(cadena2, puerta)
     
