@@ -2,6 +2,7 @@ import unittest
 import os
 from colorama import init, Fore, Style
 from src.model.Cuadrado import Cuadrado
+from src.model.Rombo import Rombo
 from src.model.Director import Director
 from src.model.Juego import Juego
 
@@ -13,7 +14,7 @@ class Test(unittest.TestCase):
         self.juego = Juego()
         ruta_actual = os.path.abspath(__file__)
         directorio_proyecto = os.path.dirname(ruta_actual)
-        unArchivo = os.path.join(directorio_proyecto, "laberintos/lab4Hab4Arm4BichosTunel.json")
+        unArchivo = os.path.join(directorio_proyecto, "laberintos/lab4Hab4Arm4HechicerosTunel.json")
         director = Director()
         director.procesar(unArchivo)
         self.juego = director.obtenerJuego()
@@ -21,7 +22,7 @@ class Test(unittest.TestCase):
     def testIniciales(self):
         self.assertEqual(self.juego.laberinto is not None, True)
         self.assertEqual(len(self.juego.laberinto.hijos), 4)
-    
+
     def testHabitaciones(self):
         hab1 = self.juego.obtenerHabitacion(1)
         print(Fore.MAGENTA+"\nHabitacion 1:"+ Style.RESET_ALL)
@@ -98,28 +99,21 @@ class Test(unittest.TestCase):
         
         print("\nHabitación 4: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
 
-    def testBichos(self):
-        bichoAgresivo = 0
-        bichoPerezoso = 0
-        print(Fore.MAGENTA+"\nBichos:"+ Style.RESET_ALL)
-        self.assertEqual(len(self.juego.bichos), 4)
-        print("Hay 4 bichos: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
-        for bicho in self.juego.bichos:
-            if bicho.esAgresivo():
-                bichoAgresivo+=1
+    def testHechiceros(self):
+        hechiceroMago = 0
+        hechiceroBrujo = 0
+        print(Fore.MAGENTA+"\nHechiceros:"+ Style.RESET_ALL)
+        self.assertEqual(len(self.juego.hechiceros), 4)
+        print("Hay 4 hechiceros: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+        for hechicero in self.juego.hechiceros:
+            if hechicero.esMago():
+                hechiceroMago+=1
             else:
-                bichoPerezoso+=1
-        self.assertEqual(bichoAgresivo, 2)
-        print("Hay 2 bichos agresivos: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
-        self.assertEqual(bichoPerezoso, 2)
-        print("Hay 2 bichos perezosos: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
-        print("\nBichos: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
-        
-        bichoAgresivo = self.juego.bichos[0]
-        self.assertEqual(bichoAgresivo is not None, True)
-        print(Fore.MAGENTA+"\nBicho agresivo:"+ Style.RESET_ALL)
-        self.assertEqual(bichoAgresivo.esAgresivo(), True)
-        print("El bicho es agresivo: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                hechiceroBrujo+=1
+        self.assertEqual(hechiceroMago, 2)
+        print("Hay 2 magos: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+        self.assertEqual(hechiceroBrujo, 2)
+        print("Hay 2 brujos: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
 
     def testArmarios(self):
         for habitacion in self.juego.laberinto.hijos:
@@ -136,6 +130,16 @@ class Test(unittest.TestCase):
                     print("El baul "+str(hijo.num)+" no es nulo: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
                     self.assertEqual(hijo.esBaul(), True)
                     print("El baul "+str(hijo.num)+" es baul: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                    for hijos in hijo.hijos:
+                        if hijos.esEspada():
+                            print(Fore.MAGENTA+"\nEspada:"+ Style.RESET_ALL)
+                            self.assertEqual(hijo.hijos is not None, True)
+                            print("La espada "+str(hijo.num)+" no es nulo: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                            self.assertEqual(hijos.esEspada(), True)
+                            print("La espada "+str(hijo.num)+" es espada: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                            self.assertEqual(hijos.estado,True)
+                            print("La espada "+str(hijo.num)+" esta afilada: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+
                 elif hijo.esTunel():
                     print(Fore.MAGENTA+"\nTunel:"+ Style.RESET_ALL)
                     self.assertEqual(hijo is not None, True)
@@ -143,7 +147,7 @@ class Test(unittest.TestCase):
                     self.assertEqual(hijo.esTunel(), True)
                     print("El tunel es tunel: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
 
-
+        
 
 if __name__ == '__main__':
     unittest.main()

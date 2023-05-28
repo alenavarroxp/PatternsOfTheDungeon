@@ -10,8 +10,8 @@ class Personaje(Ente):
         self.inventario = Inventario()
         self.dinero = 50
 
-    def obtenerComandos(self):
-        return self.posicion.obtenerComandos()
+    def obtenerComandos(self,alguien):
+        return self.posicion.obtenerComandos(alguien)
     
     def cogerObjeto(self,objeto):
         self.inventario.agregarObjeto(objeto)

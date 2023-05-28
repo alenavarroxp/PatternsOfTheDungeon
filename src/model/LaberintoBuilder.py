@@ -250,7 +250,7 @@ class LaberintoBuilder():
         tienda = Tienda(num)
         tienda.forma = self.fabricarForma()
         tienda.forma.num = num
-        mercader = self.fabricarMercader()
+        mercader = self.fabricarMercader(None)
         tienda.mercader = mercader
         tienda.ponerEnElemento(self.fabricarNorte(),self.fabricarPared(tienda))
         tienda.ponerEnElemento(self.fabricarEste(),self.fabricarPared(tienda))
@@ -295,7 +295,6 @@ class LaberintoBuilder():
             objeto = getattr(self,'fabricar' + tipo.capitalize())()
             objeto.agregarComando(Comprar(),objeto)
             mercader.agregarObjeto(objeto,precio)
-       
         return mercader
     
     def fabricarMoneda(self,valor,ubicacion):

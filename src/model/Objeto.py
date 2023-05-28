@@ -13,7 +13,7 @@ class Objeto(ABC):
     def quitarComando(self,unComando):
         self.comandos.remove(unComando)
 
-    def obtenerComandos(self):
+    def obtenerComandos(self,alguien):
         return self.comandos
         
     def usarObjeto(self):

@@ -35,6 +35,8 @@ class Tienda(Contenedor):
                 print(personaje,' compra ',objeto,' a ',self.mercader)
                 personaje.dinero -= objeto.precio
                 personaje.cogerObjeto(objeto)
+            else:
+                print(personaje,' no tiene suficiente dinero para comprar ',objeto,' a ',self.mercader)
                
 
 

@@ -158,6 +158,7 @@ class LaberintoGUI():
                                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
                                 seleccionado = laberintos[i + scroll_offset]
                                 laberinto_nombre = os.path.splitext(seleccionado)[0]
+                                self.laberinto = laberinto_nombre
                                 imagen_laberinto = pygame.image.load(f"graphics/preview/{laberinto_nombre}.png")
                                 break
 
@@ -234,6 +235,8 @@ class LaberintoGUI():
             hijo.forma.extentX = self.ancho
             hijo.forma.extentY = self.alto
 
+
+    
     def mostrarVentana(self):
         pygame.init()
         pygame.display.set_caption("Juego - Patterns of the Dungeon")
@@ -241,7 +244,7 @@ class LaberintoGUI():
         running = True
         self.pX = self.origenX + (self.ancho/2) - (30/2)
         self.pY = self.origenY + (self.alto/2) - (30/2)
-        fuente = pygame.font.SysFont('radnika',20)
+        fuente = pygame.font.SysFont('radnika',18)
         self.principal = pygame.image.load("graphics/principal.png").convert_alpha()
         self.principal = pygame.transform.scale(self.principal,(30*1.35,30*1.35))
         self.personaje = self.principal
@@ -258,9 +261,18 @@ class LaberintoGUI():
         # self.screen.blit(abrirPuertasText, (abrirPuertas.x + 10, abrirPuertas.y + 10))
         # abrir = False
 
-        iniciarJuego = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 550, 200, 50))
+        iniciarJuego = pygame.draw.rect(self.screen, (0, 255, 0), (1275, 500, 150, 50))
         iniciarJuegoText = fuente.render("Iniciar juego", True, (255, 255, 255))
         self.screen.blit(iniciarJuegoText, (iniciarJuego.x + 10, iniciarJuego.y + 10))
+
+        reiniciar = pygame.draw.rect(self.screen, (0, 255, 0), (1275, 550, 150, 50))
+        reiniciarText = fuente.render("Reiniciar", True, (255, 255, 255))
+        self.screen.blit(reiniciarText, (reiniciar.x + 10, reiniciar.y + 10))
+
+        volver = pygame.draw.rect(self.screen, (0, 255, 0), (1275, 600, 150, 50))
+        volverText = fuente.render("Volver", True, (255, 255, 255))
+        self.screen.blit(volverText, (volver.x + 10, volver.y + 10))
+
 
 
         # activarBombas = pygame.draw.rect(self.screen, (0, 255, 0), (1200, 200, 200, 50))
@@ -307,6 +319,19 @@ class LaberintoGUI():
                         print("Iniciar juego")
                         self.juego.lanzarBichos()
                         self.juego.lanzarHechiceros()
+
+                    if reiniciar.collidepoint(self.mouse_pos):
+                        print("Reiniciar")
+                        self.juego.finJuego()
+                        self.__init__()
+                        self.iniciarJuego('laberintos/'+self.laberinto+'.json')
+                        
+
+                    if volver.collidepoint(self.mouse_pos):
+                        print("Volver")
+                        self.juego.finJuego()
+                        self.__init__()
+                        self.seleccionarJuego()
 
                     # if activarBombas.collidepoint(self.mouse_pos):
                     #     if not activar:
@@ -386,7 +411,7 @@ class LaberintoGUI():
 
         comandos = self.contActual.obtenerComandos(self.juego.personaje)
         longitud_anterior = self.longitud_comandos_anterior  # Obtener la longitud anterior
-        rect_borrar = pygame.Rect(1175, 50, 210, 20 + longitud_anterior * 60)  # Usar la longitud anterior
+        rect_borrar = pygame.Rect(1175, 50, 210, 20 + self.longitud_comandos_anterior * 30)  # Usar la longitud anterior
         pygame.draw.rect(self.screen, (50, 50, 50), rect_borrar)
         
         # if isinstance(self.contActual,Habitacion):

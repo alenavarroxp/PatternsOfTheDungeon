@@ -349,13 +349,13 @@ while True:
                 if juego.personaje is not None:
                     print("¿Que quieres hacer ",personaje.nickname,' en ',personaje.posicion,'?')
                     i = 0
-                    for comando in juego.personaje.obtenerComandos():
+                    for comando in juego.personaje.obtenerComandos(juego.personaje):
                         i += 1
                         print(str(i)+". "+str(comando))
                     accion = input("¿Que accion quieres realizar?\n")
                     accion = int(accion)
-                    if accion > 0 and accion <= len(juego.personaje.obtenerComandos()):
-                        juego.personaje.obtenerComandos()[accion-1].ejecutar(juego.personaje)
+                    if accion > 0 and accion <= len(juego.personaje.obtenerComandos(juego.personaje)):
+                        juego.personaje.obtenerComandos(juego.personaje)[accion-1].ejecutar(juego.personaje)
                     else:
                         print("\n\nOpción no válida.\n\n")
                 else:

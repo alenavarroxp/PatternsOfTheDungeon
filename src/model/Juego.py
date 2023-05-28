@@ -2,6 +2,7 @@
 #-*- coding: utf-8 -*-
 import copy
 import threading
+from src.model.Comprar import Comprar
 from src.model.Activar import Activar
 from src.model.Jugando import Jugando
 from src.model.Hechicero import Hechicero
@@ -341,10 +342,10 @@ class Juego:
         hab = Habitacion(num)
         hab.forma = self.fabricarForma()
         hab.forma.num = num
-        hab.ponerEnElemento(self.fabricarNorte(),self.fabricarPared())
-        hab.ponerEnElemento(self.fabricarEste(),self.fabricarPared())
-        hab.ponerEnElemento(self.fabricarOeste(),self.fabricarPared())
-        hab.ponerEnElemento(self.fabricarSur(),self.fabricarPared())
+        hab.ponerEnElemento(self.fabricarNorte(),self.fabricarPared(hab))
+        hab.ponerEnElemento(self.fabricarEste(),self.fabricarPared(hab))
+        hab.ponerEnElemento(self.fabricarOeste(),self.fabricarPared(hab))
+        hab.ponerEnElemento(self.fabricarSur(),self.fabricarPared(hab))
         hab.agregarOrientacion(self.fabricarNorte())
         hab.agregarOrientacion(self.fabricarEste())
         hab.agregarOrientacion(self.fabricarOeste())
@@ -381,8 +382,10 @@ class Juego:
     def fabricarOeste(self):
         return Oeste()
     
-    def fabricarPared(self):
-        return Pared()
+    def fabricarPared(self,padre):
+        pared = Pared()
+        pared.padre = padre
+        return pared
     
     def fabricarPuerta(self,unaHab:Habitacion,otraHab:Habitacion):
         puerta = Puerta()
@@ -407,10 +410,13 @@ class Juego:
     
     def fabricarMercader(self):
         mercader = Mercader('Antonio')
-        mercader.agregarObjeto(self.fabricarEspada(),50)
+        espada = self.fabricarEspada()
+        espada.agregarComando(Comprar(),espada)
+        mercader.agregarObjeto(espada,50)
         mochila = self.fabricarMochila()
         mochila.agregarObjeto(self.fabricarMoneda(10,mochila))
         mochila.agregarObjeto(self.fabricarMoneda(20,mochila))
+        mochila.agregarComando(Comprar(),mochila)
         mercader.agregarObjeto(mochila,150)
         return mercader
     
@@ -465,13 +471,13 @@ class Juego:
             hab2 = self.fabricarHabitacion(2)
 
             puerta = self.fabricarPuerta(hab1,hab2)
-            hab1.forma.norte = self.fabricarPared()
-            hab1.forma.oeste = self.fabricarPared()
-            hab1.forma.este = self.fabricarPared()
+            hab1.forma.norte = self.fabricarPared(hab1)
+            hab1.forma.oeste = self.fabricarPared(hab1)
+            hab1.forma.este = self.fabricarPared(hab1)
 
-            hab2.forma.sur = self.fabricarPared()
-            hab2.forma.oeste = self.fabricarPared()
-            hab2.forma.este = self.fabricarPared()
+            hab2.forma.sur = self.fabricarPared(hab2)
+            hab2.forma.oeste = self.fabricarPared(hab2)
+            hab2.forma.este = self.fabricarPared(hab2)
 
             hab1.forma.sur = puerta
             hab2.forma.norte = puerta
@@ -499,13 +505,13 @@ class Juego:
         hab2 = self.fabricarHabitacion(2)
 
         puerta = self.fabricarPuerta(hab1,hab2)
-        hab1.forma.norte = self.fabricarPared()
-        hab1.forma.oeste = self.fabricarPared()
-        hab1.forma.este = self.fabricarPared()
+        hab1.forma.norte = self.fabricarPared(hab1)
+        hab1.forma.oeste = self.fabricarPared(hab1)
+        hab1.forma.este = self.fabricarPared(hab1)
 
-        hab2.forma.sur = self.fabricarPared()
-        hab2.forma.oeste = self.fabricarPared()
-        hab2.forma.este = self.fabricarPared()
+        hab2.forma.sur = self.fabricarPared(hab2)
+        hab2.forma.oeste = self.fabricarPared(hab2)
+        hab2.forma.este = self.fabricarPared(hab2)
 
         hab1.forma.sur = puerta
         hab2.forma.norte = puerta
@@ -522,17 +528,17 @@ class Juego:
         hab2 = self.fabricarHabitacion(2)
         puerta = self.fabricarPuerta(hab1,hab2)
         bomba1 = self.fabricarBomba()
-        bomba1.component = self.fabricarPared()
+        bomba1.component = self.fabricarPared(hab1)
         bomba2 = self.fabricarBomba()
-        bomba2.component = self.fabricarPared()
+        bomba2.component = self.fabricarPared(hab2)
 
         hab1.forma.norte = bomba1
-        hab1.forma.oeste = self.fabricarPared()
-        hab1.forma.este = self.fabricarPared()
+        hab1.forma.oeste = self.fabricarPared(hab1)
+        hab1.forma.este = self.fabricarPared(hab1)
 
         hab2.forma.sur = bomba2
-        hab2.forma.oeste = self.fabricarPared()
-        hab2.forma.este = self.fabricarPared()
+        hab2.forma.oeste = self.fabricarPared(hab2)
+        hab2.forma.este = self.fabricarPared(hab2)
 
         hab1.forma.sur = puerta
         hab2.forma.norte = puerta
