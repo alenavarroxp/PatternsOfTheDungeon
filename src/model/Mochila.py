@@ -7,6 +7,12 @@ class Mochila(Objeto):
         super().__init__()
         self.objetos = []
 
+    def esMochila(self):
+        return True
+
+    def aceptar(self, unVisitor):
+        unVisitor.visitarMochila(self)
+
     def agregarObjeto(self, objeto):
         if objeto not in self.objetos:
             objeto.mochila = self

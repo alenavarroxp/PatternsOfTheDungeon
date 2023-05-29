@@ -5,6 +5,7 @@ class Desactivar(Comando):
     
     def ejecutar(self,alguien):
       self.receptor.desactivar(alguien)
+      alguien.notificar()
     
     def esDesactivar(self):
         return True

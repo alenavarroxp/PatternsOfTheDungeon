@@ -21,3 +21,9 @@ class Objeto(ABC):
 
     def esMoneda(self):
         return False
+    
+    def esMochila(self):
+        return False
+    
+    def esEspada(self):
+        return False

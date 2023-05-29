@@ -8,7 +8,8 @@ from src.model.Comando import Comando
 class Entrar(Comando):
     
     def ejecutar(self,alguien):
-      self.receptor.entrar(alguien)
+        self.receptor.entrar(alguien)
+        alguien.notificar()
     
     def esEntrar(self):
         return True

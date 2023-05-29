@@ -30,6 +30,7 @@ class LaberintoGUI():
         self.vidasM = 0
         self.poderM = 0
         self.dineroM = 0
+        self.inventarioM = None
         self.origenX = 10
         self.origenY = 50
         self.pX = 0
@@ -262,15 +263,15 @@ class LaberintoGUI():
         # self.screen.blit(abrirPuertasText, (abrirPuertas.x + 10, abrirPuertas.y + 10))
         # abrir = False
 
-        iniciarJuego = pygame.draw.rect(self.screen, (0, 255, 0), (1275, 500, 150, 50))
+        iniciarJuego = pygame.draw.rect(self.screen, (0, 255, 0), (610, 3 , 120, 40))
         iniciarJuegoText = fuente.render("Iniciar juego", True, (255, 255, 255))
         self.screen.blit(iniciarJuegoText, (iniciarJuego.x + 10, iniciarJuego.y + 10))
 
-        reiniciar = pygame.draw.rect(self.screen, (0, 255, 0), (1275, 550, 150, 50))
+        reiniciar = pygame.draw.rect(self.screen, (0, 255, 0), (750, 3, 120, 40))
         reiniciarText = fuente.render("Reiniciar", True, (255, 255, 255))
         self.screen.blit(reiniciarText, (reiniciar.x + 10, reiniciar.y + 10))
 
-        volver = pygame.draw.rect(self.screen, (0, 255, 0), (1275, 600, 150, 50))
+        volver = pygame.draw.rect(self.screen, (0, 255, 0), (890, 3, 120, 40))
         volverText = fuente.render("Volver", True, (255, 255, 255))
         self.screen.blit(volverText, (volver.x + 10, volver.y + 10))
 
@@ -397,6 +398,7 @@ class LaberintoGUI():
                     
 
             self.dibujarComandos(self.mouse_pos)
+            self.mostrarInventario(self.mouse_pos)
             self.screen.blit(self.personaje,(self.pX,self.pY))
             self.mouse_pos = None
            
@@ -473,11 +475,76 @@ class LaberintoGUI():
             self.mostrarVidasPersonaje()
             self.mostrarPoderPersonaje()
             self.mostrarDineroPersonaje()
-            # self.mostrarPersonaje()
+            self.mostrarInventario(None)
             self.mostrarBichos()
             self.mostrarHechiceros()
             self.redibujar()
+
+    def mostrarInventario(self,mouse_pos):
+        if self.inventarioM is None or self.person is None:
+            return None
+        pygame.init()
+        miFuente = pygame.font.SysFont('radnika', 20)
+        if self.juego.personaje.inventario.objetos.__len__() == 0:
+            text = miFuente.render("Inventario Vacío ", True, (255, 255, 255))
+            rectText = text.get_rect()
+            rectText.center = (1250, 420)
+        else:
+            text = miFuente.render("Inventario:          ", True, (255, 255, 255))
+            rectText = text.get_rect()
+            rectText.center = (1250, 420)
+       
+       
+        rect = pygame.Rect(rectText.left - 5, rectText.top - 5, rectText.width + 10, rectText.height + 7)
+        if pygame.display.get_active():
+            pygame.draw.rect(self.screen, (50, 50, 50), rect)  # Dibuja el rectángulo negro detrás del texto
+            self.screen.blit(text, rectText)
+            pygame.display.update()
+
+        self.mostrarObjetosInventario(mouse_pos)
+
+    def mostrarObjetosInventario(self,mouse_pos):
+        if self.juego.personaje.inventario.objetos.__len__() > 0:
+            for i, obj in enumerate(self.juego.personaje.inventario.objetos):
+                # Calcula las coordenadas de fila y columna
+                fila = i // 3  # Cada fila contendrá 3 objetos
+                columna = i % 3  # Columna actual dentro de la fila
+
+                # Calcula las coordenadas de dibujo basadas en la fila y columna
+                x = 1175 + columna * 56
+                y = 440 + fila * 56
+
+                # Dibuja la imagen de la celda del inventario
+                celda = pygame.image.load("graphics/celdaInventario.png").convert_alpha()
+                rect_comando = pygame.Rect(x, y, 56, 56)
+                self.screen.blit(celda, (x, y))
+
+                # Dibuja la imagen del objeto correspondiente
+                if obj.esEspada():
+                    if isinstance(obj.modo, Afilada):
+                        espada = pygame.image.load("graphics/espadaRota.png").convert_alpha()
+                        espada = pygame.transform.scale(espada, (15, 61))
+                        espada = pygame.transform.rotate(espada, 140)
+                        self.screen.blit(espada, (x, y))
+                    else:
+                        espada = pygame.image.load("graphics/espadaRota.png").convert_alpha()
+                        espada = pygame.transform.scale(espada, (15, 61))
+                        espada = pygame.transform.rotate(espada, 140)
+                        self.screen.blit(espada, (x, y))
+                elif obj.esMochila():
+                    mochila = pygame.image.load("graphics/mochila.png").convert_alpha()
+                    mochila = pygame.transform.scale(mochila,(33,39))
+                    mochila_x = x + (56 - mochila.get_width()) // 2  # Ajuste de posición en x
+                    mochila_y = y + (56 - mochila.get_height()) // 2  # Ajuste de posición en y
+                    self.screen.blit(mochila, (mochila_x, mochila_y))
+                    
+                 # Verifica si se hizo clic en la celda actual
+                if mouse_pos is not None and rect_comando.collidepoint(mouse_pos):
+                    print("PULSADO CELDA", i)
+
+                
             
+
     # def mostrarPersonaje(self):
     #     self.dibujarPersonaje(self.juego.personaje)
 
@@ -630,6 +697,7 @@ class LaberintoGUI():
         self.mostrarVidasPersonaje()
         self.mostrarPoderPersonaje()
         self.mostrarDineroPersonaje()
+        self.mostrarInventario(None)
         # Meter aqui los botones del menú
         
         self.mostrarBichos()
@@ -641,10 +709,11 @@ class LaberintoGUI():
         personaje.nickname = unaCadena
         self.juego.agregarPersonaje(personaje)
         self.person = self.juego.personaje
-        self.person.añadirDependencia(self)
         self.vidasM = self.person.vidas
         self.poderM = self.person.poder
         self.dineroM = self.person.dinero
+        self.inventarioM = self.person.inventario
+        self.person.añadirDependencia(self)
         self.contActual = self.person.posicion
       
     def ocultar(self):
@@ -737,7 +806,21 @@ class LaberintoGUI():
         #dibujar
         self.dibujarContenedorRectangularEscala(unaHabitacion,unaHabitacion.forma, 1)
         
-    
+    def visitarMochila(self,unaMochila):
+        print('Mochila visitada')
+        #dibujar
+        unPuntoX = unaMochila.padre.forma.puntoX
+        unPuntoY = unaMochila.padre.forma.puntoY
+        ancho = unaMochila.padre.forma.extentX
+        alto = unaMochila.padre.forma.extentY
+        self.dibujarMochila(unaMochila,unPuntoX,unPuntoY,ancho,alto)
+
+    def dibujarMochila(self,unaMochila,unPuntoX,unPuntoY,ancho,alto):
+        mochila = pygame.image.load("graphics/mochila.png").convert_alpha()
+        mochila = pygame.transform.scale(mochila,(33,39))
+        self.screen.blit(mochila,(unPuntoX+ancho/2-90,unPuntoY+20))
+        
+
     def visitarPuerta(self,unaPuerta):
         # print('Puerta visitada')
         # #dibujar
@@ -793,11 +876,13 @@ class LaberintoGUI():
         if isinstance(unaEspada.modo,Afilada):
                 espada = pygame.image.load("graphics/espadaAfilada.png").convert_alpha()
                 espada = pygame.transform.scale(espada,(15,61))
-                self.screen.blit(espada,(unPuntoX+ancho/2+50,unPuntoY+20))
+                espada = pygame.transform.rotate(espada, -90)
+                self.screen.blit(espada,(unPuntoX+ancho/2+50,unPuntoY+40))
         else:
                 espada = pygame.image.load("graphics/espadaRota.png").convert_alpha()
                 espada = pygame.transform.scale(espada,(100,100))
-                self.screen.blit(espada,(unPuntoX+ancho/2+50 ,unPuntoY+20))
+                espada = pygame.transform.rotate(espada, -90)
+                self.screen.blit(espada,(unPuntoX+ancho/2+50 ,unPuntoY+40))
 
     def dibujarTienda(self,unaTienda,unPuntoX,unPuntoY,ancho,alto):
         if isinstance(unaTienda.estadoTienda,Abierto):  

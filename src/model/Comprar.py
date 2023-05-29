@@ -5,7 +5,8 @@ from src.model.Comando import Comando
 class Comprar(Comando):
     
     def ejecutar(self,alguien):
-      alguien.posicion.enteCompraObjeto(alguien,self.receptor)
+        alguien.posicion.enteCompraObjeto(alguien,self.receptor)
+        alguien.notificar()
     
     def esComprar(self):
         return True

@@ -5,6 +5,7 @@ class Activar(Comando):
     
     def ejecutar(self,alguien):
       self.receptor.activar(alguien)
+      alguien.notificar()
     
     def esActivar(self):
         return True

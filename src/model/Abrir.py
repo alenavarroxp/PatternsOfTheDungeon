@@ -8,7 +8,8 @@ from src.model.Comando import Comando
 class Abrir(Comando):
     
     def ejecutar(self,alguien):
-      self.receptor.abrir(alguien)
+        self.receptor.abrir(alguien)
+        alguien.notificar()
     
     def esAbrir(self):
         return True

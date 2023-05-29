@@ -9,6 +9,7 @@ class Coger(Comando):
           if hijo == self.receptor:
               self.receptor.padre.hijos.remove(hijo)
               break
+      alguien.notificar()
     
     def esCoger(self):
         return True

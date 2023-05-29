@@ -19,9 +19,11 @@ class Personaje(Ente):
     
     def soltarObjeto(self,objeto):
         self.inventario.quitarObjeto(objeto)
+        self.notificar()
 
     def abrirInventario(self):
         self.inventario.abrirInventario()
+        self.notificar()
     
     def heMuerto(self):
         self.estado = Muerto()

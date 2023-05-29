@@ -9,6 +9,7 @@ class Cerrar(Comando):
     
     def ejecutar(self,alguien):
       self.receptor.cerrar(alguien)
+      alguien.notificar()
     
     def esCerrar(self):
         return True
