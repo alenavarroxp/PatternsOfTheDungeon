@@ -1,12 +1,16 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 
+from src.model.Afilada import Afilada
 from src.model.Objeto import Objeto
 class Espada(Objeto):
     def __init__(self):
         super().__init__()
-        self.estado = True
+        self.modo = Afilada()
     
+    def aceptar(self, unVisitor):
+        unVisitor.visitarEspada(self)
+
     def esEspada(self):
         return True
     
@@ -14,15 +18,7 @@ class Espada(Objeto):
         print('Recorriendo espada')
 
     def __str__(self):
-        if self.estado:
-            estado = 'Afilada'
-        else:
-            estado = 'Rota'
-        return f"Espada ({estado}) {self.precio}€"
+        return f"Espada ({self.modo}) {self.precio}€"
     
     def __repr__(self):
-        if self.estado:
-            estado = 'Afilada'
-        else:
-            estado = 'Rota'
-        return f"Espada ({estado}) {self.precio}€"
+        return f"Espada ({self.modo}) {self.precio}€"

@@ -1,3 +1,4 @@
+from src.model.Coger import Coger
 from src.model.Comprar import Comprar
 from src.model.Moneda import Moneda
 from src.model.Mercader import Mercader
@@ -163,6 +164,13 @@ class LaberintoBuilder():
     def fabricarEspada(self):
         espada = Espada()
         return espada
+    
+    def fabricarEspadaEn(self,unContenedor):
+        espada = self.fabricarEspada()
+        unContenedor.agregarHijo(espada)
+        espada.agregarComando(Coger(),espada)
+        return espada
+
     
     def fabricarFuego(self):
         return Fuego()

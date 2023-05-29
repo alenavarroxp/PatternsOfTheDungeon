@@ -6,7 +6,8 @@
         ]},
         {"tipo":"habitacion","num":2,"hijos":[
             {"tipo":"armario","num":2,"hijos":[]},
-            {"tipo":"tunel"}
+            {"tipo":"tunel"},
+            {"tipo":"espada"}
             
        ]},
        {"tipo":"habitacion","num":3,"hijos":[

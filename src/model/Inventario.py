@@ -7,6 +7,7 @@ class Inventario:
             self.objetos[objeto] += 1
         else:
             self.objetos[objeto] = 1
+        
 
     def quitarObjeto(self, objeto):
         if objeto in self.objetos:

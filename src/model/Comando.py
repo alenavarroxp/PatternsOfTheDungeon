@@ -22,3 +22,6 @@ class Comando():
     
     def esComprar(self):
         return False    
+    
+    def esCoger(self):
+        return False

@@ -1,4 +1,5 @@
 import pygame,sys,os
+from src.model.Afilada import Afilada
 from src.model.Tienda import Tienda
 from src.model.Abierto import Abierto
 from src.model.Baul import Baul
@@ -394,7 +395,7 @@ class LaberintoGUI():
                     self.juego.personaje.atacar()
                         
                     
-                        
+
             self.dibujarComandos(self.mouse_pos)
             self.screen.blit(self.personaje,(self.pX,self.pY))
             self.mouse_pos = None
@@ -411,16 +412,14 @@ class LaberintoGUI():
 
         comandos = self.contActual.obtenerComandos(self.juego.personaje)
         longitud_anterior = self.longitud_comandos_anterior  # Obtener la longitud anterior
-        rect_borrar = pygame.Rect(1175, 50, 210, 20 + self.longitud_comandos_anterior * 30)  # Usar la longitud anterior
+        rect_borrar = pygame.Rect(1175, 50, 210, 20 + longitud_anterior * 30)  # Usar la longitud anterior
         pygame.draw.rect(self.screen, (50, 50, 50), rect_borrar)
-        
-        # if isinstance(self.contActual,Habitacion):
 
         for i, comando in enumerate(comandos):
             rect_comando = pygame.Rect(1175, 50 + i * 30, 210, 30)
 
             if mouse_pos is not None and rect_comando.collidepoint(mouse_pos):
-                if comando.esComprar() or comando.esAbrir() or comando.esEntrar() or comando.esCerrar() or comando.esActivar() or comando.esDesactivar():
+                if comando.esComprar() or comando.esAbrir() or comando.esEntrar() or comando.esCerrar() or comando.esActivar() or comando.esDesactivar() or comando.esCoger():
                     comando.ejecutar(self.juego.personaje)
                     self.moverPersonajeHabitacion()
                 self.redibujar()
@@ -780,6 +779,25 @@ class LaberintoGUI():
         ancho = unaTienda.padre.forma.extentX
         alto = unaTienda.padre.forma.extentY
         self.dibujarTienda(unaTienda,unPuntoX,unPuntoY,ancho,alto)
+
+    def visitarEspada(self,unaEspada):
+        print("Espada visitada")
+        unPuntoX = unaEspada.padre.forma.puntoX
+        unPuntoY = unaEspada.padre.forma.puntoY
+        ancho = unaEspada.padre.forma.extentX
+        alto = unaEspada.padre.forma.extentY
+        self.dibujarEspada(unaEspada,unPuntoX,unPuntoY,ancho,alto)
+
+    def dibujarEspada(self,unaEspada,unPuntoX,unPuntoY,ancho,alto):
+
+        if isinstance(unaEspada.modo,Afilada):
+                espada = pygame.image.load("graphics/espadaAfilada.png").convert_alpha()
+                espada = pygame.transform.scale(espada,(15,61))
+                self.screen.blit(espada,(unPuntoX+ancho/2+50,unPuntoY+20))
+        else:
+                espada = pygame.image.load("graphics/espadaRota.png").convert_alpha()
+                espada = pygame.transform.scale(espada,(100,100))
+                self.screen.blit(espada,(unPuntoX+ancho/2+50 ,unPuntoY+20))
 
     def dibujarTienda(self,unaTienda,unPuntoX,unPuntoY,ancho,alto):
         if isinstance(unaTienda.estadoTienda,Abierto):  
