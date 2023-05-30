@@ -521,8 +521,8 @@ class LaberintoGUI():
 
                 # Dibuja la imagen del objeto correspondiente
                 if obj.esEspada():
-                    if isinstance(obj.modo, Afilada):
-                        espada = pygame.image.load("graphics/espadaRota.png").convert_alpha()
+                    if isinstance(obj.estado, Afilada):
+                        espada = pygame.image.load("graphics/espadaAfilada.png").convert_alpha()
                         espada = pygame.transform.scale(espada, (15, 61))
                         espada = pygame.transform.rotate(espada, 140)
                         self.screen.blit(espada, (x, y))
@@ -873,7 +873,7 @@ class LaberintoGUI():
 
     def dibujarEspada(self,unaEspada,unPuntoX,unPuntoY,ancho,alto):
 
-        if isinstance(unaEspada.modo,Afilada):
+        if isinstance(unaEspada.estado,Afilada):
                 espada = pygame.image.load("graphics/espadaAfilada.png").convert_alpha()
                 espada = pygame.transform.scale(espada,(15,61))
                 espada = pygame.transform.rotate(espada, -90)

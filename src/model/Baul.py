@@ -15,6 +15,17 @@ class Baul(Contenedor):
         # for hijo in self.hijos:
         #     hijo.aceptar(unVisitor)
         self.forma.aceptar(unVisitor)
+    
+    def obtenerComandos(self,alguien):
+        lista = []
+        if alguien.posicion is self:
+            lista = super().obtenerComandos(None)
+            for objeto in self.hijos:
+                lista.append(objeto.comandos[0])
+        else: 
+            lista = super().obtenerComandos(alguien)
+        
+        return lista
 
     def entrar(self):
         print('Estas en el baul',self.num)

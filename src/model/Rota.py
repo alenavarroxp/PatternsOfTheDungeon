@@ -1,7 +1,7 @@
-from src.model.ModoEspada import ModoEspada
+from src.model.EstadoEspada import EstadoEspada
 
 
-class Rota(ModoEspada):
+class Rota(EstadoEspada):
     def estaRota(self):
         super().estaRota()
         print("La espada está rota")

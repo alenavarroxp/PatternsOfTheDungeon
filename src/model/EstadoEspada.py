@@ -1,4 +1,4 @@
-class ModoEspada():
+class EstadoEspada():
 
     def estaAfilada(self):
         return False

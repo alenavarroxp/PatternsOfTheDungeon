@@ -52,6 +52,12 @@ class ElementoMapa:
     def esTienda(self):
         return False
     
+    def esEspada(self):
+        return False
+    
+    def esMochila(self):
+        return False
+    
     def recorrer(self,unBloque):
         unBloque(self)
 

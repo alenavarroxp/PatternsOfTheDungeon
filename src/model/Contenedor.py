@@ -15,6 +15,7 @@ class Contenedor(ElementoMapa):
         self.oeste = None
         self.sur = None
         self.forma = None
+        self.objetos = []
         
 
     def __init__(self,num):
@@ -27,12 +28,13 @@ class Contenedor(ElementoMapa):
         self.sur = None
         self.forma = None
         self.num = num
-    
+        self.objetos = []
 
     def obtenerComandos(self,alguien):
         lista = []
         for hijo in self.hijos:
-            lista.extend(hijo.obtenerComandos(alguien))
+            if hijo.esEspada() == False:
+                lista.extend(hijo.obtenerComandos(alguien))
         lista.extend(self.forma.obtenerComandos())
         return lista
 

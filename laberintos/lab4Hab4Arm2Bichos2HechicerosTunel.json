@@ -17,7 +17,8 @@
        {"tipo":"habitacion","num":3,"hijos":[
             {"tipo":"armario","num":3,"hijos":[]},
             {"tipo":"bomba"},
-            {"tipo":"baul","num":1,"contenido":"Espada"}
+            {"tipo":"baul","num":1,"contenido":"espada"},
+            {"tipo":"espada"}
        ]},
        {"tipo":"habitacion","num":4,"hijos":[
             {"tipo":"armario","num":4,"hijos,":[]},

@@ -76,8 +76,7 @@ class LaberintoBuilder():
         baul.ponerEnElemento(self.fabricarEste(),self.fabricarPared(baul))
         baul.ponerEnElemento(self.fabricarOeste(),self.fabricarPared(baul))
         baul.ponerEnElemento(self.fabricarSur(),self.fabricarPared(baul))
-        cadena1 = getattr(self,'fabricar' + contenido)()
-        baul.agregarHijo(cadena1)
+        getattr(self,'fabricar' + contenido.capitalize()+'En')(baul)
         baul.agregarOrientacion(self.fabricarNorte())
         baul.agregarOrientacion(self.fabricarEste())
         baul.agregarOrientacion(self.fabricarOeste())
@@ -163,12 +162,13 @@ class LaberintoBuilder():
     
     def fabricarEspada(self):
         espada = Espada()
+        espada.agregarComando(Coger(),espada)
         return espada
     
     def fabricarEspadaEn(self,unContenedor):
-        espada = self.fabricarEspada()
-        unContenedor.agregarHijo(espada)
+        espada = Espada()
         espada.agregarComando(Coger(),espada)
+        unContenedor.agregarHijo(espada)
         return espada
 
     
@@ -275,7 +275,7 @@ class LaberintoBuilder():
         tienda = Tienda(num)
         tienda.forma = self.fabricarForma()
         tienda.forma.num = num
-        mercader = self.fabricarMercader(tienda,objetos)
+        mercader = self.fabricarMercader(objetos)
         tienda.mercader = mercader
         tienda.ponerEnElemento(self.fabricarNorte(),self.fabricarPared(tienda))
         tienda.ponerEnElemento(self.fabricarEste(),self.fabricarPared(tienda))
@@ -297,11 +297,11 @@ class LaberintoBuilder():
     
     def fabricarMochilaEn(self,unContenedor):
         mochila = self.fabricarMochila()
-        unContenedor.agregarHijo(mochila)
         mochila.agregarComando(Coger(),mochila)
+        unContenedor.agregarHijo(mochila)
         return mochila
     
-    def fabricarMercader(self,unContenedor,objetos):
+    def fabricarMercader(self,objetos):
         mercader = Mercader('Antonio')
         for objeto in objetos:
             precio = objeto['precio']
@@ -309,7 +309,6 @@ class LaberintoBuilder():
             objeto = getattr(self,'fabricar' + tipo.capitalize())()
             objeto.agregarComando(Comprar(),objeto)
             mercader.agregarObjeto(objeto,precio)
-            unContenedor.agregarHijo(objeto)
         return mercader
     
     def fabricarMoneda(self,valor,ubicacion):

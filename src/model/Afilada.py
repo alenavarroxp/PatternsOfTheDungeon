@@ -1,7 +1,7 @@
-from src.model.ModoEspada import ModoEspada
+from src.model.EstadoEspada import EstadoEspada
 
 
-class Afilada(ModoEspada):
+class Afilada(EstadoEspada):
     def estaAfilada(self):
         return True
     

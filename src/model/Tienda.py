@@ -15,11 +15,13 @@ class Tienda(Contenedor):
         self.forma.aceptar(unVisitor)
     
     def obtenerComandos(self,alguien):
-        lista = super().obtenerComandos(alguien)
-
+        lista = []
         if alguien.posicion is self:
+            lista = super().obtenerComandos(None)
             for objeto in self.mercader.objetos:
                 lista.append(objeto.comandos[0])
+        else: 
+            lista = super().obtenerComandos(alguien)
         
         return lista
 

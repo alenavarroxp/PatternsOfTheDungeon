@@ -6,7 +6,7 @@ from src.model.Objeto import Objeto
 class Espada(Objeto):
     def __init__(self):
         super().__init__()
-        self.modo = Afilada()
+        self.estado = Afilada()
     
     def aceptar(self, unVisitor):
         unVisitor.visitarEspada(self)
@@ -18,7 +18,7 @@ class Espada(Objeto):
         print('Recorriendo espada')
 
     def __str__(self):
-        return f"Espada ({self.modo}) {self.precio}€"
+        return f"Espada ({self.estado}) {self.precio}€"
     
     def __repr__(self):
-        return f"Espada ({self.modo}) {self.precio}€"
+        return f"Espada ({self.estado}) {self.precio}€"
