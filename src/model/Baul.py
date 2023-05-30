@@ -19,11 +19,12 @@ class Baul(Contenedor):
     def obtenerComandos(self,alguien):
         lista = []
         if alguien.posicion is self:
-            lista = super().obtenerComandos(None)
+            lista = self.forma.obtenerComandos()
             for objeto in self.hijos:
                 lista.append(objeto.comandos[0])
         else: 
-            lista = super().obtenerComandos(alguien)
+            
+            lista = self.forma.obtenerComandos()
         
         return lista
 

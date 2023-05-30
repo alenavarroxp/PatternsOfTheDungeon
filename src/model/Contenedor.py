@@ -30,11 +30,10 @@ class Contenedor(ElementoMapa):
         self.num = num
         self.objetos = []
 
-    def obtenerComandos(self,alguien):
+    def obtenerComandos(self, alguien):
         lista = []
         for hijo in self.hijos:
-            if hijo.esEspada() == False:
-                lista.extend(hijo.obtenerComandos(alguien))
+            lista.extend(hijo.obtenerComandos(alguien))
         lista.extend(self.forma.obtenerComandos())
         return lista
 
