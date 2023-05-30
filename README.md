@@ -35,7 +35,7 @@
 
 ## Diagrama de Secuencia de Personaje_Compra_Tienda
 Este diagrama de secuencia simula el comportamiento interno que ocurre cuando un personaje entra a una tienda y compra un objeto
-<img src="https://github.com/alenavarroxp/laberintoPython/blob/main/DesignDiagram/SequenceDiagram/Personaje_Compra_Objeto"">
+<img src="https://github.com/alenavarroxp/laberintoPython/blob/main/DesignDiagram/SequenceDiagram/Personaje_Compra_Objeto">
 
 
 
