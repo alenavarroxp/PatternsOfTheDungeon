@@ -6,9 +6,9 @@ class ElementoMapa:
         self.padre = None
         self.comandos = []
     
-    def agregarComando(self,unComando,puerta):
+    def agregarComando(self,unComando,receptor):
         self.comandos.append(unComando)
-        unComando.receptor = puerta
+        unComando.receptor = receptor
     
     def quitarComando(self,unComando):
         self.comandos.remove(unComando)

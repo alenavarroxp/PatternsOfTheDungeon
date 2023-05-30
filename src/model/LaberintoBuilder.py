@@ -162,7 +162,6 @@ class LaberintoBuilder():
     
     def fabricarEspada(self):
         espada = Espada()
-        espada.agregarComando(Coger(),espada)
         return espada
     
     def fabricarEspadaEn(self,unContenedor):

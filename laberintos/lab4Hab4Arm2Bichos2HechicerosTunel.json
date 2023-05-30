@@ -3,7 +3,7 @@
     "laberinto":[
         {"tipo":"habitacion","num":1,"hijos":[
             {"tipo":"armario","num":1,"hijos":[]},
-            {"tipo":"baul","num":1,"contenido":"Espada"},
+            {"tipo":"baul","num":1,"contenido":"espada"},
             {"tipo":"bomba"},
             {"tipo":"tienda","num":1,"hijos":[],"objetos":[
                 {"tipo":"mochila","precio":50}
@@ -11,13 +11,14 @@
         ]},
         {"tipo":"habitacion","num":2,"hijos":[
             {"tipo":"armario","num":2,"hijos":[]},
-            {"tipo":"bomba"}
+            {"tipo":"bomba"},
+            {"tipo":"mochila"}
             
        ]},
        {"tipo":"habitacion","num":3,"hijos":[
             {"tipo":"armario","num":3,"hijos":[]},
             {"tipo":"bomba"},
-            {"tipo":"baul","num":1,"contenido":"espada"},
+            {"tipo":"baul","num":1,"contenido":"mochila"},
             {"tipo":"espada"}
        ]},
        {"tipo":"habitacion","num":4,"hijos":[
