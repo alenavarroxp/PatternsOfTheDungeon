@@ -39,6 +39,9 @@ class LaberintoGUI():
         self.person = None
         self.pasadoPuerta = False
         self.longitud_comandos_anterior = 0
+        self.celda_seleccionada = None 
+        # self.mostrandoObjeto = False
+        self.objetoSeleccionado = None
     
     def pantallaInicial(self):
         pygame.init()
@@ -285,6 +288,7 @@ class LaberintoGUI():
         updateIntervalo = 2000
         lastUpdate = pygame.time.get_ticks()
         self.mouse_pos = None
+        
         while self.juego.fase.esFinal() == False:
             # currentTime = pygame.time.get_ticks()
             
@@ -300,7 +304,8 @@ class LaberintoGUI():
                 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.mouse_pos = pygame.mouse.get_pos()
-                    
+                    # if self.celda_seleccionada is not None:
+                    #     self.mostrandoObjeto = not self.mostrandoObjeto
                     # if abrirPuertas.collidepoint(self.mouse_pos):
                     #     if not abrir:
                     #         abrir = True
@@ -355,7 +360,7 @@ class LaberintoGUI():
                     if isinstance(self.contActual,Habitacion):
                         self.pX = self.origenX -(30/2) + 50
                         self.pY = self.origenY + ((self.alto)/2) -(30/2)
-                        print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
+                        # print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
                         self.redibujar()
                         self.personaje = principalOesteImage
                         self.comprobarElemento(self.contActual,self.contActual.forma.oeste)
@@ -367,7 +372,7 @@ class LaberintoGUI():
                     if isinstance(self.contActual,Habitacion):
                         self.pX = self.origenX - (30/2) - 50 + self.ancho
                         self.pY = self.origenY + ((self.alto)/2) -(30/2)
-                        print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
+                        # print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
                         self.redibujar()
                         self.personaje = principalOesteImage
                         self.personaje = pygame.transform.flip(self.personaje,True,False)
@@ -377,7 +382,7 @@ class LaberintoGUI():
                     if isinstance(self.contActual,Habitacion):
                         self.pX = self.origenX + (self.ancho/2) - (30/2)
                         self.pY = self.origenY + (self.alto/5) - (30/2)
-                        print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
+                        # print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
                         self.redibujar()
                         self.personaje = principalNorteImage
                         self.comprobarElemento(self.contActual,self.contActual.forma.norte)
@@ -386,7 +391,7 @@ class LaberintoGUI():
                     if isinstance(self.contActual,Habitacion):
                         self.pX = self.origenX + (self.ancho/2) - (30/2)
                         self.pY = self.origenY + (self.alto-85) - (30/2)
-                        print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
+                        # print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
                         self.redibujar()
                         self.personaje = self.principal
                         self.comprobarElemento(self.contActual,self.contActual.forma.sur)
@@ -396,9 +401,10 @@ class LaberintoGUI():
                     self.juego.personaje.atacar()
                         
                     
-
+                # if not self.mostrandoObjeto:
             self.dibujarComandos(self.mouse_pos)
             self.mostrarInventario(self.mouse_pos)
+                
             self.screen.blit(self.personaje,(self.pX,self.pY))
             self.mouse_pos = None
            
@@ -412,28 +418,79 @@ class LaberintoGUI():
     def dibujarComandos(self, mouse_pos):
         fuente = pygame.font.SysFont('radnika', 14)
 
-        comandos = self.contActual.obtenerComandos(self.juego.personaje)
-        longitud_anterior = self.longitud_comandos_anterior  # Obtener la longitud anterior
-        rect_borrar = pygame.Rect(1175, 50, 210, 20 + longitud_anterior * 30)  # Usar la longitud anterior
-        pygame.draw.rect(self.screen, (50, 50, 50), rect_borrar)
+        if self.objetoSeleccionado is None:
+            comandos = self.contActual.obtenerComandos(self.juego.personaje)
+            rect_borrar = pygame.Rect(1175, 50, 210, 20 + self.longitud_comandos_anterior * 30)
+            pygame.draw.rect(self.screen, (50, 50, 50), rect_borrar)
+            deseleccionar_borrar = pygame.Rect(1175, 20, 210, 30)
+            pygame.draw.rect(self.screen, (50, 50, 50), deseleccionar_borrar)
 
-        for i, comando in enumerate(comandos):
-            rect_comando = pygame.Rect(1175, 50 + i * 30, 210, 30)
 
-            if mouse_pos is not None and rect_comando.collidepoint(mouse_pos):
-                if comando.esComprar() or comando.esAbrir() or comando.esEntrar() or comando.esCerrar() or comando.esActivar() or comando.esDesactivar() or comando.esCoger():
-                    comando.ejecutar(self.juego.personaje)
-                    self.moverPersonajeHabitacion()
-                self.redibujar()
-            else:
-                pygame.draw.rect(self.screen, (50, 50, 50), rect_comando)
+            for i, comando in enumerate(comandos):
+                rect_comando = pygame.Rect(1175, 50 + i * 30, 210, 30)
 
-            pygame.draw.rect(self.screen, (0, 255, 0), rect_comando)
-            comando_texto = fuente.render(str(comando), True, (255, 255, 255))
-            self.screen.blit(comando_texto, (rect_comando.x + 5, rect_comando.y + 5))
+                if mouse_pos is not None and rect_comando.collidepoint(mouse_pos):
+                    if comando.esComprar() or comando.esAbrir() or comando.esEntrar() or comando.esCerrar() or comando.esActivar() or comando.esDesactivar() or comando.esCoger():
+                            comando.ejecutar(self.juego.personaje)
+                            self.moverPersonajeHabitacion()
+                            print("Ejecutando comando", comando)
+                            # self.redibujar()
+                            
+                else:
+                    pygame.draw.rect(self.screen, (50, 50, 50), rect_comando)
 
-        self.longitud_comandos_anterior = len(comandos)  # Almacenar la longitud actual para usar en la siguiente iteración
-        pygame.display.update()
+                pygame.draw.rect(self.screen, (0, 255, 0), rect_comando)
+                comando_texto = fuente.render(str(comando), True, (255, 255, 255))
+                self.screen.blit(comando_texto, (rect_comando.x + 5, rect_comando.y + 5))
+
+            self.longitud_comandos_anterior = len(comandos)
+            pygame.display.update()
+        else:
+            # Mostrar los comandos del objeto seleccionado
+            if self.objetoSeleccionado is not None:
+                comandos = self.objetoSeleccionado.obtenerComandos(self.juego.personaje)
+                rect_borrar = pygame.Rect(1175, 50, 210, 25 + self.longitud_comandos_anterior * 30)
+                pygame.draw.rect(self.screen, (50, 50, 50), rect_borrar)
+
+                for i, comando in enumerate(comandos):
+                    rect_comando = pygame.Rect(1175, 50 + i * 30, 210, 30)
+
+                    if mouse_pos is not None and rect_comando.collidepoint(mouse_pos):
+                        # Realiza acciones según el comando del objeto
+                        if comando.esUsar():
+                            comando.ejecutar(self.juego.personaje)
+                            print("EJECUTANDO COMANDO: ",comando)
+                                # self.redibujar()
+                    else:
+                        pygame.draw.rect(self.screen, (50, 50, 50), rect_comando)
+
+                    pygame.draw.rect(self.screen, (0, 255, 0), rect_comando)
+                    comando_texto = fuente.render(str(comando), True, (255, 255, 255))
+                    self.screen.blit(comando_texto, (rect_comando.x + 5, rect_comando.y + 5))
+
+                self.longitud_comandos_anterior = len(comandos) + 1
+
+                # Agrega el comando "Volver" debajo de los comandos del objeto
+                rect_volver = pygame.Rect(1175, 20 , 210, 30)
+                pygame.draw.rect(self.screen, (50, 50, 50), rect_volver)
+                pygame.draw.rect(self.screen, (0, 255, 0), rect_volver)
+                volver_texto = fuente.render("Deseleccionar", True, (255, 255, 255))
+                self.screen.blit(volver_texto, (rect_volver.x + 5, rect_volver.y + 5))
+
+                # Verifica si se hizo clic en el comando "Volver"
+            if mouse_pos is not None and rect_volver.collidepoint(mouse_pos):
+                if self.objetoSeleccionado is not None:
+                    self.objetoSeleccionado = None
+                    self.deseleccionarObjeto()
+
+
+            pygame.display.update()
+
+
+
+
+
+
 
     def pantallaFinal(self):
         pygame.init()
@@ -475,7 +532,7 @@ class LaberintoGUI():
             self.mostrarVidasPersonaje()
             self.mostrarPoderPersonaje()
             self.mostrarDineroPersonaje()
-            self.mostrarInventario(None)
+            self.mostrarInventario(self.mouse_pos)
             self.mostrarBichos()
             self.mostrarHechiceros()
             self.redibujar()
@@ -503,8 +560,9 @@ class LaberintoGUI():
 
         self.mostrarObjetosInventario(mouse_pos)
 
-    def mostrarObjetosInventario(self,mouse_pos):
+    def mostrarObjetosInventario(self, mouse_pos):
         if self.juego.personaje.inventario.objetos.__len__() > 0:
+            
             for i, obj in enumerate(self.juego.personaje.inventario.objetos):
                 # Calcula las coordenadas de fila y columna
                 fila = i // 3  # Cada fila contendrá 3 objetos
@@ -515,9 +573,9 @@ class LaberintoGUI():
                 y = 440 + fila * 56
 
                 # Dibuja la imagen de la celda del inventario
-                celda = pygame.image.load("graphics/celdaInventario.png").convert_alpha()
                 rect_comando = pygame.Rect(x, y, 56, 56)
-                self.screen.blit(celda, (x, y))
+                pygame.draw.rect(self.screen, (255, 255, 255), rect_comando)
+                pygame.draw.rect(self.screen, (0, 0, 0), rect_comando, 2)
 
                 # Dibuja la imagen del objeto correspondiente
                 if obj.esEspada():
@@ -533,16 +591,78 @@ class LaberintoGUI():
                         self.screen.blit(espada, (x, y))
                 elif obj.esMochila():
                     mochila = pygame.image.load("graphics/mochila.png").convert_alpha()
-                    mochila = pygame.transform.scale(mochila,(33,39))
+                    mochila = pygame.transform.scale(mochila, (33, 39))
                     mochila_x = x + (56 - mochila.get_width()) // 2  # Ajuste de posición en x
                     mochila_y = y + (56 - mochila.get_height()) // 2  # Ajuste de posición en y
                     self.screen.blit(mochila, (mochila_x, mochila_y))
-                    
-                 # Verifica si se hizo clic en la celda actual
-                if mouse_pos is not None and rect_comando.collidepoint(mouse_pos):
-                    print("PULSADO CELDA", i)
 
-                
+                # Verifica si se hizo clic en la celda actual
+                if mouse_pos is not None and rect_comando.collidepoint(mouse_pos):
+                    self.celda_seleccionada = i
+                    print("PULSADO CELDA", i)
+                    self.objetoSeleccionado = obj
+
+            # Dibujar el borde dorado en la celda seleccionada actualmente
+            if self.celda_seleccionada is not None:
+                fila_seleccionada = self.celda_seleccionada // 3
+                columna_seleccionada = self.celda_seleccionada % 3
+                x_seleccionada = 1175 + columna_seleccionada * 56
+                y_seleccionada = 440 + fila_seleccionada * 56
+                rect_seleccionada = pygame.Rect(x_seleccionada, y_seleccionada, 56, 56)
+                pygame.draw.rect(self.screen, (255, 215, 0), rect_seleccionada, 4)
+            
+
+
+
+            pygame.display.update()
+    def deseleccionarObjeto(self):
+        self.celda_seleccionada = None
+        mouse_pos = pygame.mouse.get_pos()
+        self.dibujarComandos(mouse_pos)
+        pygame.display.update()
+        
+
+    # def mostrarComandosObjeto(self, obj):
+    #     fuente = pygame.font.SysFont('radnika', 14)
+    #     comandos = obj.obtenerComandos(self.juego.personaje)
+    #     rect_borrar = pygame.Rect(1175, 50, 210, 20 + self.longitud_comandos_anterior * 30)
+    #     pygame.draw.rect(self.screen, (50, 50, 50), rect_borrar)
+
+    #     for i, comando in enumerate(comandos):
+    #         rect_comando = pygame.Rect(1175, 50 + i * 30, 210, 30)
+
+    #         if self.mouse_pos is not None and rect_comando.collidepoint(self.mouse_pos):
+    #             # if comando.esComprar() or comando.esAbrir() or comando.esEntrar() or comando.esCerrar() or comando.esActivar() or comando.esDesactivar() or comando.esCoger():
+    #             #     comando.ejecutar(self.juego.personaje)
+    #             #     self.moverPersonajeHabitacion()
+    #             # self.redibujar()
+    #             pass
+    #         else:
+    #             pygame.draw.rect(self.screen, (50, 50, 50), rect_comando)
+
+    #         pygame.draw.rect(self.screen, (0, 255, 0), rect_comando)
+    #         comando_texto = fuente.render(str(comando), True, (255, 255, 255))
+    #         self.screen.blit(comando_texto, (rect_comando.x + 5, rect_comando.y + 5))
+    #     # Agrega el comando "Volver" debajo de los comandos del objeto
+    #     rect_volver = pygame.Rect(1175, 40 + len(comandos) * 30 + 10, 210, 30)
+    #     pygame.draw.rect(self.screen, (50, 50, 50), rect_volver)
+    #     pygame.draw.rect(self.screen, (0, 255, 0), rect_volver)
+    #     volver_texto = fuente.render("Deseleccionar", True, (255, 255, 255))
+    #     self.screen.blit(volver_texto, (rect_volver.x + 5, rect_volver.y + 5))
+
+        
+
+    #     # Verifica si se hizo clic en el comando "Volver"
+    #     if self.mouse_pos is not None and rect_volver.collidepoint(self.mouse_pos):
+    #         self.mostrandoObjeto = False
+    #         self.celda_seleccionada = None
+            
+
+    #     self.longitud_comandos_anterior = len(comandos) + 1
+    #     pygame.display.update()
+
+
+
             
 
     # def mostrarPersonaje(self):
@@ -601,26 +721,24 @@ class LaberintoGUI():
             self.screen.blit(bicho,(unPuntoX+(ancho/3)+150,unPuntoY+(alto/3)+80))
             self.mostrarVidasEnemigo(unBicho,unPuntoX+(ancho/3)+150,unPuntoY+(alto/3)+70)
     
-    def mostrarVidasEnemigo(self,unEnemigo,unPuntoX,unPuntoY):
-        vida = pygame.Surface((65,1), pygame.SRCALPHA)
-        if isinstance(unEnemigo.estado,Vivo):
-            if unEnemigo.vidas == 50:
-                vida = pygame.image.load("graphics/50L.jpg").convert_alpha()
-            elif unEnemigo.vidas == 40:
-                vida = pygame.image.load("graphics/40L.jpg").convert_alpha()
-            elif unEnemigo.vidas == 30:
-                vida = pygame.image.load("graphics/30L.jpg").convert_alpha()
-            elif unEnemigo.vidas == 20:
-                vida = pygame.image.load("graphics/20L.jpg").convert_alpha()
-            elif unEnemigo.vidas == 10:
-                vida = pygame.image.load("graphics/10L.jpg").convert_alpha()
-            elif unEnemigo.vidas <= 0:
-                vida = pygame.Surface((65,1), pygame.SRCALPHA)
-                
-                
-            vida = pygame.transform.scale(vida,(65,1))
-            self.screen.blit(vida,(unPuntoX,unPuntoY))
-        pass
+    def mostrarVidasEnemigo(self, unEnemigo, unPuntoX, unPuntoY):
+        vida = pygame.Surface((65, 1), pygame.SRCALPHA)
+        
+        vidas = [50, 40, 30, 20, 10]
+        ruta_imagen = None
+        
+        if isinstance(unEnemigo.estado, Vivo) and unEnemigo.vidas in vidas:
+            index = vidas.index(unEnemigo.vidas)
+            ruta_imagen = f"graphics/{vidas[index]}L.jpg"
+        
+        if ruta_imagen is not None:
+            vida = pygame.image.load(ruta_imagen).convert_alpha()
+            vida = pygame.transform.scale(vida, (65, 1))
+        
+        self.screen.blit(vida, (unPuntoX, unPuntoY))
+
+
+
         
 
     def moverPersonajeHabitacion(self):
@@ -676,7 +794,6 @@ class LaberintoGUI():
                         if comando.esEntrar():
                             comando.ejecutar(self.juego.personaje)
                             self.moverPersonajeHabitacion()
-                            self.redibujar()
                             break
 
                     
@@ -774,7 +891,7 @@ class LaberintoGUI():
         self.dibujarArmario(unArmario.forma,unPuntoX,unPuntoY,ancho,alto)
     
     def visitarBomba(self,unaBomba):
-        print('Bomba visitada')
+        # print('Bomba visitada')
         #dibujar
         unPuntoX = unaBomba.padre.forma.puntoX
         unPuntoY = unaBomba.padre.forma.puntoY
@@ -807,7 +924,7 @@ class LaberintoGUI():
         self.dibujarContenedorRectangularEscala(unaHabitacion,unaHabitacion.forma, 1)
         
     def visitarMochila(self,unaMochila):
-        print('Mochila visitada')
+        # print('Mochila visitada')
         #dibujar
         unPuntoX = unaMochila.padre.forma.puntoX
         unPuntoY = unaMochila.padre.forma.puntoY
@@ -856,7 +973,7 @@ class LaberintoGUI():
         self.screen.blit(imagen,(unaHab.forma.puntoX,unaHab.forma.puntoY+unaHab.forma.extentY-60))
     
     def visitarTienda(self,unaTienda):
-        print("Tienda visitada")
+        # print("Tienda visitada")
         unPuntoX = unaTienda.padre.forma.puntoX
         unPuntoY = unaTienda.padre.forma.puntoY
         ancho = unaTienda.padre.forma.extentX
@@ -864,7 +981,7 @@ class LaberintoGUI():
         self.dibujarTienda(unaTienda,unPuntoX,unPuntoY,ancho,alto)
 
     def visitarEspada(self,unaEspada):
-        print("Espada visitada")
+        # print("Espada visitada")
         unPuntoX = unaEspada.padre.forma.puntoX
         unPuntoY = unaEspada.padre.forma.puntoY
         ancho = unaEspada.padre.forma.extentX

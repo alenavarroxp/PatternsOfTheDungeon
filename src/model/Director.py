@@ -53,7 +53,7 @@ class Director():
         elif laberinto['tipo'] == 'tienda':
             tmp1 = self.builder.fabricarTiendaEn(root,laberinto['num'],laberinto['objetos'])
         elif laberinto['tipo'] == 'espada':
-            tmp1 = self.builder.fabricarEspadaEn(root)
+            tmp1 = self.builder.fabricarEspadaEn(root,laberinto['poder'])
         elif laberinto['tipo'] == 'mochila':
             tmp1 = self.builder.fabricarMochilaEn(root)
         

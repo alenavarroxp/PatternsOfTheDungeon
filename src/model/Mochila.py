@@ -28,7 +28,9 @@ class Mochila(Objeto):
         print("Abriendo mochila...")
         for objeto in self.objetos:
             objeto.usarObjeto()
-        
+
+    def recorrer(self,unBloque):
+        print('Recorriendo mochila')
 
     def __str__(self):
         if len(self.objetos) == 0:

@@ -6,6 +6,10 @@ class Rota(EstadoEspada):
         super().estaRota()
         print("La espada está rota")
 
+    def usarObjeto(self, alguien,objeto):
+        objeto.poder = 0
+        print("La espada está rota. ",alguien," no la puede usar")
+
     def __str__(self):
         return "Rota"
 

@@ -76,7 +76,13 @@ class LaberintoBuilder():
         baul.ponerEnElemento(self.fabricarEste(),self.fabricarPared(baul))
         baul.ponerEnElemento(self.fabricarOeste(),self.fabricarPared(baul))
         baul.ponerEnElemento(self.fabricarSur(),self.fabricarPared(baul))
-        getattr(self,'fabricar' + contenido.capitalize()+'En')(baul)
+        if contenido[0]['tipo'] == 'espada':
+            poder = contenido[0]['poder']
+            tipo = contenido[0]['tipo']
+            if tipo == 'espada':
+                getattr(self, 'fabricar' + tipo.capitalize() + 'En')(baul,poder)
+        elif contenido[0]['tipo'] == 'mochila':
+            getattr(self, 'fabricar' + contenido[0]['tipo'].capitalize() + 'En')(baul)
         baul.agregarOrientacion(self.fabricarNorte())
         baul.agregarOrientacion(self.fabricarEste())
         baul.agregarOrientacion(self.fabricarOeste())
@@ -164,8 +170,9 @@ class LaberintoBuilder():
         espada = Espada()
         return espada
     
-    def fabricarEspadaEn(self,unContenedor):
+    def fabricarEspadaEn(self,unContenedor,poder):
         espada = Espada()
+        espada.poder = poder
         espada.agregarComando(Coger(),espada)
         unContenedor.agregarHijo(espada)
         return espada

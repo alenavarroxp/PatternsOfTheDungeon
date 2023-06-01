@@ -16,7 +16,7 @@ class Objeto(ABC):
     def obtenerComandos(self,alguien):
         return self.comandos
         
-    def usarObjeto(self):
+    def usarObjeto(self,alguien):
         pass
 
     def esMoneda(self):
