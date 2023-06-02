@@ -1,7 +1,8 @@
 from abc import ABC
+from src.model.ElementoMapa import ElementoMapa
 
 
-class Objeto(ABC):
+class Objeto(ElementoMapa, ABC):
     def __init__(self):
         self.precio = 0
         self.comandos = []

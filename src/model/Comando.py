@@ -25,3 +25,9 @@ class Comando():
     
     def esCoger(self):
         return False
+
+    def esUsar(self):
+        return False
+    
+    def esCanjear(self):
+        return False

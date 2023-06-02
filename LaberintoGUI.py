@@ -457,10 +457,11 @@ class LaberintoGUI():
 
                     if mouse_pos is not None and rect_comando.collidepoint(mouse_pos):
                         # Realiza acciones según el comando del objeto
-                        if comando.esUsar():
+                        if comando.esUsar() or comando.esCanjear():
                             comando.ejecutar(self.juego.personaje)
-                            print("EJECUTANDO COMANDO: ",comando)
-                                # self.redibujar()
+                            if comando.esCanjear():
+                                self.celda_seleccionada = None
+                                
                     else:
                         pygame.draw.rect(self.screen, (50, 50, 50), rect_comando)
 
@@ -563,6 +564,9 @@ class LaberintoGUI():
     def mostrarObjetosInventario(self, mouse_pos):
         if self.juego.personaje.inventario.objetos.__len__() > 0:
             
+            rect_fondo = pygame.Rect(1171, 436, 172, 172)
+            pygame.draw.rect(self.screen, (50, 50, 50), rect_fondo)
+            
             for i, obj in enumerate(self.juego.personaje.inventario.objetos):
                 # Calcula las coordenadas de fila y columna
                 fila = i // 3  # Cada fila contendrá 3 objetos
@@ -595,6 +599,12 @@ class LaberintoGUI():
                     mochila_x = x + (56 - mochila.get_width()) // 2  # Ajuste de posición en x
                     mochila_y = y + (56 - mochila.get_height()) // 2  # Ajuste de posición en y
                     self.screen.blit(mochila, (mochila_x, mochila_y))
+                elif obj.esMoneda():
+                    moneda = pygame.image.load("graphics/moneda.png").convert_alpha()
+                    moneda = pygame.transform.scale(moneda, (40, 40))
+                    moneda_x = x + (56 - moneda.get_width()) // 2
+                    moneda_y = y + (56 - moneda.get_height()) // 2
+                    self.screen.blit(moneda, (moneda_x, moneda_y))
 
                 # Verifica si se hizo clic en la celda actual
                 if mouse_pos is not None and rect_comando.collidepoint(mouse_pos):
@@ -610,11 +620,12 @@ class LaberintoGUI():
                 y_seleccionada = 440 + fila_seleccionada * 56
                 rect_seleccionada = pygame.Rect(x_seleccionada, y_seleccionada, 56, 56)
                 pygame.draw.rect(self.screen, (255, 215, 0), rect_seleccionada, 4)
+
             
-
-
-
+                
+            
             pygame.display.update()
+
     def deseleccionarObjeto(self):
         self.celda_seleccionada = None
         mouse_pos = pygame.mouse.get_pos()
@@ -935,7 +946,7 @@ class LaberintoGUI():
     def dibujarMochila(self,unaMochila,unPuntoX,unPuntoY,ancho,alto):
         mochila = pygame.image.load("graphics/mochila.png").convert_alpha()
         mochila = pygame.transform.scale(mochila,(33,39))
-        self.screen.blit(mochila,(unPuntoX+ancho/2-90,unPuntoY+20))
+        self.screen.blit(mochila,(unPuntoX+ancho/2-90,unPuntoY+32))
         
 
     def visitarPuerta(self,unaPuerta):
@@ -957,7 +968,20 @@ class LaberintoGUI():
         extentX = unaPared.padre.forma.extentX
         extentY = unaPared.padre.forma.extentY
         self.dibujarPared(unaPared.padre.forma,puntoX,puntoY,extentX,extentY)
-        
+    
+    def visitarMoneda(self,unaMoneda):
+        # print('Moneda visitada')
+        #dibujar
+        unPuntoX = unaMoneda.padre.forma.puntoX
+        unPuntoY = unaMoneda.padre.forma.puntoY
+        ancho = unaMoneda.padre.forma.extentX
+        alto = unaMoneda.padre.forma.extentY
+        self.dibujarMoneda(unaMoneda,unPuntoX,unPuntoY,ancho,alto)
+
+    def dibujarMoneda(self,unaMoneda,unPuntoX,unPuntoY,ancho,alto):
+        moneda = pygame.image.load("graphics/moneda.png").convert_alpha()
+        moneda = pygame.transform.scale(moneda,(30,30))
+        self.screen.blit(moneda,(unPuntoX+ancho/2-180,unPuntoY+alto/2+30))
 
     def visitarTunel(self,unTunel):
         # print('Tunel visitado')

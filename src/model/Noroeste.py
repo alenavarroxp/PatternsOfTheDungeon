@@ -17,7 +17,7 @@ class Noroeste(Orientacion):
         unaHab.noroeste = unEM
 
     def obtenerComandosDe(self,unaForma):
-        return unaForma.noroeste.obtenerComandos()
+        return unaForma.noroeste.obtenerComandos(None)
     
     def recorrerEn(self, unBloque, unContenedor):
         if unContenedor.noroeste is not None:

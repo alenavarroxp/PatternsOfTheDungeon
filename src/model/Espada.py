@@ -24,7 +24,8 @@ class Espada(Objeto):
         for objeto in alguien.inventario.objetos:
             if objeto is not self:
                 if not any(comando.esUsar() for comando in objeto.comandos):
-                    objeto.agregarComando(Usar(),objeto)
+                    if objeto.esEspada():
+                        objeto.agregarComando(Usar(),objeto)
 
                     
                 

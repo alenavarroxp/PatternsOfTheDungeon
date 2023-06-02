@@ -3,22 +3,24 @@
     "laberinto":[
         {"tipo":"habitacion","num":1,"hijos":[
             {"tipo":"armario","num":1,"hijos":[]},
-            {"tipo":"espada"}
+            {"tipo":"espada","poder":7}
         ]},
         {"tipo":"habitacion","num":2,"hijos":[
             {"tipo":"armario","num":2,"hijos":[]},
             {"tipo":"tunel"},
-            {"tipo":"mochila"}
+            {"tipo":"mochila"},
+            {"tipo":"moneda","valor":10}
             
        ]},
        {"tipo":"habitacion","num":3,"hijos":[
             {"tipo":"armario","num":3,"hijos":[]},
-            {"tipo":"baul","num":1,"contenido":"Espada"},
-            {"tipo":"espada"}
+            {"tipo":"baul","num":1,"contenido":[{"tipo":"espada","poder":5},{"tipo":"moneda","valor":20}]},
+            {"tipo":"espada","poder":8}
        ]},
        {"tipo":"habitacion","num":4,"hijos":[
             {"tipo":"armario","num":4,"hijos":[]},
-            {"tipo":"espada"}
+            {"tipo":"espada","poder":2},
+            {"tipo":"moneda","valor":50}
        ]}
     ],
     "puertas":[

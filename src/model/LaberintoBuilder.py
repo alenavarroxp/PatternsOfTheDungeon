@@ -1,3 +1,4 @@
+from src.model.Entrar import Entrar
 from src.model.Coger import Coger
 from src.model.Comprar import Comprar
 from src.model.Moneda import Moneda
@@ -76,13 +77,15 @@ class LaberintoBuilder():
         baul.ponerEnElemento(self.fabricarEste(),self.fabricarPared(baul))
         baul.ponerEnElemento(self.fabricarOeste(),self.fabricarPared(baul))
         baul.ponerEnElemento(self.fabricarSur(),self.fabricarPared(baul))
-        if contenido[0]['tipo'] == 'espada':
-            poder = contenido[0]['poder']
-            tipo = contenido[0]['tipo']
-            if tipo == 'espada':
+        for i in range(0,len(contenido)):
+            if contenido[i]['tipo'] == 'espada':
+                poder = contenido[i]['poder']
+                tipo = contenido[i]['tipo']
                 getattr(self, 'fabricar' + tipo.capitalize() + 'En')(baul,poder)
-        elif contenido[0]['tipo'] == 'mochila':
-            getattr(self, 'fabricar' + contenido[0]['tipo'].capitalize() + 'En')(baul)
+            elif contenido[i]['tipo'] == 'mochila':
+                getattr(self, 'fabricar' + contenido[i]['tipo'].capitalize() + 'En')(baul)
+            elif contenido[i]['tipo'] == 'moneda':
+                getattr(self, 'fabricar' + contenido[i]['tipo'].capitalize())(baul,contenido[i]['valor'])
         baul.agregarOrientacion(self.fabricarNorte())
         baul.agregarOrientacion(self.fabricarEste())
         baul.agregarOrientacion(self.fabricarOeste())
@@ -255,7 +258,9 @@ class LaberintoBuilder():
         return Sur()
     
     def fabricarTunel(self):
-        return Tunel()
+        tunel = Tunel()
+        tunel.agregarComando(Entrar(),tunel)
+        return tunel
     
     def fabricarTunelEn(self,unContenedor):
         unContenedor.agregarHijo(self.fabricarTunel())
@@ -317,5 +322,8 @@ class LaberintoBuilder():
             mercader.agregarObjeto(objeto,precio)
         return mercader
     
-    def fabricarMoneda(self,valor,ubicacion):
+    def fabricarMoneda(self,ubicacion,valor):
+        moneda = Moneda(valor,ubicacion)
+        moneda.agregarComando(Coger(),moneda)
+        ubicacion.agregarHijo(moneda)
         return Moneda(valor,ubicacion)

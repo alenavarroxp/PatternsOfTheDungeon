@@ -5,8 +5,7 @@
             {"tipo":"tunel"}
         ]},
         {"tipo":"habitacion","num":2,"hijos":[
-            {"tipo":"bomba"},
-            {"tipo":"tunel"}
+            {"tipo":"bomba"}
         ]}
     ],
     "puertas":[

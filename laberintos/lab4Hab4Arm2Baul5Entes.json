@@ -3,17 +3,23 @@
     "laberinto":[
         {"tipo":"habitacion","num":1,"hijos":[
             {"tipo":"armario","num":1,"hijos":[]},
-            {"tipo":"tunel"}
+            {"tipo":"mochila"}
         ]},
         {"tipo":"habitacion","num":2,"hijos":[
-            {"tipo":"armario","num":1,"hijos":[]}
+            {"tipo":"armario","num":2,"hijos":[]},
+            {"tipo":"espada","poder":5},
+            {"tipo":"mochila"}
             
        ]},
        {"tipo":"habitacion","num":3,"hijos":[
-            {"tipo":"armario","num":1,"hijos":[]}
+            {"tipo":"armario","num":3,"hijos":[]},
+            {"tipo":"baul","num":3,"contenido":[{"tipo":"espada","poder":10},{"tipo":"mochila"}]}
+        
        ]},
        {"tipo":"habitacion","num":4,"hijos":[
-            {"tipo":"armario","num":1,"hijos":[]}
+            {"tipo":"armario","num":4,"hijos":[]},
+            {"tipo":"baul","num":4,"contenido":[{"tipo":"mochila"}]},
+            {"tipo":"espada","poder":15}         
        ]}
     ],
     "puertas":[
@@ -24,9 +30,11 @@
     ],
     "bichos":[
        {"modo":"agresivo","posicion":1},
-       {"modo":"agresivo","posicion":3},
        {"modo":"perezoso","posicion":2},
        {"modo":"perezoso","posicion":4}
     ],
-    "hechiceros":[]
+    "hechiceros":[
+        {"modo":"mago","posicion":2},
+        {"modo":"hechicero","posicion":3}
+    ]
 }

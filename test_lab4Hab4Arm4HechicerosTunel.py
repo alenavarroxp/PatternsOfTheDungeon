@@ -1,6 +1,7 @@
 import unittest
 import os
 from colorama import init, Fore, Style
+from src.model.Afilada import Afilada
 from src.model.Cuadrado import Cuadrado
 from src.model.Rombo import Rombo
 from src.model.Director import Director
@@ -130,15 +131,13 @@ class Test(unittest.TestCase):
                     print("El baul "+str(hijo.num)+" no es nulo: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
                     self.assertEqual(hijo.esBaul(), True)
                     print("El baul "+str(hijo.num)+" es baul: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
-                    for hijos in hijo.hijos:
-                        if hijos.esEspada():
+                    for hijo in hijo.hijos:
+                        if hijo.esEspada():
                             print(Fore.MAGENTA+"\nEspada:"+ Style.RESET_ALL)
-                            self.assertEqual(hijo.hijos is not None, True)
-                            print("La espada "+str(hijo.num)+" no es nulo: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
-                            self.assertEqual(hijos.esEspada(), True)
-                            print("La espada "+str(hijo.num)+" es espada: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
-                            self.assertEqual(hijos.estado,True)
-                            print("La espada "+str(hijo.num)+" esta afilada: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                            self.assertEqual(hijo.esEspada(), True)
+                            print("La espada "+str(hijo)+" es espada: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                            self.assertTrue(isinstance(hijo.estado, Afilada))
+                            print("La espada "+str(hijo)+" esta afilada: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
 
                 elif hijo.esTunel():
                     print(Fore.MAGENTA+"\nTunel:"+ Style.RESET_ALL)

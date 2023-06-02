@@ -15,21 +15,36 @@ while True:
         metodo = int(metodo)
 
         if metodo == 1:
-            opcion1 = input(Fore.MAGENTA+"¿Qué JSON quieres elegir para crear el laberinto?\n"+Style.RESET_ALL+Fore.LIGHTWHITE_EX+"1. Laberinto 2 habitaciones (VERTICAL)\n2. Laberinto 2 habitacion (HORIZONTAL)\n3. Laberinto 2 habitaciones y 2 armarios\n4. Laberinto 2 habitaciones y 2 bichos\n5. Laberinto 2 habitaciones y tunel\n6. Laberinto 4 habitaciones,4 armarios\n7. Laberinto 4 habitaciones, 4 armarios y 4 bichos\n8. Laberinto 4 habitaciones, 4 armarios, 4 bichos y tunel\n9. Laberinto 4 habitaciones, 4 armarios, 4 bichos y tunel ROMBO\n10. Laberinto 4 habitaciones, 4 armarios, 2 bichos, 2 hechiceros y tunel\n11. Laberinto 4 habitaciones, 4 armarios, 4 hechiceros y tunel\n"+Style.RESET_ALL)
+            opcion1 = input(Fore.MAGENTA + "¿Qué JSON quieres elegir para crear el laberinto?\n" + Style.RESET_ALL +
+                "1.  lab2Hab2Arm.json\n" +
+                "2.  lab2Hab2Bichos.json\n" +
+                "3.  lab2HabHorizontal.json\n" +
+                "4.  lab2HabTunel.json\n" +
+                "5.  lab2HabVertical.json\n" +
+                "6.  lab4Hab4Arm1Tienda4Entes.json\n" +
+                "7.  lab4Hab4Arm2Baul5Entes.json\n" +
+                "8.  lab4Hab4Arm2Tiendas5Entes.json\n" +
+                "9.  lab4Hab4Arm4BichosTunel.json\n" +
+                "10. lab4Hab4Arm4BichosTunelRombo.json\n" +
+                "11. lab4Hab4Arm4HechicerosTunel.json\n" + Style.RESET_ALL)
+
             opcion1 = int(opcion1)
+
             switch = {
-                1: 'laberintos/lab2HabVertical.json',
-                2: 'laberintos/lab2HabHorizontal.json',
-                3: 'laberintos/lab2Hab2Arm.json',
-                4: 'laberintos/lab2Hab2Bichos.json',
-                5: 'laberintos/lab2HabTunel.json',
-                6: 'laberintos/lab4Hab4Arm.json',
-                7: 'laberintos/lab4Hab4Arm4Bichos.json',
-                8: 'laberintos/lab4Hab4Arm4BichosTunel.json',
-                9: 'laberintos/lab4Hab4Arm4BichosTunelRombo.json',
-                10: 'laberintos/lab4Hab4Arm2Bichos2HechicerosTunel.json',
+                1: 'laberintos/lab2Hab2Arm.json',
+                2: 'laberintos/lab2Hab2Bichos.json',
+                3: 'laberintos/lab2HabHorizontal.json',
+                4: 'laberintos/lab2HabTunel.json',
+                5: 'laberintos/lab2HabVertical.json',
+                6: 'laberintos/lab4Hab4Arm1Tienda4Entes.json',
+                7: 'laberintos/lab4Hab4Arm2Baul5Entes.json',
+                8: 'laberintos/lab4Hab4Arm2Tiendas5Entes.json',
+                9: 'laberintos/lab4Hab4Arm4BichosTunel.json',
+                10: 'laberintos/lab4Hab4Arm4BichosTunelRombo.json',
                 11: 'laberintos/lab4Hab4Arm4HechicerosTunel.json'
             }
+
+
             unArchivo = switch.get(opcion1, "\n\nEl carácter ingresado no es correcto.\n\n")
             director = Director()
             director.procesar(unArchivo)

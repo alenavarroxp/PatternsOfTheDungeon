@@ -1,0 +1,64 @@
+{
+    "forma": "cuadrado",
+    "laberinto": [
+        {
+            "tipo": "habitacion",
+            "num": 1,
+            "hijos": [
+                {"tipo": "armario", "num": 1, "hijos": []},
+                {"tipo": "bomba"},
+                {"tipo": "tienda", "num": 1, "hijos": [], "objetos": [
+                    {"tipo": "espada", "poder": 5, "precio": 20},
+                    {"tipo": "mochila", "precio": 30}
+                ]}
+            ]
+        },
+        {
+            "tipo": "habitacion",
+            "num": 2,
+            "hijos": [
+                {"tipo": "armario", "num": 2, "hijos": []},
+                {"tipo": "bomba"},
+                {"tipo": "espada", "poder": 8},
+                {"tipo": "mochila"}
+            ]
+        },
+        {
+            "tipo": "habitacion",
+            "num": 3,
+            "hijos": [
+                {"tipo": "armario", "num": 3, "hijos": []},
+                {"tipo": "baul", "num": 3, "contenido": [
+                    {"tipo": "espada", "poder": 12},
+                    {"tipo": "mochila"}
+                ]}
+            ]
+        },
+        {
+            "tipo": "habitacion",
+            "num": 4,
+            "hijos": [
+                {"tipo": "armario", "num": 4, "hijos": []},
+                {"tipo": "bomba"},
+                {"tipo": "tienda", "num": 4, "hijos": [], "objetos": [
+                    {"tipo": "mochila", "precio": 40}
+                ]}
+            ]
+        }
+    ],
+    "puertas": [
+        [1, "Sur", 2, "Norte"],
+        [1, "Este", 3, "Oeste"],
+        [2, "Este", 4, "Oeste"],
+        [3, "Sur", 4, "Norte"]
+    ],
+    "bichos": [
+        {"modo": "agresivo", "posicion": 1},
+        {"modo": "perezoso", "posicion": 2},
+        {"modo": "agresivo", "posicion": 3}
+    ],
+    "hechiceros": [
+        {"modo": "mago", "posicion": 3},
+        {"modo": "brujo", "posicion": 4}
+    ]
+}

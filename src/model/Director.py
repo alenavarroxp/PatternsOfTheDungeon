@@ -56,6 +56,8 @@ class Director():
             tmp1 = self.builder.fabricarEspadaEn(root,laberinto['poder'])
         elif laberinto['tipo'] == 'mochila':
             tmp1 = self.builder.fabricarMochilaEn(root)
+        elif laberinto['tipo'] == 'moneda':
+            tmp1 = self.builder.fabricarMoneda(root,laberinto['valor'])
         
         hijos = laberinto.get('hijos', [])
         for hijo in hijos:

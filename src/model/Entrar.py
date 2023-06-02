@@ -1,3 +1,4 @@
+from src.model.Tunel import Tunel
 from src.model.Tienda import Tienda
 from src.model.Armario import Armario
 from src.model.Baul import Baul
@@ -15,25 +16,31 @@ class Entrar(Comando):
         return True
     
     def __str__(self):
-        if self.receptor.lado1 is not None and isinstance(self.receptor.lado1,Habitacion):
-          return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Habitacion)"
-        elif isinstance(self.receptor.lado1,Armario):
-            return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Armario)"
-        elif isinstance(self.receptor.lado1,Baul):
-            return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Baúl)"
-        elif isinstance(self.receptor.lado1,Tienda):
-            return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Tienda)"
+        if not isinstance(self.receptor,Tunel):
+            if self.receptor.lado1 is not None and isinstance(self.receptor.lado1,Habitacion):
+                return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Habitacion)"
+            elif isinstance(self.receptor.lado1,Armario):
+                return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Armario)"
+            elif isinstance(self.receptor.lado1,Baul):
+                return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Baúl)"
+            elif isinstance(self.receptor.lado1,Tienda):
+                return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Tienda)"
+            else:
+                return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)
         else:
-          return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)
+            return "Entrar "+str(self.receptor)
     
     def __repr__(self):
-        if self.receptor.lado1 is not None and isinstance(self.receptor.lado1,Habitacion):
-          return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Habitacion)"
-        elif isinstance(self.receptor.lado1,Armario):
-            return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Armario)"
-        elif isinstance(self.receptor.lado1,Baul):
-            return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Baúl)"
-        elif isinstance(self.receptor.lado1,Tienda):
-            return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Tienda)"
+        if not isinstance(self.receptor,Tunel):
+            if self.receptor.lado1 is not None and isinstance(self.receptor.lado1,Habitacion):
+                return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Habitacion)"
+            elif isinstance(self.receptor.lado1,Armario):
+                return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Armario)"
+            elif isinstance(self.receptor.lado1,Baul):
+                return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Baúl)"
+            elif isinstance(self.receptor.lado1,Tienda):
+                return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)+" (Tienda)"
+            else:
+                return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)
         else:
-          return "Entrar Pt-"+str(self.receptor.lado1.num) + "-"+str(self.receptor.lado2.num)
+            return "Entrar "+str(self.receptor)

@@ -1,3 +1,4 @@
+from src.model.Canjear import Canjear
 from src.model.Usar import Usar
 
 
@@ -24,6 +25,7 @@ class Inventario:
             self.quitarComprar(objeto)
         if any(comando.esCoger() for comando in objeto.comandos):
             self.quitarCoger(objeto)
+        
         # self.quitarCoger(objeto)
 
     def quitarComprar(self, objeto):
@@ -36,7 +38,10 @@ class Inventario:
        for comando in objeto.comandos:
             if comando.esCoger():
                 objeto.quitarComando(comando)
-            objeto.agregarComando(Usar(),objeto)
+            if objeto.esMoneda():
+                objeto.agregarComando(Canjear(),objeto)
+            else:
+                objeto.agregarComando(Usar(),objeto)
 
     def quitarObjeto(self, objeto):
         if objeto in self.objetos:
