@@ -1,0 +1,30 @@
+{
+    "forma":"cuadrado",
+    "laberinto":[
+        {"tipo":"habitacion","num":1,"hijos":[
+            {"tipo":"armario","num":1},
+            {"tipo":"moneda","valor":10},
+            {"tipo":"mochila"}
+        
+        ]},
+        {"tipo":"habitacion","num":2,"hijos":[
+            {"tipo":"baul","num":2,"contenido":[{"tipo":"mochila"}]},
+            {"tipo":"tienda","num":2,"hijos":[],"objetos":[
+                {"tipo":"espada","poder":10,"precio":25}
+            ]},
+            {"tipo":"moneda","valor":13},
+            {"tipo":"espada","poder":11}
+        ]}
+    ],
+    "puertas":[
+        [1,"Este",2,"Oeste"]
+    ],
+    "bichos":[
+        {"modo": "perezoso", "posicion": 1},
+        {"modo": "agresivo", "posicion": 2}
+    ],
+    "hechiceros":[
+        {"modo": "mago", "posicion":2},
+        {"modo": "brujo", "posicion": 1}
+    ]
+}

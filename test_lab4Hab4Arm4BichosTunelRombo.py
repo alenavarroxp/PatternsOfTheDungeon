@@ -118,27 +118,29 @@ class Test(unittest.TestCase):
         self.assertEqual(bichoAgresivo.esAgresivo(), True)
         print("El bicho es agresivo: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
 
-    def testArmarios(self):
-        for habitacion in self.juego.laberinto.hijos:
-            for hijo in self.juego.laberinto.hijos[habitacion.num-1].hijos:
-                if hijo.esArmario():
-                    print(Fore.MAGENTA+"\nArmario "+str(hijo.num)+":"+ Style.RESET_ALL)
-                    self.assertEqual(hijo is not None, True)
-                    print("El armario "+str(hijo.num)+" no es nulo: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
-                    self.assertEqual(hijo.esArmario(), True)
-                    print("El armario "+str(hijo.num)+" es armario: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
-                elif hijo.esBaul():
-                    print(Fore.MAGENTA+"\nBaul "+str(hijo.num)+":"+ Style.RESET_ALL)
-                    self.assertEqual(hijo is not None, True)
-                    print("El baul "+str(hijo.num)+" no es nulo: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
-                    self.assertEqual(hijo.esBaul(), True)
-                    print("El baul "+str(hijo.num)+" es baul: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
-                elif hijo.esTunel():
-                    print(Fore.MAGENTA+"\nTunel:"+ Style.RESET_ALL)
-                    self.assertEqual(hijo is not None, True)
-                    print("El tunel no es nulo: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
-                    self.assertEqual(hijo.esTunel(), True)
-                    print("El tunel es tunel: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+    def testTunel(self):
+            print(Fore.MAGENTA+"\nTunel:"+ Style.RESET_ALL)
+            tunel = None
+            for habitacion in self.juego.laberinto.hijos:
+                for hijo in habitacion.hijos:
+                    if hijo.esTunel():
+                        tunel = hijo
+                        break
+            self.assertIsNotNone(tunel)
+            print("El tunel no es nulo: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            self.assertTrue(tunel.esTunel())
+            print("El tunel es tunel: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+
+    def testArmario(self):
+            for habitacion in self.juego.laberinto.hijos:
+                for hijo in habitacion.hijos:
+                    if hijo.esArmario():
+                        print(Fore.MAGENTA+"\nArmario "+str(hijo.num)+":"+ Style.RESET_ALL)
+                        self.assertEqual(hijo is not None, True)
+                        print("El armario "+str(hijo.num)+" no es nulo: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                        self.assertEqual(hijo.esArmario(), True)
+                        print("El armario "+str(hijo.num)+" es armario: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+
 
 
 

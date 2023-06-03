@@ -14,10 +14,12 @@ class Puerta(ElementoMapa):
         self.lado1 = None
         self.lado2 = None
         self.visitada = False
+        self.dibujada = False
         
 
     def aceptar(self,unVisitor):
         unVisitor.visitarPuerta(self)
+        self.dibujada = True
 
     def calcularPosicionDesde(self,unContenedor,puntoX,puntoY):
         if self.visitada == True:

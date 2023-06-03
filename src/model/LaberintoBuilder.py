@@ -259,7 +259,7 @@ class LaberintoBuilder():
     
     def fabricarTunel(self):
         tunel = Tunel()
-        tunel.agregarComando(Entrar(),tunel)
+        # tunel.agregarComando(Entrar(),tunel)
         return tunel
     
     def fabricarTunelEn(self,unContenedor):

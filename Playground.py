@@ -16,33 +16,34 @@ while True:
 
         if metodo == 1:
             opcion1 = input(Fore.MAGENTA + "¿Qué JSON quieres elegir para crear el laberinto?\n" + Style.RESET_ALL +
-                "1.  lab2Hab2Arm.json\n" +
-                "2.  lab2Hab2Bichos.json\n" +
-                "3.  lab2HabHorizontal.json\n" +
-                "4.  lab2HabTunel.json\n" +
-                "5.  lab2HabVertical.json\n" +
-                "6.  lab4Hab4Arm1Tienda4Entes.json\n" +
-                "7.  lab4Hab4Arm2Baul5Entes.json\n" +
-                "8.  lab4Hab4Arm2Tiendas5Entes.json\n" +
-                "9.  lab4Hab4Arm4BichosTunel.json\n" +
-                "10. lab4Hab4Arm4BichosTunelRombo.json\n" +
-                "11. lab4Hab4Arm4HechicerosTunel.json\n" + Style.RESET_ALL)
+                            "1.  lab2Hab1Tienda4Entes.json\n" +
+                            "2.  lab2Hab2Arm2Baul1Tienda2Entes.json\n" +
+                            "3.  lab2HabHorizontal1Tienda.json\n" +
+                            "4.  lab3Hab1Baul2Tiendas4Entes.json\n" +
+                            "5.  lab3Hab2Arm1Tienda6Entes.json\n" +
+                            "6.  lab4Hab4Arm1Baul4Hechiceros.json\n" +
+                            "7.  lab4Hab4Arm1Tienda4Entes.json\n" +
+                            "8.  lab4Hab4Arm2Baul5Entes.json\n" +
+                            "9.  lab4Hab4Arm2Tiendas5Entes.json\n" +
+                            "10. lab4Hab4Arm3Baul1Tienda4Entes.json\n" +
+                            "11. lab4Hab4Arm4BichosTunelRombo.json\n" + Style.RESET_ALL)
 
             opcion1 = int(opcion1)
 
             switch = {
-                1: 'laberintos/lab2Hab2Arm.json',
-                2: 'laberintos/lab2Hab2Bichos.json',
-                3: 'laberintos/lab2HabHorizontal.json',
-                4: 'laberintos/lab2HabTunel.json',
-                5: 'laberintos/lab2HabVertical.json',
-                6: 'laberintos/lab4Hab4Arm1Tienda4Entes.json',
-                7: 'laberintos/lab4Hab4Arm2Baul5Entes.json',
-                8: 'laberintos/lab4Hab4Arm2Tiendas5Entes.json',
-                9: 'laberintos/lab4Hab4Arm4BichosTunel.json',
-                10: 'laberintos/lab4Hab4Arm4BichosTunelRombo.json',
-                11: 'laberintos/lab4Hab4Arm4HechicerosTunel.json'
+                1: 'laberintos/lab2Hab1Tienda4Entes.json',
+                2: 'laberintos/lab2Hab2Arm2Baul1Tienda2Entes.json',
+                3: 'laberintos/lab2HabHorizontal1Tienda.json',
+                4: 'laberintos/lab3Hab1Baul2Tiendas4Entes.json',
+                5: 'laberintos/lab3Hab2Arm1Tienda6Entes.json',
+                6: 'laberintos/lab4Hab4Arm1Baul4Hechiceros.json',
+                7: 'laberintos/lab4Hab4Arm1Tienda4Entes.json',
+                8: 'laberintos/lab4Hab4Arm2Baul5Entes.json',
+                9: 'laberintos/lab4Hab4Arm2Tiendas5Entes.json',
+                10: 'laberintos/lab4Hab4Arm3Baul1Tienda4Entes.json',
+                11: 'laberintos/lab4Hab4Arm4BichosTunelRombo.json'
             }
+
 
 
             unArchivo = switch.get(opcion1, "\n\nEl carácter ingresado no es correcto.\n\n")
