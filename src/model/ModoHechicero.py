@@ -6,9 +6,9 @@ class ModoHechicero():
         pass
 
     def conjura(self, hechicero):
-        self.dormir()
         self.caminar(hechicero)
         self.hechiza(hechicero)
+        self.dormir()
 
     def dormir(self):
         print("Hechicero duerme")

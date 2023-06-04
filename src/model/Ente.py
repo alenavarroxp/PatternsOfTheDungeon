@@ -56,7 +56,7 @@ class Ente():
         if self.vidas <= 0:
             self.vidas = 0
             self.heMuerto()
-        self.notificar()
+        # self.notificar()
             
     def puedeSerHechizadoPor(self,alguien):
         
@@ -68,7 +68,7 @@ class Ente():
             self.poder -= 5
             self.vidas -= 5
             print(alguien,'hechiza a ',self,' y le quita 5 vidas y 5 de poder')
-        self.notificar()
+        # self.notificar()
         if self.vidas <= 0:
             self.vidas = 0
             self.heMuerto()

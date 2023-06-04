@@ -22,7 +22,7 @@ class LaberintoGUI():
         self.width = 1400
         self.height = 700
         self.screen = pygame.display.set_mode((self.width,self.height))
-        # self.uscreen = pygame.Surface((self.width,self.height))
+        self.capaEnemigos = pygame.Surface((self.width,self.height),pygame.SRCALPHA)
         self.screen.fill((50,50,50))
         self.maxX = 0
         self.maxY = 0
@@ -407,6 +407,8 @@ class LaberintoGUI():
             self.mostrarInventario(self.mouse_pos)
                 
             self.screen.blit(self.personaje,(self.pX,self.pY))
+            
+            # self.screen.blit(self.capaEnemigos,(0,0))
             self.mouse_pos = None
            
             # if currentTime - lastUpdate >= updateIntervalo:
@@ -535,8 +537,8 @@ class LaberintoGUI():
             self.mostrarPoderPersonaje()
             self.mostrarDineroPersonaje()
             self.mostrarInventario(self.mouse_pos)
-            self.mostrarBichos()
-            self.mostrarHechiceros()
+            # self.mostrarBichos()
+            # self.mostrarHechiceros()
             self.redibujar()
 
     def mostrarInventario(self,mouse_pos):
@@ -698,16 +700,16 @@ class LaberintoGUI():
         ancho = unHechicero.posicion.forma.extentX
         alto = unHechicero.posicion.forma.extentY
 
-        if isinstance(unHechicero.modohechicero,Mago):
+        if unHechicero.modohechicero.esMago():
             hechicero = pygame.image.load("graphics/hechiceroMago.png").convert_alpha()
             hechicero = pygame.transform.scale(hechicero,(30*2,30*2))
             hechicero = pygame.transform.flip(hechicero,True,False)
-            self.screen.blit(hechicero,(unPuntoX+(ancho/3)-10,unPuntoY+(alto/3)+80))
+            self.capaEnemigos.blit(hechicero,(unPuntoX+(ancho/3)-10,unPuntoY+(alto/3)+80))
             self.mostrarVidasEnemigo(unHechicero,unPuntoX+(ancho/3)-10,unPuntoY+(alto/3)+80)
         else:
             hechicero = pygame.image.load("graphics/hechiceroBrujo.png").convert_alpha()
             hechicero = pygame.transform.scale(hechicero,(30*1.75,30*1.75))
-            self.screen.blit(hechicero,(unPuntoX+(ancho/3)+150,unPuntoY+(alto/3)))
+            self.capaEnemigos.blit(hechicero,(unPuntoX+(ancho/3)+150,unPuntoY+(alto/3)))
             self.mostrarVidasEnemigo(unHechicero,unPuntoX+(ancho/3)+150,unPuntoY+alto/3)
         
    
@@ -726,12 +728,12 @@ class LaberintoGUI():
             bicho = pygame.image.load("graphics/bichoAgresivo.png").convert_alpha()
             bicho = pygame.transform.scale(bicho,(30*1.75,30*1.75))
             bicho = pygame.transform.flip(bicho,True,False)
-            self.screen.blit(bicho,(unPuntoX+ancho/3,unPuntoY+alto/3))
+            self.capaEnemigos.blit(bicho,(unPuntoX+ancho/3,unPuntoY+alto/3))
             self.mostrarVidasEnemigo(unBicho,unPuntoX+ancho/3,unPuntoY+alto/3)
         else:
             bicho = pygame.image.load("graphics/bichoPerezoso.png").convert_alpha()
             bicho = pygame.transform.scale(bicho,(30*1.75,30*1.75))
-            self.screen.blit(bicho,(unPuntoX+(ancho/3)+150,unPuntoY+(alto/3)+80))
+            self.capaEnemigos.blit(bicho,(unPuntoX+(ancho/3)+150,unPuntoY+(alto/3)+80))
             self.mostrarVidasEnemigo(unBicho,unPuntoX+(ancho/3)+150,unPuntoY+(alto/3)+70)
     
     def mostrarVidasEnemigo(self, unEnemigo, unPuntoX, unPuntoY):
@@ -748,7 +750,7 @@ class LaberintoGUI():
             vida = pygame.image.load(ruta_imagen).convert_alpha()
             vida = pygame.transform.scale(vida, (65, 1))
         
-        self.screen.blit(vida, (unPuntoX, unPuntoY))
+        self.capaEnemigos.blit(vida, (unPuntoX, unPuntoY))
 
 
 
@@ -836,6 +838,7 @@ class LaberintoGUI():
     def añadirDependencias(self):
         for bicho in self.juego.bichos:
             bicho.añadirDependencia(self)
+
         for hechicero in self.juego.hechiceros:
             hechicero.añadirDependencia(self)
 
@@ -1049,7 +1052,7 @@ class LaberintoGUI():
 
        if self.juego.laberinto.hijos.__len__() == 4:
         rect =pygame.Rect(unPuntoX,unPuntoY,ancho,alto)
-        pygame.draw.rect(self.screen,(255,0,0),rect)
+        # pygame.draw.rect(self.screen,(255,0,0),rect)
         if unPuntoX == 10 and unPuntoY == 50:
                 suelo = pygame.image.load("graphics/suelo.png").convert_alpha()
         if unPuntoX == 10 and unPuntoY == 370:
@@ -1118,8 +1121,7 @@ class LaberintoGUI():
                 puertaNorte = pygame.image.load("graphics/puertaNorteAbierta.png").convert_alpha()
             else:
                 puertaNorte = pygame.image.load("graphics/puertaNorte.png").convert_alpha()
-            # colocar la puerta en el medio del ancho de la habitacion
-            
+                       
             puertaNorte = pygame.transform.scale(puertaNorte,(128,64))
             self.screen.blit(puertaNorte,(unPuntoX+ancho/2-60,unPuntoY-64))
         if unaForma.oeste.esPuerta():
@@ -1131,16 +1133,6 @@ class LaberintoGUI():
         
             puertaOeste = pygame.transform.scale(puertaOeste,(12,128))
             self.screen.blit(puertaOeste,(unPuntoX,unPuntoY+alto/2-60))
-
-        
-
-        if unaForma.sur.esPuerta():
-            if unaForma.sur.abierta:
-                puertaSur = pygame.image.load("graphics/puertaNorteAbierta.png").convert_alpha()
-            else:
-                puertaSur = pygame.image.load("graphics/puertaNorte.png").convert_alpha()
-            puertaSur = pygame.transform.scale(puertaSur,(128,64))
-            self.screen.blit(puertaSur,(unPuntoX+ancho/2-60,unPuntoY+alto-4))
 
 
 

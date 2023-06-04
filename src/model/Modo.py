@@ -6,9 +6,9 @@ class Modo():
         pass
     
     def actua(self, bicho):
-        self.dormir()
         self.caminar(bicho)
         self.ataca(bicho)
+        self.dormir()
     
     def dormir(self):
         print("Bicho duerme")
