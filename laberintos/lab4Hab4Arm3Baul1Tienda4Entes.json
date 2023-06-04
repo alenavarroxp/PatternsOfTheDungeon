@@ -4,12 +4,12 @@
         {"tipo":"habitacion","num":1,"hijos":[
             {"tipo":"armario","num":1,"hijos":[]},
             {"tipo":"baul","num":1,"contenido":[{"tipo":"espada","poder":15}]},
-            {"tipo":"mochila"}
+            {"tipo":"mochila","contenido":[{"tipo": "moneda", "valor": 8},{"tipo":"moneda","valor":19}]}
         ]},
         {"tipo":"habitacion","num":2,"hijos":[
             {"tipo":"armario","num":2,"hijos":[]},
             {"tipo":"bomba"},
-            {"tipo":"baul","num":2,"contenido":[{"tipo":"mochila"},{"tipo":"moneda","valor":32}]},
+            {"tipo":"baul","num":2,"contenido":[{"tipo":"mochila","contenido":[{"tipo": "moneda", "valor": 15}]},{"tipo":"moneda","valor":32}]},
             {"tipo":"mochila"},
             {"tipo":"tienda","num":2,"hijos":[],"objetos":[
                 {"tipo":"espada","poder":30,"precio":97}
@@ -25,7 +25,7 @@
             {"tipo":"armario","num":4,"hijos,":[]},
             {"tipo":"moneda","valor":14},
             {"tipo":"moneda","valor":1},
-            {"tipo":"baul","num":4,"contenido":[{"tipo":"mochila"},{"tipo":"espada","poder":3}]}
+            {"tipo":"baul","num":4,"contenido":[{"tipo":"mochila","contenido":[{"tipo": "espada", "poder": 10}]},{"tipo":"espada","poder":3}]}
 
        ]}
     ],

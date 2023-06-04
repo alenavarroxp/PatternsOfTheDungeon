@@ -23,11 +23,11 @@ class Ente():
         ente = self.buscarEnemigo()
         if ente is not None:
             ente.esAtacadoPor(self)
-            self.notificar()
+            
         ente = self.buscarBrujo()
         if ente is not None:
             ente.esAtacadoPor(self)
-            self.notificar()
+            
 
     def hechizar(self):
         ente = self.buscarEnemigo()
@@ -52,11 +52,11 @@ class Ente():
     def puedeSerAtacadoPor(self,alguien):
         print(alguien,' ataca a ',self)
         self.vidas -= int(alguien.poder)
-        self.notificar()
         print(self,' tiene ',self.vidas,' vidas')
         if self.vidas <= 0:
             self.vidas = 0
             self.heMuerto()
+        self.notificar()
             
     def puedeSerHechizadoPor(self,alguien):
         
@@ -68,7 +68,6 @@ class Ente():
             self.poder -= 5
             self.vidas -= 5
             print(alguien,'hechiza a ',self,' y le quita 5 vidas y 5 de poder')
-
         self.notificar()
         if self.vidas <= 0:
             self.vidas = 0
@@ -76,7 +75,6 @@ class Ente():
             
     def irA(self,unaOrientacion):
         unaOrientacion.ir(self)
-        self.notificar()
 
     def irAlEste(self):
         print(self, "yendo al Este")

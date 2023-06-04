@@ -9,6 +9,7 @@ class Personaje(Ente):
         self.nickname = None
         self.inventario = Inventario()
         self.dinero = 50
+        self.objetoUsado = None
 
     def obtenerComandos(self,alguien):
         return self.posicion.obtenerComandos(alguien)

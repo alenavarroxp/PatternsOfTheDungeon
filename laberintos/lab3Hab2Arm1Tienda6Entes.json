@@ -14,7 +14,7 @@
        ]},
        {"tipo":"habitacion","num":3,"hijos":[
             {"tipo":"armario","num":3,"hijos":[]},
-            {"tipo":"baul","num":3,"contenido":[{"tipo":"mochila"}]},
+            {"tipo":"baul","num":3,"contenido":[{"tipo":"mochila","contenido":[{"tipo": "moneda", "valor": 7}]}]},
             {"tipo":"tienda","num":3,"hijos":[],"objetos":[
                 {"tipo":"espada","poder":10,"precio":25}
             ]}

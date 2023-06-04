@@ -31,3 +31,6 @@ class Comando():
     
     def esCanjear(self):
         return False
+    
+    def esSoltar(self):
+        return False

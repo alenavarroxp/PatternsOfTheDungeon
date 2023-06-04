@@ -9,7 +9,7 @@
                 {"tipo": "bomba"},
                 {"tipo": "tienda", "num": 1, "hijos": [], "objetos": [
                     {"tipo": "espada", "poder": 5, "precio": 20},
-                    {"tipo": "mochila", "precio": 30}
+                    {"tipo": "mochila", "precio": 30,"contenido":[]}
                 ]}
             ]
         },
@@ -20,7 +20,7 @@
                 {"tipo": "armario", "num": 2, "hijos": []},
                 {"tipo": "bomba"},
                 {"tipo": "espada", "poder": 8},
-                {"tipo": "mochila"}
+                {"tipo": "mochila","contenido":[{"tipo": "moneda", "valor": 5}]}
             ]
         },
         {
@@ -30,7 +30,10 @@
                 {"tipo": "armario", "num": 3, "hijos": []},
                 {"tipo": "baul", "num": 3, "contenido": [
                     {"tipo": "espada", "poder": 12},
-                    {"tipo": "mochila"}
+                    {"tipo": "mochila","contenido": [
+                        {"tipo": "espada", "poder": 5},
+                        {"tipo": "espada", "poder": 8}
+                    ]}
                 ]}
             ]
         },
@@ -41,7 +44,7 @@
                 {"tipo": "armario", "num": 4, "hijos": []},
                 {"tipo": "bomba"},
                 {"tipo": "tienda", "num": 4, "hijos": [], "objetos": [
-                    {"tipo": "mochila", "precio": 40}
+                    {"tipo": "mochila", "precio": 40,"contenido":[]}
                 ]}
             ]
         }

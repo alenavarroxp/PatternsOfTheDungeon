@@ -1,3 +1,5 @@
+from src.model.Coger import Coger
+from src.model.Soltar import Soltar
 from src.model.Canjear import Canjear
 from src.model.Usar import Usar
 
@@ -26,28 +28,50 @@ class Inventario:
         if any(comando.esCoger() for comando in objeto.comandos):
             self.quitarCoger(objeto)
         
-        # self.quitarCoger(objeto)
+        
+        
 
     def quitarComprar(self, objeto):
-        for comando in objeto.comandos:
+        for comando in objeto.comandos[:]:
             if comando.esComprar():
                 objeto.quitarComando(comando)
             objeto.agregarComando(Usar(), objeto)
+            if not objeto.esMoneda():
+                objeto.agregarComando(Soltar(), objeto)
         
     def quitarCoger(self,objeto):
-       for comando in objeto.comandos:
+       for comando in objeto.comandos[:]:
             if comando.esCoger():
                 objeto.quitarComando(comando)
+                if not objeto.esMoneda():
+                    objeto.agregarComando(Soltar(),objeto)
             if objeto.esMoneda():
                 objeto.agregarComando(Canjear(),objeto)
             else:
                 objeto.agregarComando(Usar(),objeto)
+            
 
     def quitarObjeto(self, objeto):
         if objeto in self.objetos:
             self.objetos[objeto] -= 1
             if self.objetos[objeto] == 0:
                 del self.objetos[objeto]
+
+    def soltarObjeto(self, objeto, alguien):
+        if objeto in self.objetos:
+            self.quitarObjeto(objeto)
+            for comando in objeto.comandos[:]:
+                if comando.esSoltar() or comando.esUsar():
+                    objeto.quitarComando(comando)
+            if objeto.esEspada():
+                if not any(comando.esUsar() for comando in objeto.comandos):
+                    if alguien.objetoUsado is objeto:
+                        alguien.poder -= objeto.poder
+                        alguien.objetoUsado = None
+            objeto.agregarComando(Coger(), objeto)
+            objeto.padre = alguien.posicion
+            alguien.posicion.agregarObjeto(objeto)
+            print(f"{str(objeto)} soltado")
 
     def abrirInventario(self):
         print("Inventario:")

@@ -51,6 +51,7 @@ class Puerta(ElementoMapa):
                 self.lado1.entrar(alguien)
                 alguien.posicion = self.lado1
             print(alguien,' puede pasar al otro lado')
+            alguien.notificar()
         else:
             print('La puerta está cerrada.')
             

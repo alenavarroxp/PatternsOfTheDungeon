@@ -22,6 +22,7 @@ class LaberintoGUI():
         self.width = 1400
         self.height = 700
         self.screen = pygame.display.set_mode((self.width,self.height))
+        # self.uscreen = pygame.Surface((self.width,self.height))
         self.screen.fill((50,50,50))
         self.maxX = 0
         self.maxY = 0
@@ -188,7 +189,7 @@ class LaberintoGUI():
         self.agregarPersonaje("Mario")
         self.screen.fill((50, 50, 50))
         self.dibujarLaberinto()
-        
+        self.añadirDependencias()
         self.mostrarVentana()
         
     def mostrarLaberinto(self):
@@ -411,7 +412,7 @@ class LaberintoGUI():
             # if currentTime - lastUpdate >= updateIntervalo:
             #     self.update()
             #     lastUpdate = currentTime
-                
+            
             pygame.display.update()
         self.pantallaFinal()
 
@@ -433,6 +434,7 @@ class LaberintoGUI():
                     if comando.esComprar() or comando.esAbrir() or comando.esEntrar() or comando.esCerrar() or comando.esActivar() or comando.esDesactivar() or comando.esCoger():
                             comando.ejecutar(self.juego.personaje)
                             self.moverPersonajeHabitacion()
+                            self.mostrarInventario(self.mouse_pos)
                             print("Ejecutando comando", comando)
                             # self.redibujar()
                             
@@ -457,10 +459,13 @@ class LaberintoGUI():
 
                     if mouse_pos is not None and rect_comando.collidepoint(mouse_pos):
                         # Realiza acciones según el comando del objeto
-                        if comando.esUsar() or comando.esCanjear():
+                        if comando.esUsar() or comando.esCanjear() or comando.esSoltar() or comando.esCoger():
                             comando.ejecutar(self.juego.personaje)
-                            if comando.esCanjear():
+
+                            if comando.esCanjear() or comando.esSoltar():
                                 self.celda_seleccionada = None
+                                self.update()
+                            self.mostrarInventario(self.mouse_pos)
                                 
                     else:
                         pygame.draw.rect(self.screen, (50, 50, 50), rect_comando)
@@ -539,31 +544,32 @@ class LaberintoGUI():
             return None
         pygame.init()
         miFuente = pygame.font.SysFont('radnika', 20)
-        if self.juego.personaje.inventario.objetos.__len__() == 0:
-            text = miFuente.render("Inventario Vacío ", True, (255, 255, 255))
-            rectText = text.get_rect()
-            rectText.center = (1250, 420)
-        else:
-            text = miFuente.render("Inventario:          ", True, (255, 255, 255))
-            rectText = text.get_rect()
-            rectText.center = (1250, 420)
-       
-       
-        rect = pygame.Rect(rectText.left - 5, rectText.top - 5, rectText.width + 10, rectText.height + 7)
-        if pygame.display.get_active():
-            pygame.draw.rect(self.screen, (50, 50, 50), rect)  # Dibuja el rectángulo negro detrás del texto
-            self.screen.blit(text, rectText)
-            pygame.display.update()
+        if self.person is not None:
+            if self.person.inventario.objetos.__len__() == 0:
+                text = miFuente.render("Inventario Vacío ", True, (255, 255, 255))
+                rectText = text.get_rect()
+                rectText.center = (1250, 420)
+            else:
+                text = miFuente.render("Inventario:          ", True, (255, 255, 255))
+                rectText = text.get_rect()
+                rectText.center = (1250, 420)
+        
+        
+            rect = pygame.Rect(rectText.left - 5, rectText.top - 5, rectText.width + 10, rectText.height + 7)
+            if pygame.display.get_active():
+                pygame.draw.rect(self.screen, (50, 50, 50), rect)  # Dibuja el rectángulo negro detrás del texto
+                self.screen.blit(text, rectText)
+                pygame.display.update()
 
-        self.mostrarObjetosInventario(mouse_pos)
+            self.mostrarObjetosInventario(mouse_pos)
 
     def mostrarObjetosInventario(self, mouse_pos):
-        if self.juego.personaje.inventario.objetos.__len__() > 0:
+        if self.person.inventario.objetos.__len__() >= 0:
             
             rect_fondo = pygame.Rect(1171, 436, 172, 228)
             pygame.draw.rect(self.screen, (50, 50, 50), rect_fondo)
             
-            for i, obj in enumerate(self.juego.personaje.inventario.objetos):
+            for i, obj in enumerate(self.person.inventario.objetos):
                 # Calcula las coordenadas de fila y columna
                 fila = i // 3  # Cada fila contendrá 3 objetos
                 columna = i % 3  # Columna actual dentro de la fila
@@ -822,11 +828,16 @@ class LaberintoGUI():
         self.mostrarPoderPersonaje()
         self.mostrarDineroPersonaje()
         self.mostrarInventario(None)
-        # Meter aqui los botones del menú
+        
         
         self.mostrarBichos()
         self.mostrarHechiceros()
 
+    def añadirDependencias(self):
+        for bicho in self.juego.bichos:
+            bicho.añadirDependencia(self)
+        for hechicero in self.juego.hechiceros:
+            hechicero.añadirDependencia(self)
 
     def agregarPersonaje(self,unaCadena):
         personaje = Personaje()
@@ -998,7 +1009,8 @@ class LaberintoGUI():
         unPuntoY = unaEspada.padre.forma.puntoY
         ancho = unaEspada.padre.forma.extentX
         alto = unaEspada.padre.forma.extentY
-        self.dibujarEspada(unaEspada,unPuntoX,unPuntoY,ancho,alto)
+        if unPuntoX != 0 and unPuntoY != 0:
+         self.dibujarEspada(unaEspada,unPuntoX,unPuntoY,ancho,alto)
 
     def dibujarEspada(self,unaEspada,unPuntoX,unPuntoY,ancho,alto):
 

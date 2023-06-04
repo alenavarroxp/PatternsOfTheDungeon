@@ -11,7 +11,7 @@
                 {"tipo": "bomba"},
                 {"tipo": "tienda", "num": 1, "hijos": [], "objetos": [
                     {"tipo": "espada", "poder": 5, "precio": 20},
-                    {"tipo": "mochila", "precio": 30}
+                    {"tipo": "mochila", "precio": 30,"contenido":[{"tipo": "espada", "poder": 10}]}
                 ]}
             ]
         },
@@ -23,7 +23,7 @@
                 {"tipo": "bomba"},
                 {"tipo": "tienda", "num": 2, "hijos": [], "objetos": [
                     {"tipo": "espada", "poder": 5, "precio": 8},
-                    {"tipo": "mochila", "precio": 10}
+                    {"tipo": "mochila", "precio": 10,"contenido":[]}
                 ]}
             ]
         },

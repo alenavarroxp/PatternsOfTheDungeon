@@ -1,3 +1,4 @@
+from src.model.Canjear import Canjear
 from src.model.Entrar import Entrar
 from src.model.Coger import Coger
 from src.model.Comprar import Comprar
@@ -83,7 +84,7 @@ class LaberintoBuilder():
                 tipo = contenido[i]['tipo']
                 getattr(self, 'fabricar' + tipo.capitalize() + 'En')(baul,poder)
             elif contenido[i]['tipo'] == 'mochila':
-                getattr(self, 'fabricar' + contenido[i]['tipo'].capitalize() + 'En')(baul)
+                getattr(self, 'fabricar' + contenido[i]['tipo'].capitalize() + 'En')(baul,contenido[i]['contenido'])
             elif contenido[i]['tipo'] == 'moneda':
                 getattr(self, 'fabricar' + contenido[i]['tipo'].capitalize())(baul,contenido[i]['valor'])
         baul.agregarOrientacion(self.fabricarNorte())
@@ -177,7 +178,10 @@ class LaberintoBuilder():
         espada = Espada()
         espada.poder = poder
         espada.agregarComando(Coger(),espada)
-        unContenedor.agregarHijo(espada)
+        if isinstance(unContenedor,Mochila):
+            unContenedor.agregarObjeto(espada)
+        else:
+            unContenedor.agregarHijo(espada)
         return espada
 
     
@@ -302,12 +306,18 @@ class LaberintoBuilder():
         unContenedor.agregarHijo(tienda)
         return tienda
     
-    def fabricarMochila(self):
+    def fabricarMochila(self,contenido):
         mochila = Mochila()
+        for i in range(0,len(contenido)):
+            item = contenido[i]['tipo']
+            if item == 'espada':
+                getattr(self,'fabricar' + item.capitalize()+"En")(mochila,contenido[i]['poder'])
+            elif item == 'moneda':
+                getattr(self,'fabricar' + item.capitalize())(mochila,contenido[i]['valor'])
         return mochila
     
-    def fabricarMochilaEn(self,unContenedor):
-        mochila = self.fabricarMochila()
+    def fabricarMochilaEn(self,unContenedor,contenido):
+        mochila = self.fabricarMochila(contenido)
         mochila.agregarComando(Coger(),mochila)
         unContenedor.agregarHijo(mochila)
         return mochila
@@ -317,13 +327,20 @@ class LaberintoBuilder():
         for objeto in objetos:
             precio = objeto['precio']
             tipo = objeto['tipo']
-            objeto = getattr(self,'fabricar' + tipo.capitalize())()
+            if tipo == 'mochila':
+                objeto = getattr(self,'fabricar' + tipo.capitalize())(objeto['contenido'])
+            else:
+                objeto = getattr(self,'fabricar' + tipo.capitalize())()
             objeto.agregarComando(Comprar(),objeto)
             mercader.agregarObjeto(objeto,precio)
         return mercader
     
     def fabricarMoneda(self,ubicacion,valor):
         moneda = Moneda(valor,ubicacion)
-        moneda.agregarComando(Coger(),moneda)
-        ubicacion.agregarHijo(moneda)
-        return Moneda(valor,ubicacion)
+        if isinstance(ubicacion,Mochila):
+            moneda.agregarComando(Canjear(),moneda)
+            ubicacion.agregarObjeto(moneda)
+        else:
+            moneda.agregarComando(Coger(),moneda)
+            ubicacion.agregarHijo(moneda)
+        return moneda

@@ -6,10 +6,10 @@
         ]},
         {"tipo":"habitacion","num":2,"hijos":[
             {"tipo":"bomba"},
-            {"tipo":"tienda","num":1,"hijos":[],"objetos":[
+            {"tipo":"tienda","num":2,"hijos":[],"objetos":[
                 {"tipo":"espada","precio":20},
                 {"tipo":"espada","precio":10},
-                {"tipo":"mochila","precio":30}
+                {"tipo":"mochila","precio":30,"contenido":[]}
             ]}
         ]}
     ],

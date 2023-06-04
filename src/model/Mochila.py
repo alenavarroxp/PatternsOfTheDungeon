@@ -20,14 +20,17 @@ class Mochila(Objeto):
 
     def quitarObjeto(self, objeto):
         if objeto in self.objetos:
-            objeto.contador -= 1
-            if objeto.contador == 0:
                 self.objetos.remove(objeto)
 
-    def abrirMochila(self):
+    def abrirMochila(self,alguien):
         print("Abriendo mochila...")
-        for objeto in self.objetos:
-            objeto.usarObjeto()
+        for objeto in self.objetos[:]:
+            self.quitarObjeto(objeto)
+            alguien.inventario.agregarObjeto(objeto)
+            
+            
+        
+       
 
     def recorrer(self,unBloque):
         print('Recorriendo mochila')
@@ -35,9 +38,9 @@ class Mochila(Objeto):
     def __str__(self):
         if len(self.objetos) == 0:
             return f"Mochila vacía {self.precio}€"
-        return f"Mochila: [{self.objetos}] Precio: {self.precio}"
+        return f"Mochila cargada {self.precio}€"
     
     def __repr__(self):
         if len(self.objetos) == 0:
             return f"Mochila vacía {self.precio}€"
-        return f"Mochila: [{self.objetos}] Precio: {self.precio}"
+        return f"Mochila cargada {self.precio}€"

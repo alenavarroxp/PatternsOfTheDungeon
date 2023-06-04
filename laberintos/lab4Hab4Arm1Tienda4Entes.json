@@ -9,10 +9,10 @@
         {"tipo":"habitacion","num":2,"hijos":[
             {"tipo":"armario","num":2,"hijos":[]},
             {"tipo":"bomba"},
-            {"tipo":"baul","num":2,"contenido":[{"tipo":"mochila"}]},
-            {"tipo":"mochila"},
+            {"tipo":"baul","num":2,"contenido":[{"tipo":"mochila","contenido":[{"tipo": "moneda", "valor": 15},{"tipo": "moneda", "valor": 1}]}]},
+            {"tipo":"mochila","contenido":[{"tipo": "moneda", "valor": 5}]},
             {"tipo":"tienda","num":2,"hijos":[],"objetos":[
-                {"tipo":"mochila","precio":50}
+                {"tipo":"mochila","precio":50,"contenido":[{"tipo": "espada", "poder": 13}]}
             ]}
             
        ]},
