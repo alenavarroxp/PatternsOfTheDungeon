@@ -5,7 +5,9 @@ from src.model.Muerto import Muerto
 class Bicho(Ente):
     def __init__(self):
         super().__init__()
-        
+
+    def esEnemigo(self):
+        return True
     
     def actua(self):
         self.estado.actua(self)

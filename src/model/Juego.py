@@ -27,8 +27,7 @@ from src.model.Bicho import Bicho
 from src.model.Bomba import Bomba
 from src.model.Este import Este
 from src.model.Baul import Baul
-from src.model.Espada import Espada
-from src.model.Fuego import Fuego
+from src.model.Espada import Espada 
 from src.model.Moneda import Moneda
 from src.model.Norte import Norte
 from src.model.Oeste import Oeste
@@ -73,11 +72,20 @@ class Juego:
 
     def lanzarBichos(self):
         for bicho in self.bichos:
-            self.lanzarHilo(bicho)
+            if bicho in self.hilos:
+                print("El bicho ya está en ejecucion")
+            else:
+                self.lanzarHilo(bicho)
+                
+
+            
 
     def lanzarHechiceros(self):
         for hechicero in self.hechiceros:
-            self.lanzarHilo(hechicero)
+            if hechicero in self.hilos:
+                print("El hechicero ya está en ejecucion")
+            else:
+                self.lanzarHilo(hechicero)
 
         
 
@@ -153,7 +161,13 @@ class Juego:
         self.prototipo.laberinto.num = self.laberinto.num + 1
         return self.prototipo.laberinto
     
+    def detonarBomba(self,unaBomba,alguien):
+        if unaBomba.esBomba():
+            unaBomba.detonar(alguien,self.bichos,self.hechiceros)
+
     # Métodos ITERATOR
+    
+        
     def activarBomba(self,unaBomba):
         if unaBomba.esBomba():
             unaBomba.activar(None)
@@ -331,9 +345,7 @@ class Juego:
     
     def fabricarEspada(self):
         return Espada()
-    
-    def fabricarFuego(self):
-        return Fuego()
+
     
     def fabricarForma(self):
         return Cuadrado()
@@ -722,7 +734,6 @@ class Juego:
         hab2.ponerEnElemento(self.fabricarSur(),puerta24)
         hab4.ponerEnElemento(self.fabricarNorte(),puerta24)
 
-        hab4.agregarHijo(self.fabricarFuego())
         self.fabricarBaulEn(hab2,2,self.fabricarBomba())
         self.fabricarBaulEn(hab3,3,self.fabricarEspada())
 

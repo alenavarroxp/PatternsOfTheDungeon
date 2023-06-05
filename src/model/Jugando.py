@@ -7,3 +7,5 @@ class Jugando(Fase):
     
     def agregarPersonajeJuego(self, unPersonaje, unJuego):
         print("El juego ya ha comenzado")
+
+    

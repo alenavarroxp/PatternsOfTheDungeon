@@ -11,6 +11,9 @@ class Personaje(Ente):
         self.dinero = 50
         self.objetoUsado = None
 
+    def esPersonaje(self):
+        return True
+
     def obtenerComandos(self,alguien):
         return self.posicion.obtenerComandos(alguien)
     

@@ -27,7 +27,6 @@ class Norte(Orientacion):
     def ir(self,alguien):
         contenedor = alguien.posicion.forma
         contenedor.norte.entrar(alguien)
-        alguien.notificar()
 
     def obtenerElementoEn(self,unContenedor):
         return unContenedor.norte

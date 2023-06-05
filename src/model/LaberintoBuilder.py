@@ -19,7 +19,6 @@ from src.model.Bomba import Bomba
 from src.model.Cuadrado import Cuadrado
 from src.model.Espada import Espada
 from src.model.Este import Este
-from src.model.Fuego import Fuego
 from src.model.Habitacion import Habitacion
 from src.model.Juego import Juego
 from src.model.Laberinto import Laberinto
@@ -184,9 +183,7 @@ class LaberintoBuilder():
             unContenedor.agregarHijo(espada)
         return espada
 
-    
-    def fabricarFuego(self):
-        return Fuego()
+
     
     def fabricarForma(self):
         return Cuadrado()

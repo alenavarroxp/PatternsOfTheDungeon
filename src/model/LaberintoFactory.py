@@ -6,7 +6,6 @@ from src.model.Bomba import Bomba
 from src.model.Cuadrado import Cuadrado
 from src.model.Espada import Espada
 from src.model.Este import Este
-from src.model.Fuego import Fuego
 from src.model.Habitacion import Habitacion
 from src.model.Laberinto import Laberinto
 from src.model.Norte import Norte
@@ -99,8 +98,6 @@ class LaberintoFactory():
     def fabricarEspada(self):
         return Espada()
     
-    def fabricarFuego(self):
-        return Fuego()
     
     def fabricarForma(self):
         return Cuadrado()

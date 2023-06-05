@@ -7,6 +7,9 @@ from src.model.Muerto import Muerto
 class Hechicero(Ente):
     def __init__(self):
         super().__init__()
+    
+    def esEnemigo(self):
+        return True
 
     def conjura(self):
         self.estado.conjura(self)

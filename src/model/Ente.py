@@ -12,12 +12,18 @@ class Ente():
         self.estado = Vivo()
         self.observers = []
 
+    def esEnemigo(self):
+        return False
+    
+    def esPersonaje(self):
+        return False    
+
     def añadirDependencia(self,observer):
         self.observers.append(observer)
 
     def notificar(self):
         for observer in self.observers:
-            observer.update()
+            observer.update(self)
     
     def atacar(self):
         ente = self.buscarEnemigo()
@@ -27,12 +33,14 @@ class Ente():
         ente = self.buscarBrujo()
         if ente is not None:
             ente.esAtacadoPor(self)
+        
             
 
     def hechizar(self):
         ente = self.buscarEnemigo()
         if ente is not None:
             ente.esHechizadoPor(self)
+        
 
     def buscarEnemigo(self):
         pass
@@ -56,7 +64,7 @@ class Ente():
         if self.vidas <= 0:
             self.vidas = 0
             self.heMuerto()
-        # self.notificar()
+        self.notificar()
             
     def puedeSerHechizadoPor(self,alguien):
         
@@ -68,7 +76,7 @@ class Ente():
             self.poder -= 5
             self.vidas -= 5
             print(alguien,'hechiza a ',self,' y le quita 5 vidas y 5 de poder')
-        # self.notificar()
+        self.notificar()
         if self.vidas <= 0:
             self.vidas = 0
             self.heMuerto()
