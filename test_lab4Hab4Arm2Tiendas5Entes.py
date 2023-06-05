@@ -1,6 +1,7 @@
 import unittest
 import os
 from colorama import init, Fore, Style
+from src.model.Personaje import Personaje
 from src.model.Afilada import Afilada
 from src.model.Cuadrado import Cuadrado
 from src.model.Director import Director
@@ -18,11 +19,28 @@ class Test(unittest.TestCase):
         director = Director()
         director.procesar(unArchivo)
         self.juego = director.obtenerJuego()
+        self.personaje = Personaje()
+        self.juego.agregarPersonaje(self.personaje)
+
 
     def testIniciales(self):
         self.assertEqual(self.juego.laberinto is not None, True)
         self.assertEqual(len(self.juego.laberinto.hijos), 4)
     
+    def testPersonaje(self):
+            
+            print(Fore.MAGENTA+"\nPersonaje:"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje is not None, True)
+            print("El personaje se ha creado: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje.vidas, 100)
+            print("El personaje tiene 100 vidas: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje.poder, 10)
+            print("El personaje tiene 10 de poder: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje.dinero,50)
+            print("El personaje tiene 50 de dinero: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje.posicion, self.juego.obtenerHabitacion(1))
+            print("El personaje esta en la habitacion 1: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+
     def testHabitaciones(self):
         hab1 = self.juego.obtenerHabitacion(1)
         print(Fore.MAGENTA+"\nHabitacion 1:"+ Style.RESET_ALL)
@@ -246,7 +264,7 @@ class Test(unittest.TestCase):
                         self.assertEqual(hijo.padre,habitacion)
                         print("El padre de la tienda "+str(hijo)+" es la habitacion "+str(habitacion.num)+": ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
                         for contenido in hijo.hijos:
-                           if contenido.esEspada():
+                            if contenido.esEspada():
                                 print(Fore.MAGENTA+"\n"+str(contenido)+":"+ Style.RESET_ALL)
                                 self.assertEqual(contenido is not None, True)
                                 print("La espada "+str(contenido)+" no es nula: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
@@ -256,6 +274,15 @@ class Test(unittest.TestCase):
                                 print("La espada "+str(contenido)+" es afilada: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
                                 self.assertEqual(contenido.padre,hijo)
                                 print("El padre de la espada "+str(contenido)+" es la tienda "+str(hijo.num)+": ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                            if contenido.esMochila():
+                                print(Fore.MAGENTA+"\n"+str(contenido)+":"+ Style.RESET_ALL)
+                                self.assertEqual(contenido is not None, True)
+                                print("La mochila "+str(contenido)+" no es nula: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                                self.assertEqual(contenido.esMochila(), True)
+                                print("La mochila "+str(contenido)+" es mochila: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                                self.assertEqual(contenido.padre,hijo)
+                                print("El padre de la mochila "+str(contenido)+" es la tienda "+str(hijo.num)+": ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+
                         
 
 

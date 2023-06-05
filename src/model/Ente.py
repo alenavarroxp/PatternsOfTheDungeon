@@ -68,11 +68,11 @@ class Ente():
             
     def puedeSerHechizadoPor(self,alguien):
         
-        if isinstance(alguien.modohechicero,Mago):
+        if alguien.modohechicero.esMago():
             self.poder += 5
             self.vidas += 5
             print(alguien,'hechiza a ',self,' y le da 5 vidas y 5 de poder')
-        elif isinstance(alguien.modohechicero,Brujo):
+        elif alguien.modohechicero.esBrujo():
             self.poder -= 5
             self.vidas -= 5
             print(alguien,'hechiza a ',self,' y le quita 5 vidas y 5 de poder')

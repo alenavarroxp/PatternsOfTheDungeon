@@ -1,6 +1,7 @@
 import unittest
 import os
 from colorama import init, Fore, Style
+from src.model.Personaje import Personaje
 from src.model.Rombo import Rombo
 from src.model.Director import Director
 from src.model.Juego import Juego
@@ -17,10 +18,27 @@ class Test(unittest.TestCase):
         director = Director()
         director.procesar(unArchivo)
         self.juego = director.obtenerJuego()
+        self.personaje = Personaje()
+        self.juego.agregarPersonaje(self.personaje)
 
     def testIniciales(self):
         self.assertEqual(self.juego.laberinto is not None, True)
         self.assertEqual(len(self.juego.laberinto.hijos), 4)
+
+    
+    def testPersonaje(self):
+            
+            print(Fore.MAGENTA+"\nPersonaje:"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje is not None, True)
+            print("El personaje se ha creado: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje.vidas, 100)
+            print("El personaje tiene 100 vidas: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje.poder, 10)
+            print("El personaje tiene 10 de poder: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje.dinero,50)
+            print("El personaje tiene 50 de dinero: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje.posicion, self.juego.obtenerHabitacion(1))
+            print("El personaje esta en la habitacion 1: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
     
     def testHabitaciones(self):
         hab1 = self.juego.obtenerHabitacion(1)

@@ -27,6 +27,7 @@ class Inventario:
             self.quitarComprar(objeto)
         if any(comando.esCoger() for comando in objeto.comandos):
             self.quitarCoger(objeto)
+        print(f"\n{str(objeto)} agregado al inventario")
         
         
         

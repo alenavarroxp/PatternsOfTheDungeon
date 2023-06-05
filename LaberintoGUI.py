@@ -582,7 +582,7 @@ class LaberintoGUI():
     def mostrarObjetosInventario(self, mouse_pos):
         if self.person.inventario.objetos.__len__() >= 0:
             
-            rect_fondo = pygame.Rect(1171, 436, 172, 228)
+            rect_fondo = pygame.Rect(1171, 436, 172, 340)
             pygame.draw.rect(self.bufferLaberinto, (50, 50, 50), rect_fondo)
             
             for i, obj in enumerate(self.person.inventario.objetos):

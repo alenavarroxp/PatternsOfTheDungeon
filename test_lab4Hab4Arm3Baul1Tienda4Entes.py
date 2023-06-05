@@ -1,6 +1,8 @@
 import unittest
 import os
 from colorama import init, Fore, Style
+from src.model.Habitacion import Habitacion
+from src.model.Personaje import Personaje
 from src.model.Afilada import Afilada
 from src.model.Cuadrado import Cuadrado
 from src.model.Director import Director
@@ -18,10 +20,30 @@ class Test(unittest.TestCase):
         director = Director()
         director.procesar(unArchivo)
         self.juego = director.obtenerJuego()
+        self.personaje = Personaje()
+        self.juego.agregarPersonaje(self.personaje)
+        self.comandos = self.personaje.posicion.obtenerComandos(self.personaje)
 
     def testIniciales(self):
         self.assertEqual(self.juego.laberinto is not None, True)
         self.assertEqual(len(self.juego.laberinto.hijos), 4)
+
+    def testPersonaje(self):
+            
+            print(Fore.MAGENTA+"\nPersonaje:"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje is not None, True)
+            print("El personaje se ha creado: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje.vidas, 100)
+            print("El personaje tiene 100 vidas: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje.poder, 10)
+            print("El personaje tiene 10 de poder: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje.dinero,50)
+            print("El personaje tiene 50 de dinero: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje.posicion, self.juego.obtenerHabitacion(1))
+            print("El personaje esta en la habitacion 1: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+
+
+
     
     def testHabitaciones(self):
         hab1 = self.juego.obtenerHabitacion(1)
@@ -239,6 +261,13 @@ class Test(unittest.TestCase):
                         print("La tienda "+str(hijo)+" es tienda: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
                         self.assertEqual(hijo.padre,habitacion)
                         print("El padre de la tienda "+str(hijo)+" es la habitacion "+str(habitacion.num)+": ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                        self.assertEqual(hijo.mercader is not None, True)
+                        print("El mercader de la tienda "+str(hijo)+" no es nulo: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                        self.assertEqual(hijo.mercader.nick == 'Antonio', True)
+                        print("El mercader de la tienda "+str(hijo)+" se llama Antonio: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                        self.assertEqual(hijo.mercader.objetos is not None, True)
+                        print("El mercader de la tienda "+str(hijo)+" tiene objetos: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+
                         for contenido in hijo.hijos:
                            if contenido.esEspada():
                                 print(Fore.MAGENTA+"\n"+str(contenido)+":"+ Style.RESET_ALL)
@@ -250,8 +279,119 @@ class Test(unittest.TestCase):
                                 print("La espada "+str(contenido)+" es afilada: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
                                 self.assertEqual(contenido.padre,hijo)
                                 print("El padre de la espada "+str(contenido)+" es la tienda "+str(hijo.num)+": ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
-                        
 
+    # Test de funcionalidad. Aqui se comprueba la ejecucion de los comandos. 
+    # Pasando por todas las habitaciones y ejecutando todos los comandos posibles.
+    # Se comprueba que el personaje se mueve correctamente y que los objetos se 
+    # comportan como se espera.
+    def testFuncionalidad(self):
+        for habitacion in self.juego.laberinto.hijos:
+            self.testComandos()
+            for comando in self.comandos:
+                if comando.esAbrir():
+                    comando.ejecutar(self.personaje)
+            self.comandos = self.juego.obtenerHabitacion(habitacion.num).obtenerComandos(self.personaje)
+            self.testComandos()
+            for comando in self.comandos[:]:
+                if comando.esEntrar():
+                    if not isinstance(comando.receptor.padre,Habitacion):
+                        comando.ejecutar(self.personaje)
+                        self.comandos = self.personaje.posicion.obtenerComandos(self.personaje)
+                        self.testComandos()
+                if comando.esCerrar():
+                    comando.ejecutar(self.personaje)
+                    self.comandos = self.personaje.posicion.obtenerComandos(self.personaje)
+                    self.testComandos()
+                if comando.esCoger():
+                    comando.ejecutar(self.personaje)
+                    self.comandos = self.personaje.posicion.obtenerComandos(self.personaje)
+                    self.testComandos()
+            for hijo in habitacion.hijos:
+                if not hijo.esBomba():
+                    for hijo in hijo.hijos[:]:
+                        self.comandos = hijo.obtenerComandos(self.personaje)
+                        for comando in self.comandos[:]:
+                            if comando.esCoger():
+                                comando.ejecutar(self.personaje)
+                                self.comandos = hijo.obtenerComandos(self.personaje)
+                                self.testComandos()
+                else:
+                    self.comandos = hijo.obtenerComandos(self.personaje)
+                    for comando in self.comandos[:]:
+                        if comando.esActivar():
+                            comando.ejecutar(self.personaje)
+                            self.comandos = hijo.obtenerComandos(self.personaje)
+                            self.testComandos()
+                        
+            self.personaje.posicion = self.juego.obtenerHabitacion(habitacion.num)    
+
+    def testComandos(self):
+        print(Fore.MAGENTA+"\n"+"Comandos:"+ Style.RESET_ALL)	
+        
+        for comando in self.comandos:
+            if comando.esAbrir():
+                self.assertEqual(comando.esAbrir(), True)
+                print("El comando "+str(comando)+" es abrir: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                self.assertEqual(comando.receptor.esPuerta(), True)
+                print("El receptor del comando "+str(comando)+" es puerta: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                self.assertEqual(comando.receptor.abierta, False)
+                print("La puerta "+str(comando.receptor)+" no está abierta: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            if comando.esCoger():
+                self.assertEqual(comando.esCoger(),True)
+                print("El comando "+str(comando)+" es coger: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            if comando.esEntrar():
+                self.assertEqual(comando.esEntrar(),True)
+                print("El comando "+str(comando)+" es entrar: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                self.assertEqual(comando.receptor.abierta,True)
+                print("La puerta "+str(comando.receptor)+" está abierta: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            if comando.esCerrar():
+                self.assertEqual(comando.esCerrar(),True)
+                print("El comando "+str(comando)+" es cerrar: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                self.assertEqual(comando.receptor.esPuerta(),True)
+                print("El receptor del comando "+str(comando)+" es puerta: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                self.assertEqual(comando.receptor.abierta,True)
+                print("La puerta "+str(comando.receptor)+" está abierta: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            if comando.esActivar():
+                self.assertEqual(comando.esActivar(),True)
+                print("El comando "+str(comando)+" es activar: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                self.assertEqual(comando.receptor.esBomba(),True)
+                print("El receptor del comando "+str(comando)+" es bomba: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                self.assertEqual(comando.receptor.activa,False)
+                print("La bomba "+str(comando.receptor)+" no está activa: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            if comando.esDesactivar():
+                self.assertEqual(comando.esDesactivar(),True)
+                print("El comando "+str(comando)+" es desactivar: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                self.assertEqual(comando.receptor.esBomba(),True)
+                print("El receptor del comando "+str(comando)+" es bomba: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                self.assertEqual(comando.receptor.activa,True)
+                print("La bomba "+str(comando.receptor)+" está activa: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            if comando.esUsar():
+                self.assertEqual(comando.esUsar(),True) 
+                print("El comando "+str(comando)+" es usar: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            if comando.esSoltar():
+                self.assertEqual(comando.esSoltar(),True)
+                print("El comando "+str(comando)+" es soltar: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            if comando.esCanjear():
+                self.assertEqual(comando.esCanjear(),True)
+                print("El comando "+str(comando)+" es canjear: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                self.assertEqual(comando.receptor.esMoneda(),True)
+                print("El receptor del comando "+str(comando)+" es moneda: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            if comando.esComprar():
+                self.assertEqual(comando.esComprar(),True)
+                print("El comando "+str(comando)+" es comprar: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+                self.assertEqual(comando.receptor.padre.esTienda(),True)
+                print("El receptor del comando "+str(comando)+" es tienda: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+
+
+    
+    def testInventario(self):
+        print(Fore.MAGENTA+"\n"+"Inventario:"+ Style.RESET_ALL)
+        self.assertEqual(self.personaje.inventario is not None,True)
+        print("El personaje tiene inventario: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+        self.assertEqual(self.personaje.inventario.objetos is not None,True)
+        print("El personaje tiene objetos en el inventario: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+    
 
 if __name__ == '__main__':
     unittest.main()
+    

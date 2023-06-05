@@ -10,7 +10,7 @@
             {"tipo":"armario","num":2,"hijos":[]},
             {"tipo":"bomba"},
             {"tipo":"baul","num":2,"contenido":[{"tipo":"mochila","contenido":[{"tipo": "moneda", "valor": 15}]},{"tipo":"moneda","valor":32}]},
-            {"tipo":"mochila"},
+            {"tipo":"mochila","contenido":[{"tipo": "moneda", "valor": 20}]},
             {"tipo":"tienda","num":2,"hijos":[],"objetos":[
                 {"tipo":"espada","poder":30,"precio":97}
             ]}

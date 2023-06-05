@@ -1,6 +1,7 @@
 import unittest
 import os
 from colorama import init, Fore, Style
+from src.model.Personaje import Personaje
 from src.model.Afilada import Afilada
 from src.model.Cuadrado import Cuadrado
 from src.model.Director import Director
@@ -14,14 +15,32 @@ class Test(unittest.TestCase):
         self.juego = Juego()
         ruta_actual = os.path.abspath(__file__)
         directorio_proyecto = os.path.dirname(ruta_actual)
-        unArchivo = os.path.join(directorio_proyecto, "laberintos/lab4Hab4Arm1Baul4Hechiceros.json")
+        unArchivo = os.path.join(directorio_proyecto, "laberintos/lab4Hab4Arm1Baul4Entes.json")
         director = Director()
         director.procesar(unArchivo)
         self.juego = director.obtenerJuego()
+        self.personaje = Personaje()
+        self.juego.agregarPersonaje(self.personaje)
+
 
     def testIniciales(self):
         self.assertEqual(self.juego.laberinto is not None, True)
         self.assertEqual(len(self.juego.laberinto.hijos), 4)
+
+    
+    def testPersonaje(self):
+            
+            print(Fore.MAGENTA+"\nPersonaje:"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje is not None, True)
+            print("El personaje se ha creado: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje.vidas, 100)
+            print("El personaje tiene 100 vidas: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje.poder, 10)
+            print("El personaje tiene 10 de poder: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje.dinero,50)
+            print("El personaje tiene 50 de dinero: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+            self.assertEqual(self.personaje.posicion, self.juego.obtenerHabitacion(1))
+            print("El personaje esta en la habitacion 1: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
     
     def testHabitaciones(self):
         hab1 = self.juego.obtenerHabitacion(1)
