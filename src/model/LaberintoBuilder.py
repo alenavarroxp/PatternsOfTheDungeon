@@ -1,3 +1,4 @@
+from src.model.Rota import Rota
 from src.model.Canjear import Canjear
 from src.model.Entrar import Entrar
 from src.model.Coger import Coger
@@ -169,18 +170,22 @@ class LaberintoBuilder():
     def fabricarEste(self):
         return Este()
     
-    def fabricarEspada(self):
+    def fabricarEspada(self,):
         espada = Espada()
         return espada
     
     def fabricarEspadaEn(self,unContenedor,poder):
         espada = Espada()
         espada.poder = poder
-        espada.agregarComando(Coger(),espada)
+        if espada.poder <= 0:
+            espada.estado = Rota()
+        if not unContenedor.esTienda():
+            espada.agregarComando(Coger(),espada)
         if isinstance(unContenedor,Mochila):
             unContenedor.agregarObjeto(espada)
         else:
-            unContenedor.agregarHijo(espada)
+            if not unContenedor.esTienda():
+                unContenedor.agregarHijo(espada)
         return espada
 
 
@@ -287,7 +292,7 @@ class LaberintoBuilder():
         tienda = Tienda(num)
         tienda.forma = self.fabricarForma()
         tienda.forma.num = num
-        mercader = self.fabricarMercader(objetos)
+        mercader = self.fabricarMercader(objetos,tienda)
         tienda.mercader = mercader
         tienda.ponerEnElemento(self.fabricarNorte(),self.fabricarPared(tienda))
         tienda.ponerEnElemento(self.fabricarEste(),self.fabricarPared(tienda))
@@ -310,7 +315,7 @@ class LaberintoBuilder():
             if item == 'espada':
                 getattr(self,'fabricar' + item.capitalize()+"En")(mochila,contenido[i]['poder'])
             elif item == 'moneda':
-                getattr(self,'fabricar' + item.capitalize())(mochila,contenido[i]['valor'])
+                getattr(self,'fabricar' + item.capitalize()+"")(mochila,contenido[i]['valor'])
         return mochila
     
     def fabricarMochilaEn(self,unContenedor,contenido):
@@ -319,13 +324,16 @@ class LaberintoBuilder():
         unContenedor.agregarHijo(mochila)
         return mochila
     
-    def fabricarMercader(self,objetos):
+    def fabricarMercader(self,objetos,padre):
         mercader = Mercader('Antonio')
         for objeto in objetos:
             precio = objeto['precio']
             tipo = objeto['tipo']
             if tipo == 'mochila':
                 objeto = getattr(self,'fabricar' + tipo.capitalize())(objeto['contenido'])
+            elif tipo == 'espada':
+                poder = objeto['poder']
+                objeto = getattr(self,'fabricar' + tipo.capitalize()+"En")(padre,poder)
             else:
                 objeto = getattr(self,'fabricar' + tipo.capitalize())()
             objeto.agregarComando(Comprar(),objeto)

@@ -1,6 +1,7 @@
 import unittest
 import os
 from colorama import init, Fore, Style
+from src.model.Rota import Rota
 from src.model.Personaje import Personaje
 from src.model.Afilada import Afilada
 from src.model.Cuadrado import Cuadrado
@@ -207,8 +208,6 @@ class Test(unittest.TestCase):
                         print("La espada "+str(hijo)+" no es nula: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
                         self.assertEqual(hijo.esEspada(), True)
                         print("La espada "+str(hijo)+" es espada: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
-                        self.assertEqual(isinstance(hijo.estado,Afilada),True)
-                        print("La espada "+str(hijo)+" es afilada: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
                         self.assertEqual(hijo.padre,habitacion)
                         print("El padre de la espada "+str(hijo)+" es la habitacion "+str(habitacion.num)+": ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
     

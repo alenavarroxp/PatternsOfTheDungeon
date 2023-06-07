@@ -4,8 +4,9 @@ from src.model.ElementoMapa import ElementoMapa
 
 class Objeto(ElementoMapa, ABC):
     def __init__(self):
+        super().__init__()
         self.precio = 0
-        self.comandos = []
+        
 
     def agregarComando(self,unComando,puerta):
         self.comandos.append(unComando)

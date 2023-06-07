@@ -42,7 +42,6 @@ class LaberintoGUI():
         self.pasadoPuerta = False
         self.longitud_comandos_anterior = 0
         self.celda_seleccionada = None 
-        # self.mostrandoObjeto = False
         self.objetoSeleccionado = None
     
     def pantallaInicial(self):
@@ -187,7 +186,7 @@ class LaberintoGUI():
         self.juego=director.obtenerJuego()
         self.mostrarLaberinto()
         #Abrir ventana
-        self.agregarPersonaje("Mario")
+        self.agregarPersonaje("Roberto")
         self.screen.fill((50, 50, 50))
         self.dibujarLaberinto()
         self.añadirDependencias()
@@ -361,7 +360,7 @@ class LaberintoGUI():
                             self.redibujar()
 
                 if keys[pygame.K_LEFT] or keys[pygame.K_a]:
-                    if isinstance(self.contActual,Habitacion):
+                    if self.contActual.esHabitacion():
                         self.pX = self.origenX -(30/2) + 50
                         self.pY = self.origenY + ((self.alto)/2) -(30/2)
                         # print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
@@ -373,7 +372,7 @@ class LaberintoGUI():
                     
 
                 if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-                    if isinstance(self.contActual,Habitacion):
+                    if self.contActual.esHabitacion():
                         self.pX = self.origenX - (30/2) - 50 + self.ancho
                         self.pY = self.origenY + ((self.alto)/2) -(30/2)
                         # print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
@@ -383,7 +382,7 @@ class LaberintoGUI():
                         self.comprobarElemento(self.contActual,self.contActual.forma.este)
                     
                 if keys[pygame.K_UP] or keys[pygame.K_w]:
-                    if isinstance(self.contActual,Habitacion):
+                    if self.contActual.esHabitacion():
                         self.pX = self.origenX + (self.ancho/2) - (30/2)
                         self.pY = self.origenY + (self.alto/5) - (30/2)
                         # print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
@@ -392,7 +391,7 @@ class LaberintoGUI():
                         self.comprobarElemento(self.contActual,self.contActual.forma.norte)
 
                 if keys[pygame.K_DOWN] or keys[pygame.K_s]:
-                    if isinstance(self.contActual,Habitacion):
+                    if self.contActual.esHabitacion():
                         self.pX = self.origenX + (self.ancho/2) - (30/2)
                         self.pY = self.origenY + (self.alto-85) - (30/2)
                         # print("ORIGEN X: ",self.origenX,"ORIGEN Y: ",self.origenY, "PUNTO X: ",self.pX,"PUNTO Y: ",self.pY)
@@ -685,7 +684,7 @@ class LaberintoGUI():
         ancho = unBicho.posicion.forma.extentX
         alto = unBicho.posicion.forma.extentY
 
-        if isinstance(unBicho.modo,Agresivo):
+        if unBicho.modo.esAgresivo():
             bicho = pygame.image.load("graphics/bichoAgresivo.png").convert_alpha()
             bicho = pygame.transform.scale(bicho,(30*1.75,30*1.75))
             bicho = pygame.transform.flip(bicho,True,False)
@@ -720,18 +719,18 @@ class LaberintoGUI():
     def moverPersonajeHabitacion(self):
         if self.juego.personaje is not None:
             self.contActual = self.juego.personaje.posicion
-            if isinstance(self.contActual,Armario):
+            if self.contActual.esArmario():
                 self.pX = (self.contActual.padre.forma.puntoX+self.contActual.padre.forma.extentX-67)
                 self.pY = self.contActual.padre.forma.puntoY+63
                 self.origenX = self.contActual.padre.forma.puntoX
                 self.origenY = self.contActual.padre.forma.puntoY
 
-            elif isinstance(self.contActual,Baul):
+            elif self.contActual.esBaul():
                 self.pX = (self.contActual.padre.forma.puntoX+self.contActual.padre.forma.extentX/2-173)
                 self.pY = self.contActual.padre.forma.puntoY+26
                 self.origenX = self.contActual.padre.forma.puntoX
                 self.origenY = self.contActual.padre.forma.puntoY
-            elif isinstance(self.contActual,Tienda):
+            elif self.contActual.esTienda():
                 self.pX = (self.contActual.padre.forma.puntoX+self.contActual.padre.forma.extentX-70)
                 self.pY = self.contActual.padre.forma.puntoY+self.contActual.padre.forma.extentY-70
                 self.origenX = self.contActual.padre.forma.puntoX
@@ -923,7 +922,8 @@ class LaberintoGUI():
         
 
     def visitarPuerta(self, unaPuerta):
-        print('Puerta visitada')
+        # print('Puerta visitada')
+        pass
        
     def visitarPared(self,unaPared):
         # print('Pared visitada')
@@ -987,7 +987,7 @@ class LaberintoGUI():
                 self.bufferLaberinto.blit(espada,(unPuntoX+ancho/2+50,unPuntoY+40))
         else:
                 espada = pygame.image.load("graphics/espadaRota.png").convert_alpha()
-                espada = pygame.transform.scale(espada,(100,100))
+                espada = pygame.transform.scale(espada,(15,61))
                 espada = pygame.transform.rotate(espada, -90)
                 self.bufferLaberinto.blit(espada,(unPuntoX+ancho/2+50 ,unPuntoY+40))
 
@@ -1101,10 +1101,10 @@ class LaberintoGUI():
 
 
 
-vista = LaberintoGUI()
-vista.pantallaInicial()
+# vista = LaberintoGUI()
+# vista.pantallaInicial()
 
-juego = vista.juego
-print(vista.juego)
+# juego = vista.juego
+# print(vista.juego)
 
 # print("FUENTES",pygame.font.get_fonts())

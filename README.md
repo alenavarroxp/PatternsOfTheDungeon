@@ -7,7 +7,7 @@
 
 <img src="https://github.com/alenavarroxp/laberintoPython/blob/main/DesignDiagram/DiagramaDise%C3%B1o.jpg"/>
 
-## 17 Patrones implementados <br/>
+## 16 Patrones implementados <br/>
 | Patrón de Diseño | Descripción |
 |------------------|-------------|
 | Factory Method   | Patrón que define una interface para crear un objeto, pero deja que las subclases decidan qué clase instanciar |
@@ -25,7 +25,6 @@
 | State            | Patrón que permite a un objeto alterar su comportamiento cuando cambia su estado interno. |
 | Bridge           | Patrón que desacopla una abstracción de su implementación de modo que las dos puedan variar de forma independiente. |
 | Visitor          | Patrón que representa una operación a realizar en los elementos de un objeto compuesto y nos permite definir una nueva operación sin modificar las clases de los objetos sobre los que se aplica. |
-| Flyweight        | Patrón que utiliza compartir para soportar de manera eficiente un gran número de objetos pequeños. (ADAPTACIÓN) |
 | Command          | Patrón que encapsula una petición como un objeto, permitiendo parametrizar a los clientes con diferentes peticiones y soportar operaciones deshacer. |
 
 ## Dependencias<br/>

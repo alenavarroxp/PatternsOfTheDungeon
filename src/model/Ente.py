@@ -73,10 +73,18 @@ class Ente():
             self.vidas += 5
             print(alguien,'hechiza a ',self,' y le da 5 vidas y 5 de poder')
         elif alguien.modohechicero.esBrujo():
-            self.poder -= 5
-            self.vidas -= 5
-            print(alguien,'hechiza a ',self,' y le quita 5 vidas y 5 de poder')
+            if self.poder > 0:
+                self.poder -= 5
+                self.vidas -= 5
+                print(alguien,'hechiza a ',self,' y le quita 5 vidas y 5 de poder')
+            else: 
+                self.vidas -= 5
+                print(alguien,'hechiza a ',self,' y le quita 5 vidas')
+        if self.poder <= 0:
+            self.poder = 0
+    
         self.notificar()
+
         if self.vidas <= 0:
             self.vidas = 0
             self.heMuerto()

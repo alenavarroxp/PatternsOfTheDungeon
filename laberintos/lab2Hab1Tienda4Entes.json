@@ -7,8 +7,8 @@
         {"tipo":"habitacion","num":2,"hijos":[
             {"tipo":"bomba"},
             {"tipo":"tienda","num":2,"hijos":[],"objetos":[
-                {"tipo":"espada","precio":20},
-                {"tipo":"espada","precio":10},
+                {"tipo":"espada","poder":10,"precio":20},
+                {"tipo":"espada","poder":7,"precio":10},
                 {"tipo":"mochila","precio":30,"contenido":[]}
             ]}
         ]}

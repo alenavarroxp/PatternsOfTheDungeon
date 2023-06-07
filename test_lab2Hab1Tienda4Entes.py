@@ -7,7 +7,7 @@ from src.model.Cuadrado import Cuadrado
 from src.model.Director import Director
 from src.model.Juego import Juego
 
-class Test(unittest.TestCase):
+class test_lab2Hab1Tienda4Entes(unittest.TestCase):
 
     def setUp(self):
         init()
@@ -84,7 +84,7 @@ class Test(unittest.TestCase):
         bichoPerezoso = 0
         print(Fore.MAGENTA+"\nBichos:"+ Style.RESET_ALL)
         self.assertEqual(len(self.juego.bichos), 2)
-        print("Hay 4 bichos: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
+        print("Hay 2 bichos: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
         for bicho in self.juego.bichos:
             if bicho.esPerezoso():
                 bichoPerezoso+=1

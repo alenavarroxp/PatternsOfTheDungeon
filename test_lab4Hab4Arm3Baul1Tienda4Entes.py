@@ -177,8 +177,6 @@ class Test(unittest.TestCase):
                                 print("La espada "+str(contenido)+" no es nula: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
                                 self.assertEqual(contenido.esEspada(), True)
                                 print("La espada "+str(contenido)+" es espada: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
-                                self.assertEqual(isinstance(contenido.estado,Afilada),True)
-                                print("La espada "+str(contenido)+" es afilada: ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
                                 self.assertEqual(contenido.padre,hijo)
                                 print("El padre de la espada "+str(contenido)+" es el baul "+str(hijo.num)+": ",Fore.GREEN+"Correct"+ Style.RESET_ALL)
                             if contenido.esMochila():

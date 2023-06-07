@@ -2,16 +2,7 @@ from src.model.Objeto import Objeto
 
 
 class Moneda(Objeto):
-    # # Aproximación de flyweight para reducir el uso de memoria y evitar la creación de objetos innecesarios 
-    # instanciasMonedas = {}
-    # def __new__(cls, valor,ubicacion):
-    #     if (valor,ubicacion) not in cls.instanciasMonedas:
-    #         cls.instanciasMonedas[(valor,ubicacion)] = super(Moneda,cls).__new__(cls)
-    #         cls.instanciasMonedas[(valor,ubicacion)].contador = 1
-    #     else:
-    #         cls.instanciasMonedas[(valor,ubicacion)].contador += 1
-    #     return cls.instanciasMonedas[(valor,ubicacion)]
-
+   
     def __init__(self, valor,ubicacion):
         super().__init__()
         self.valor = valor

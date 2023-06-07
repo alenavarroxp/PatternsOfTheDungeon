@@ -64,6 +64,7 @@ class Tienda(Contenedor):
     def salir(self,alguien):
         print(alguien,' sale de la tienda: ',self.num)
         alguien.posicion = self.padre
+        
     def esTienda(self):
         return True
 

@@ -28,8 +28,8 @@ class LaberintoRomboBuilder(LaberintoBuilder):
                 return Rombo()
         
         def fabricarArmarioEn(self,unContenedor):
-                num = unContenedor.hijos.__len__() + 1
-                armario = Armario(num)
+                num = unContenedor.num
+                armario = self.fabricarArmario(num)
                 armario.forma = self.fabricarForma()
 
                 armario.ponerEnElemento(self.fabricarNoroeste(),self.fabricarPared(armario))
