@@ -292,7 +292,7 @@ class LaberintoGUI():
         self.mouse_pos = None
         self.screen.blit(self.bufferLaberinto,(0,0))
         while self.juego.fase.esFinal() == False:
-            # currentTime = pygame.time.get_ticks()
+            
             
         
             keys = pygame.key.get_pressed()
@@ -307,8 +307,7 @@ class LaberintoGUI():
                 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.mouse_pos = pygame.mouse.get_pos()
-                    # if self.celda_seleccionada is not None:
-                    #     self.mostrandoObjeto = not self.mostrandoObjeto
+                
                     if abrirPuertas.collidepoint(self.mouse_pos):
                         if not abrir:
                             abrir = True
@@ -405,7 +404,7 @@ class LaberintoGUI():
                     self.redibujar()
                         
                     
-                # if not self.mostrandoObjeto:
+              
             self.dibujarComandos(self.mouse_pos)
             self.mostrarInventario(self.mouse_pos)
                 
@@ -419,9 +418,6 @@ class LaberintoGUI():
             self.screen.blit(self.bufferLaberinto,(0,0))
             self.mouse_pos = None
            
-            # if currentTime - lastUpdate >= updateIntervalo:
-            #     lastUpdate = currentTime
-            #     self.redibujar()
             pygame.display.flip()
 
             clock.tick(60)
@@ -815,10 +811,6 @@ class LaberintoGUI():
         self.person.añadirDependencia(self)
         self.contActual = self.person.posicion
       
-    # def ocultar(self):
-    #     ocultar = pygame.Surface((30,self.height-60))
-    #     ocultar.fill((50,50,50))
-    #     self.screen.blit(ocultar,(1140,50))
 
     def mostrarVidasPersonaje(self):
         if self.vidasM is None or self.person is None:
@@ -1101,10 +1093,10 @@ class LaberintoGUI():
 
 
 
-# vista = LaberintoGUI()
-# vista.pantallaInicial()
+vista = LaberintoGUI()
+vista.pantallaInicial()
 
-# juego = vista.juego
-# print(vista.juego)
+juego = vista.juego
+print(vista.juego)
 
-# print("FUENTES",pygame.font.get_fonts())
+print("FUENTES",pygame.font.get_fonts())
